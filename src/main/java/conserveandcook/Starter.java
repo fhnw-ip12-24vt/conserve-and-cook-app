@@ -14,6 +14,8 @@ public class Starter {
         // SomePUI pui =  new SomePUI(controller, FRAME_RATE);
 
         LOGGER.logInfo("App started");
+        Database db = new Database("src/main/resources/database/database.db");
+        db.initializeDatabase();
 
         // This will ensure Pi4J is properly finished. All I/O instances are
         // released by the system and shutdown in the appropriate
