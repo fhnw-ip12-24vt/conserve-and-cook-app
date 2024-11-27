@@ -7,14 +7,14 @@ public class Starter {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         // SomeController controller = new SomeController();
 
         // SomePUI pui =  new SomePUI(controller, FRAME_RATE);
 
         LOGGER.logInfo("App started");
-        Database db = new Database("src/main/resources/database/database.db");
+        Database db = Database.getInstance();
         db.initializeDatabase();
 
         // This will ensure Pi4J is properly finished. All I/O instances are
