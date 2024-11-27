@@ -1,17 +1,12 @@
 package conserveandcook;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class Database {
-
-    private static Database INSTANCE;
     private static final String databasePath = "src/main/resources/database/database.db";
+    private static Database INSTANCE;
 
     public static Database getInstance() {
         if (INSTANCE == null) {
@@ -45,14 +40,12 @@ public class Database {
         try (Connection connection = connect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
-
             while (resultSet.next()) {
                 LOGGER.logInfo("ID: " + resultSet.getInt("id"));
                 if (resultSet.getMetaData().getColumnCount() > 1) {
                     LOGGER.logInfo("Value: " + resultSet.getString(2));
                 }
             }
-
         } catch (SQLException e) {
             LOGGER.logException("Error executing query: " + e.getMessage());
         }
