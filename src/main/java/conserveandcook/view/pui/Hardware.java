@@ -5,8 +5,6 @@ import conserveandcook.controller.ApplicationController;
 import conserveandcook.model.Application;
 import conserveandcook.view.pui.components.Joystick;
 
-import java.time.Duration;
-
 public class Hardware extends PuiBase<Application, ApplicationController> {
     private Joystick joystick;
 
@@ -24,11 +22,17 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
 
     @Override
     public void updateComponents(Application model) {
-        //nothing to do in first place
+        // nothing to do in first place
     }
 
     @Override
     public void initializeComponents(Application model) {
         joystick = new Joystick("/dev/input/js0");
+    }
+
+    @Override
+    public void shutdown(){
+        super.shutdown();
+        // shutdown logic
     }
 }

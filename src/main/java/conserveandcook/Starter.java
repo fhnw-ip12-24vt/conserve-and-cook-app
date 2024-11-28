@@ -24,5 +24,6 @@ public class Starter {
         screen.runUntilClosed(1000 / Starter.FRAME_RATE);
 
         controller.shutdown();
+        pui.shutdown();
     }
 }
