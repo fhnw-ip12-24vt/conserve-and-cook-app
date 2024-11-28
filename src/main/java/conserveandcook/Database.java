@@ -29,7 +29,7 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath);
             LOGGER.logInfo("Connection to SQLite database established.");
         } catch (SQLException e) {
-            LOGGER.logException("Failed to connect to the database: " + e.getMessage());
+            LOGGER.logException("Failed to connect to the database: " + e.getMessage(), e);
         }
         return connection;
     }
@@ -40,7 +40,7 @@ public class Database {
             statement.executeUpdate(sql);
             LOGGER.logInfo("SQL update executed: " + sql);
         } catch (SQLException e) {
-            LOGGER.logException("Error executing update: " + e.getMessage());
+            LOGGER.logException("Error executing update: " + e.getMessage(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class Database {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.logException("Error executing query: " + e.getMessage());
+            LOGGER.logException("Error executing query: " + e.getMessage(), e);
         }
     }
 
