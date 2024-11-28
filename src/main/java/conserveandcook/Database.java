@@ -51,11 +51,15 @@ public class Database {
         }
     }
 
+    public String drop(String table) {
+        return "DROP TABLE IF EXISTS " + table;
+    }
+
     public void initializeDatabase() {
-        executeUpdate("DROP TABLE IF EXISTS translations");
-        executeUpdate("DROP TABLE IF EXISTS recipe");
-        executeUpdate("DROP TABLE IF EXISTS regions");
-        executeUpdate("DROP TABLE IF EXISTS languages");
+        executeUpdate(drop("translations"));
+        executeUpdate(drop("recipe"));
+        executeUpdate(drop("regions"));
+        executeUpdate(drop("languages"));
         executeUpdate("CREATE TABLE languages (id INT PRIMARY KEY, name VARCHAR(20))");
         executeUpdate("CREATE TABLE translations (id INT PRIMARY KEY, text VARCHAR(255), language_id INT, FOREIGN KEY(language_id) REFERENCES languages(id))");
         executeUpdate("CREATE TABLE regions (id INT PRIMARY KEY, title VARCHAR(20))");
