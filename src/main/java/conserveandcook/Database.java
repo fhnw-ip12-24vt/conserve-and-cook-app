@@ -1,12 +1,20 @@
 package conserveandcook;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class Database {
-    private static final String databasePath = "src/main/resources/database/database.db";
+    private static final String databasePath = "database.db";
     private static Database INSTANCE;
+    private Connection connection;
+
+    private Database() {
+        this.connection = connect();
+    }
 
     public static Database getInstance() {
         if (INSTANCE == null) {
@@ -15,7 +23,7 @@ public class Database {
         return INSTANCE;
     }
 
-    public Connection connect() {
+    private Connection connect() {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath);
@@ -27,8 +35,8 @@ public class Database {
     }
 
     public void executeUpdate(String sql) {
-        try (Connection connection = connect();
-             Statement statement = connection.createStatement()) {
+        try {
+            Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
             LOGGER.logInfo("SQL update executed: " + sql);
         } catch (SQLException e) {
@@ -37,9 +45,9 @@ public class Database {
     }
 
     public void executeQuery(String sql) {
-        try (Connection connection = connect();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 LOGGER.logInfo("ID: " + resultSet.getInt("id"));
                 if (resultSet.getMetaData().getColumnCount() > 1) {
@@ -51,7 +59,7 @@ public class Database {
         }
     }
 
-    public String drop(String table) {
+    private String drop(String table) {
         return "DROP TABLE IF EXISTS " + table;
     }
 
