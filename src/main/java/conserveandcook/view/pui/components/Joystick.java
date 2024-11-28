@@ -1,4 +1,4 @@
-package conserveandcook.view.pui;
+package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
 import org.slf4j.Logger;
@@ -57,6 +57,7 @@ public class Joystick extends Component {
             }
         } catch (Exception e) {
             logException(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
@@ -86,9 +87,8 @@ public class Joystick extends Component {
             // You can extend this to handle buttons if needed
             System.out.printf("Button %d %s%n", number, (value == 1) ? "pressed" : "released");
         }
-        // Interpret the event
-        logInfo(String.valueOf(value));
 
+        executor = Executors.newSingleThreadExecutor();
         if (isNorth) {
             executor.submit(whileNorthWorker);
             if (onNorth != null) {
@@ -127,39 +127,30 @@ public class Joystick extends Component {
     }
 
     private final Runnable whileNorthWorker = () -> {
-        while (isNorth) {
+        while (isNorth && whileNorth != null) {
             delay(whilePressedDelay);
-            if (isNorth && whileNorth != null) {
-                whileNorth.run();
-            }
+            whileNorth.run();
         }
     };
 
     private final Runnable whileEastWorker = () -> {
-        while (isEast) {
+        while (isEast && whileEast != null) {
             delay(whilePressedDelay);
-            if (isEast && whileEast != null) {
-                whileEast.run();
-            }
+            whileEast.run();
         }
     };
 
     private final Runnable whileSouthWorker = () -> {
-        while (isSouth) {
+        while (isSouth && whileSouth != null) {
             delay(whilePressedDelay);
-            if (isSouth && whileSouth != null) {
-                whileSouth.run();
-            }
+            whileSouth.run();
         }
     };
 
-
     private final Runnable whileWestWorker = () -> {
-        while (isWest) {
+        while (isWest && whileWest != null) {
             delay(whilePressedDelay);
-            if (isWest && whileWest != null) {
-                whileWest.run();
-            }
+            whileWest.run();
         }
     };
 
@@ -223,5 +214,21 @@ public class Joystick extends Component {
 
     public boolean isWest() {
         return isWest;
+    }
+
+    public void onNorth(Runnable task) {
+        this.onNorth = task;
+    }
+
+    public void onEast(Runnable task) {
+        this.onEast = task;
+    }
+
+    public void onSouth(Runnable task) {
+        this.onSouth = task;
+    }
+
+    public void onWest(Runnable task) {
+        this.onWest = task;
     }
 }

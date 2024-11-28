@@ -3,6 +3,7 @@ package conserveandcook;
 import conserveandcook.controller.ApplicationController;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.Screen;
+import conserveandcook.view.pui.Hardware;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
@@ -15,6 +16,8 @@ public class Starter {
 
         ApplicationController controller = new ApplicationController(new Application());
         Screen screen = new Screen(controller);
+
+        Hardware pui = new Hardware(controller, FRAME_RATE);
 
         screen.open();
         screen.setFullScreen(true);
