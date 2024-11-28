@@ -138,7 +138,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Sqlite JDBC -->
+        <!-- sqlite-jdbc -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
@@ -342,6 +342,12 @@
                                                  username="${pi.username}" password="${pi.password}" trust="true"
                                                  failonerror="false" usepty="true" useSystemIn="true"
                                                  command="unzip '${pi.deploydirectory}/${jar.name}.zip' -d '${pi.deploydirectory}'"/>
+
+                                        <scp trust="true"
+                                             localFile="${project.basedir}/src/main/resources/database/database.db"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/database.db"
+                                             port="${pi.port}">
+                                        </scp>
 
                                         <!-- Run application on Raspberry Pi -->
                                         <sshexec host="${pi.ipnumber}" port="${pi.port}"
