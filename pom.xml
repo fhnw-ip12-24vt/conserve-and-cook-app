@@ -11,14 +11,9 @@
 
     <properties>
         <!-- The class that will be started, choose one and only one -->
-        <launcher.class>trick17examples.billmvc.BillMvcStarter</launcher.class>
+        <launcher.class>conserveandcook.Starter</launcher.class>
 
-        <!-- *********** the templates; use one of these for your project *********** -->
-        <!-- <launcher.class>templateapp.AppStarter</launcher.class> -->
-        <!-- <launcher.class>templatepuiapp.PuiAppStarter</launcher.class> -->
-        <!-- <launcher.class>multicontroller.AppStarter</launcher.class> -->
-
-        <jar.name>Conserve&amp;Cook</jar.name>
+        <jar.name>Trick17App</jar.name>
 
         <!-- Setup for the RaspPi -->
         <pi.hostname>pi4j</pi.hostname>
@@ -333,11 +328,12 @@
                                         <!-- Ensure target directory exists on RaspPi -->
                                         <sshexec host="${pi.ipnumber}" port="${pi.port}"
                                                  username="${pi.username}" password="${pi.password}"
-                                                 trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -r -f ${pi.deploydirectory}/*"/>
+                                                 trust="true"
+                                                 command="mkdir --parents ${pi.deploydirectory}; rm -r -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
                                         <scp trust="true"
-                                             localFile = "${project.build.directory}/${jar.name}.zip"
+                                             localFile="${project.build.directory}/${jar.name}.zip"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
                                              port="${pi.port}">
                                         </scp>
@@ -351,7 +347,7 @@
                                         <sshexec host="${pi.ipnumber}" port="${pi.port}"
                                                  username="${pi.username}" password="${pi.password}" trust="true"
                                                  failonerror="false" usepty="true" useSystemIn="true"
-                                                 command="${pi.deploydirectory}/${jar.name}/${pi.startScript} ${pi.deploydirectory}/${jar.name} ${jar.name} "/>
+                                                 command="sh ${pi.deploydirectory}/${jar.name}/${pi.startScript} ${pi.deploydirectory}/${jar.name} ${jar.name} "/>
                                     </target>
                                 </configuration>
                             </execution>
