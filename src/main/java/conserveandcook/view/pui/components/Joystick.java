@@ -14,22 +14,13 @@ public class Joystick extends Component {
     private String device;
     private Thread serialReaderThread;
 
-    private Runnable onNorth;
-    private Runnable onEast;
-    private Runnable onSouth;
-    private Runnable onWest;
+    private Runnable onNorth, onEast, onSouth, onWest;
 
-    private Runnable whileNorth;
-    private Runnable whileEast;
-    private Runnable whileSouth;
-    private Runnable whileWest;
+    private Runnable whileNorth, whileEast, whileSouth, whileWest;
 
     private Duration whilePressedDelay;
 
-    private boolean isNorth = false;
-    private boolean isEast = false;
-    private boolean isSouth = false;
-    private boolean isWest = false;
+    private boolean isNorth, isEast, isSouth, isWest = false;
 
     private ExecutorService executor;
 
@@ -46,31 +37,34 @@ public class Joystick extends Component {
 
     private void listenToInput() {
         try (FileInputStream fis = new FileInputStream(this.device)) {
-            byte[] buffer = new byte[8]; // Joystick event structure size
-            System.out.println("Reading joystick events from " + this.device);
+            byte[] buffer = new byte[8]; // Joystick events are 8 bytes big
+            log.info("Reading joystick events from {}", this.device);
 
             while (true) {
                 int bytesRead = fis.read(buffer);
-                if (bytesRead == 8) { // Each event is 8 bytes
+                if (bytesRead == 8) {
                     parseEvent(buffer);
                 }
             }
         } catch (Exception e) {
-            logException(e.getMessage(), e);
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
     private void parseEvent(byte[] buffer) {
+        // The direction in which the joystick was moved
         int value = (short) ((buffer[4] & 0xFF) | ((buffer[5] & 0xFF) << 8));
-        byte type = buffer[6];
-        byte number = buffer[7];
 
-        // Event type 2 = Axis movement, type 1 = Button press
+        // type 1 = Button Press, type 2 = Axis movement
+        byte type = buffer[6];
+
+        // 1 = X-Axis, 2 = Y-Axis
+        byte axis = buffer[7];
+
         if (value == 0) {
             setNeutral();
         } else if (type == 2) { // Axis movement
-            switch (number) {
+            switch (axis) {
                 case 1: // X-axis
                     isWest = (value > -30000);  // Move left
                     isEast = (value < 30000); // Move right
@@ -80,12 +74,11 @@ public class Joystick extends Component {
                     isSouth = (value > 30000); // Move down
                     break;
                 default:
-                    // Ignore other axes
+                    // No other axis
                     break;
             }
-        } else if (type == 1) { // Button press
-            // You can extend this to handle buttons if needed
-            System.out.printf("Button %d %s%n", number, (value == 1) ? "pressed" : "released");
+        } else if (type == 1) {
+            // Button press
         }
 
         executor = Executors.newSingleThreadExecutor();
@@ -166,7 +159,6 @@ public class Joystick extends Component {
         }
     }
 
-
     public void whileSouth(Runnable task, Duration delay) {
         whileSouth = task;
         whilePressedDelay = delay;
@@ -198,22 +190,6 @@ public class Joystick extends Component {
         if (task != null) {
             executor = Executors.newSingleThreadExecutor();
         }
-    }
-
-    public boolean isNorth() {
-        return isNorth;
-    }
-
-    public boolean isEast() {
-        return isEast;
-    }
-
-    public boolean isSouth() {
-        return isSouth;
-    }
-
-    public boolean isWest() {
-        return isWest;
     }
 
     public void onNorth(Runnable task) {
