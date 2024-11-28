@@ -39,7 +39,7 @@ public final class MvcLogger {
         logger.fine(() -> String.format(msg, args));
     }
 
-    public void logException(String msg){
-        logger.log(Level.SEVERE, msg);
+    public void logException(String msg, Throwable exception) {
+        logger.log(Level.SEVERE, msg, exception);
     }
 }
