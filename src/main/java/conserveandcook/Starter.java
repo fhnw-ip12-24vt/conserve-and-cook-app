@@ -1,31 +1,25 @@
 package conserveandcook;
 
+import conserveandcook.controller.ApplicationController;
+import conserveandcook.model.Application;
+import conserveandcook.view.gui.Screen;
+
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class Starter {
-    private static final int FRAME_RATE = 50;
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    public static final int FRAME_RATE = 50;
 
     public static void main(String[] args) {
-
-        // SomeController controller = new SomeController();
-
-        // SomePUI pui =  new SomePUI(controller, FRAME_RATE);
-
+        System.setProperty("sun.java2d.opengl", "True");
         LOGGER.logInfo("App started");
 
-        // This will ensure Pi4J is properly finished. All I/O instances are
-        // released by the system and shutdown in the appropriate
-        // manner. It will also ensure that any background
-        // threads/processes are cleanly shutdown and any used memory
-        // is returned to the system.
-        /* Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            controller.shutdown();
-            pui.shutdown();
-        }));
+        ApplicationController controller = new ApplicationController(new Application());
+        Screen screen = new Screen(controller);
 
-         */
+        screen.open();
+        screen.setFullScreen(true);
+        screen.runUntilClosed(1000 / Starter.FRAME_RATE);
 
+        controller.shutdown();
     }
 }

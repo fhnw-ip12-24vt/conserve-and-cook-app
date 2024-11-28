@@ -1,5 +1,6 @@
 package ch.mvcbase;
 
+import ch.trick17.gui.Gui;
 import ch.trick17.gui.component.Component;
 
 /**
@@ -29,4 +30,6 @@ public abstract class ComponentGuiBase<M, C extends ControllerBase<M>>  extends 
     protected final void redraw(M model) {
         // don't allow pure component-based GUIs to redraw
     }
+
+    public abstract void draw(Gui gui);
 }
