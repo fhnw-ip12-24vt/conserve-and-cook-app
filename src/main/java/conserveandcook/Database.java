@@ -45,10 +45,8 @@ public class Database {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                if (resultSet.getMetaData().getColumnCount() > 1) {
-                    return resultSet;
-                }
+            if (resultSet.getMetaData().getColumnCount() > 1) {
+                return resultSet;
             }
         } catch (SQLException e) {
             LOGGER.logException("Error executing query: " + e.getMessage(), e);
