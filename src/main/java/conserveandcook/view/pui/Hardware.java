@@ -34,6 +34,5 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
     public void shutdown(){
         super.shutdown();
         joystick.shutdown();
-        // shutdown logic
     }
 }

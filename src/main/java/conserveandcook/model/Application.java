@@ -1,11 +1,11 @@
 package conserveandcook.model;
 
 public class Application {
-    private volatile int currentScreen = 0;
-    private static String[] screens = {"start", "language"};
+    private int currentScreen = 0;
+    private static final String[] screens = {"start", "language"};
 
-    private volatile int selectedLanguage = 0;
-    private static String[] languages = {"de", "fr", "it", "en"};
+    private int selectedLanguage = 0;
+    private static final String[] languages = {"de", "fr", "it", "en"};
 
     public void incrementLanguage() {
         selectedLanguage = selectedLanguage -1 > 0 ? selectedLanguage - 1 : languages.length - 1;

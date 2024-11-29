@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 public class Joystick extends Component {
     private static final Logger log = LoggerFactory.getLogger(Joystick.class);
-    private String device;
+    private final String device;
     private Thread serialReaderThread;
 
     private Runnable onNorth, onEast, onSouth, onWest;

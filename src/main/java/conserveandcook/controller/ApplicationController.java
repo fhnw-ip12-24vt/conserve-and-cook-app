@@ -1,11 +1,7 @@
 package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
-import conserveandcook.Database;
 import conserveandcook.model.Application;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ApplicationController extends ControllerBase<Application> {
     /**
