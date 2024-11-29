@@ -1,8 +1,5 @@
 package conserveandcook;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.*;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
@@ -44,19 +41,19 @@ public class Database {
         }
     }
 
-    public void executeQuery(String sql) {
+    public ResultSet executeQuery(String sql) {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                LOGGER.logInfo("ID: " + resultSet.getInt("id"));
                 if (resultSet.getMetaData().getColumnCount() > 1) {
-                    LOGGER.logInfo("Value: " + resultSet.getString(2));
+                    return resultSet;
                 }
             }
         } catch (SQLException e) {
             LOGGER.logException("Error executing query: " + e.getMessage(), e);
         }
+        return null;
     }
 
     private String drop(String table) {
