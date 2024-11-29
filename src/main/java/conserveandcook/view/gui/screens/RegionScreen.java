@@ -14,7 +14,7 @@ public class RegionScreen implements conserveandcook.view.gui.screens.Screen {
 
     @Override
     public String getCurrentFrame(String regions) {
-        String backgroundPath = "img/regions/Amerika";
+        String backgroundPath = "img/regions/";
         long now = System.nanoTime();
 
         String frameName = String.format("%01d", currentFrame);
