@@ -10,13 +10,8 @@ import static ch.mvcbase.MvcLogger.LOGGER;
 public class Starter {
     public static final int FRAME_RATE = 50;
 
-
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "True");
-        // SomeController controller = new SomeController();
-
-        // SomePUI pui =  new SomePUI(controller, FRAME_RATE);
-
         LOGGER.logInfo("App started");
         Database db = Database.getInstance();
         db.initializeDatabase();
