@@ -2,8 +2,13 @@ package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
 import conserveandcook.model.Application;
+import conserveandcook.model.Ingredient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ApplicationController extends ControllerBase<Application> {
+    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
+
     /**
      * The Controller needs a Model.
      *
@@ -43,6 +48,12 @@ public class ApplicationController extends ControllerBase<Application> {
 
     public void scan(String barcode) {
         if (model.getCurrentScreen().equals("game")) {
+            try{
+                Ingredient scannedIngredient = Ingredient.getIngredientById(barcode);
+                model.addSelectedIngredient(scannedIngredient);
+            } catch (Exception e) {
+                log.info(e.getMessage());
+            }
             // TODO: (SK) Implement game logic
         }
     }
