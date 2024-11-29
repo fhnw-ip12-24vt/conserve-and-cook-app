@@ -11,17 +11,14 @@ import java.util.concurrent.Executors;
 
 public class Joystick extends Component {
     private static final Logger log = LoggerFactory.getLogger(Joystick.class);
-    private String device;
+    private final String device;
     private Thread serialReaderThread;
 
     private Runnable onNorth, onEast, onSouth, onWest;
-
     private Runnable whileNorth, whileEast, whileSouth, whileWest;
-
-    private Duration whilePressedDelay;
-
     private boolean isNorth, isEast, isSouth, isWest = false;
 
+    private Duration whilePressedDelay;
     private ExecutorService executor;
 
     public Joystick(String device) {
@@ -30,9 +27,14 @@ public class Joystick extends Component {
     }
 
     private void startReading() {
-        serialReaderThread = new Thread(() -> listenToInput(), "SerialJoystickReader");
+        serialReaderThread = new Thread(this::listenToInput, "SerialJoystickReader");
         serialReaderThread.setDaemon(true);
         serialReaderThread.start();
+    }
+
+    public void shutdown() {
+        serialReaderThread.interrupt();
+        log.info("Shutting down Joystick");
     }
 
     private void listenToInput() {
@@ -48,6 +50,7 @@ public class Joystick extends Component {
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            shutdown();
         }
     }
 
@@ -55,61 +58,47 @@ public class Joystick extends Component {
         // The direction in which the joystick was moved
         int value = (short) ((buffer[4] & 0xFF) | ((buffer[5] & 0xFF) << 8));
 
-        // type 1 = Button Press, type 2 = Axis movement
-        byte type = buffer[6];
-
-        // 1 = X-Axis, 2 = Y-Axis
-        byte axis = buffer[7];
+        byte type = buffer[6]; // type 1 = Button Press, type 2 = Axis movement
+        byte axis = buffer[7]; // 1 = X-Axis, 2 = Y-Axis
 
         if (value == 0) {
             setNeutral();
-        } else if (type == 2) { // Axis movement
-            switch (axis) {
-                case 1: // X-axis
-                    isWest = (value > -30000);  // Move left
-                    isEast = (value < 30000); // Move right
-                    break;
-                case 0: // Y-axis
-                    isNorth = (value < -30000);   // Move up
-                    isSouth = (value > 30000); // Move down
-                    break;
-                default:
-                    // No other axis
-                    break;
-            }
-        } else if (type == 1) {
-            // Button press
+            return;
+        }
+
+        if (type == 1) {
+            return;    // Button Pressed
+        }
+
+        // Axis movement
+        switch (axis) {
+            case 1: // X-axis
+                isWest = (value > -30000);  // Move left
+                isEast = (value < 30000); // Move right
+                break;
+            case 0: // Y-axis
+                isNorth = (value < -30000);   // Move up
+                isSouth = (value > 30000); // Move down
+                break;
+            default: // No other axis
+                break;
         }
 
         executor = Executors.newSingleThreadExecutor();
-        if (isNorth) {
-            executor.submit(whileNorthWorker);
-            if (onNorth != null) {
-                onNorth.run();
+
+        setDirection(isNorth, whileNorthWorker, onNorth);
+        setDirection(isEast, whileEastWorker, onEast);
+        setDirection(isSouth, whileSouthWorker, onSouth);
+        setDirection(isWest, whileWestWorker, onWest);
+    }
+
+    private void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
+        if (isInDirection) {
+            executor.submit(worker);
+            if (task != null) {
+                task.run();
             }
         }
-
-        if (isEast) {
-            executor.submit(whileEastWorker);
-            if (onEast != null) {
-                onEast.run();
-            }
-        }
-
-        if (isSouth) {
-            executor.submit(whileSouthWorker);
-            if (onSouth != null) {
-                onSouth.run();
-            }
-        }
-
-        if (isWest) {
-            executor.submit(whileWestWorker);
-            if (onWest != null) {
-                onWest.run();
-            }
-        }
-
     }
 
     private void setNeutral() {

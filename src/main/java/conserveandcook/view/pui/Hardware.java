@@ -33,6 +33,6 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
     @Override
     public void shutdown(){
         super.shutdown();
-        // shutdown logic
+        joystick.shutdown();
     }
 }

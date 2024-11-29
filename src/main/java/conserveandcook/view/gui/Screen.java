@@ -25,9 +25,9 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     @Override
     protected void redraw(Application model) {
         String frame = "";
-        String language = controller.getLanguage();
+        String language = model.getSelectedLanguage();
 
-        frame = switch (this.controller.getCurrentScreen()) {
+        frame = switch (model.getCurrentScreen()) {
             case "start" -> startScreen.getCurrentFrame(language);
             case "language" -> languageScreen.getCurrentFrame(language);
             default -> frame;
