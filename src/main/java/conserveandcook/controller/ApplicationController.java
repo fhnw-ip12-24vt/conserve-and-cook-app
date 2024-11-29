@@ -41,4 +41,11 @@ public class ApplicationController extends ControllerBase<Application> {
                 model.decrementLanguage();
         }
     }
+
+    public void scan(String barcode) {
+        switch (model.getCurrentScreen()) {
+            case "game":
+                // TODO: (SK) Implement game logic
+        }
+    }
 }
