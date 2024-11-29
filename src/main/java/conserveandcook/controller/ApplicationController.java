@@ -1,7 +1,6 @@
 package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
-import conserveandcook.Database;
 import conserveandcook.model.Application;
 
 public class ApplicationController extends ControllerBase<Application> {
@@ -10,7 +9,6 @@ public class ApplicationController extends ControllerBase<Application> {
      *
      * @param model Model managed by this Controller
      */
-
 
     public ApplicationController(Application model) {
         super(model);
@@ -40,6 +38,12 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.decrementLanguage();
+        }
+    }
+
+    public void scan(String barcode) {
+        if (model.getCurrentScreen().equals("game")) {
+            // TODO: (SK) Implement game logic
         }
     }
 }

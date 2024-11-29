@@ -8,7 +8,7 @@ public class Application {
     private static final String[] languages = {"de", "fr", "it", "en"};
 
     public void incrementLanguage() {
-        selectedLanguage = selectedLanguage -1 > 0 ? selectedLanguage - 1 : languages.length - 1;
+        selectedLanguage = selectedLanguage -1 >= 0 ? selectedLanguage - 1 : languages.length - 1;
     }
 
     public void decrementLanguage() {
