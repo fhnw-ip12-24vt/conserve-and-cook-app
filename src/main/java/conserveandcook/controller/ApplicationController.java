@@ -1,6 +1,7 @@
 package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
+import conserveandcook.Database;
 import conserveandcook.model.Application;
 
 public class ApplicationController extends ControllerBase<Application> {
