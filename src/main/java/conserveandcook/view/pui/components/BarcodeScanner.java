@@ -52,7 +52,7 @@ public class BarcodeScanner extends Component {
                     }
                 } else if (event.value == 0) { // Key released
                     if (event.code == 28) { // Enter key
-                        log.info("Barcode scanned: " + barcode);
+                        log.info("Barcode scanned: {}", barcode);
                         if(onScan != null) {
                             onScan.accept(barcode.toString());
                         }
