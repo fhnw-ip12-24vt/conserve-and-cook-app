@@ -44,4 +44,12 @@ public class Application {
          */
         selectedIngredients[ingredient.getCategory()] = ingredient;
     }
+
+    public Ingredient[] getSelectedIngredients() {
+        return selectedIngredients;
+    }
+
+    public static String[] getLanguages(){
+        return languages;
+    }
 }

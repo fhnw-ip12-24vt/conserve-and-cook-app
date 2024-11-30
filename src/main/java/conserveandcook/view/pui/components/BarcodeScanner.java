@@ -93,4 +93,10 @@ public class BarcodeScanner extends Component {
     public void onScan(Consumer<String> task) {
         this.onScan = task;
     }
+
+    public void mockScan(String payload){
+        if(onScan != null) {
+            onScan.accept(payload);
+        }
+    }
 }
