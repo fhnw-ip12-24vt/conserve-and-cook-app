@@ -71,7 +71,7 @@ INSERT INTO languages (id, name)
 VALUES (4, 'italienisch');
 
 INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
-VALUES (644824915043, 'Rindfleischfleisch', 10, 0, 1);
+VALUES (644824915043, 'Rindfleisch', 10, 0, 1);
 INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
 VALUES (4250236825175, 'Poulet', 20, 1, 1);
 
