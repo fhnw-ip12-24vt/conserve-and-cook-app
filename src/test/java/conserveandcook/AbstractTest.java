@@ -1,6 +1,6 @@
 package conserveandcook;
 
-import conserveandcook.misc.Props;
+import conserveandcook.misc.Config;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -8,10 +8,10 @@ public abstract class AbstractTest {
 
     @BeforeEach
     public final void setup() {
-        Props.set("joystick_enabled", "false");
-        Props.set("barcode_scanner_enabled", "false");
-        Props.set("environment", "test");
-        Props.set("database_path", "src/main/resources/database/database.db");
+        Config.set("joystick_enabled", "false");
+        Config.set("barcode_scanner_enabled", "false");
+        Config.set("environment", "test");
+        Config.set("database_path", "src/main/resources/database/database.db");
     }
 
 
