@@ -1,6 +1,7 @@
 package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
+import conserveandcook.misc.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,5 +196,16 @@ public class Joystick extends Component {
 
     public void onWest(Runnable task) {
         this.onWest = task;
+    }
+
+    // For testing
+    public void mockInput(){
+        if(Config.get("environment").equals("test")) {
+            executor = Executors.newSingleThreadExecutor();
+            setDirection(true, whileNorthWorker, onNorth);
+            setDirection(true, whileEastWorker, onEast);
+            setDirection(true, whileSouthWorker, onSouth);
+            setDirection(true, whileWestWorker, onWest);
+        }
     }
 }

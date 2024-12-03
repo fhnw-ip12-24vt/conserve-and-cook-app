@@ -1,11 +1,13 @@
 package conserveandcook;
 
+import conserveandcook.misc.Config;
+
 import java.sql.*;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class Database {
-    private static final String databasePath = "database.db";
+    private static final String databasePath = Config.get("database_path");
     private static Database INSTANCE;
     private Connection connection;
 
