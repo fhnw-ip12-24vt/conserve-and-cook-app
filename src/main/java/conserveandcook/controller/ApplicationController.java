@@ -9,6 +9,7 @@ public class ApplicationController extends ControllerBase<Application> {
      *
      * @param model Model managed by this Controller
      */
+
     public ApplicationController(Application model) {
         super(model);
     }
@@ -51,6 +52,12 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getSelectedRegion()) {
             case "regions":
                 model.previousRegion();
+        }
+    }
+
+    public void scan(String barcode) {
+        if (model.getCurrentScreen().equals("game")) {
+            // TODO: (SK) Implement game logic
         }
     }
 }

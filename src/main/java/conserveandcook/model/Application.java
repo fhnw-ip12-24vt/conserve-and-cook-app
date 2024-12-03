@@ -11,7 +11,7 @@ public class Application {
     private static final String[] regions = {"Amerika","Asien","Europa"};
 
     public void incrementLanguage() {
-        selectedLanguage = selectedLanguage -1 > 0 ? selectedLanguage - 1 : languages.length - 1;
+        selectedLanguage = selectedLanguage -1 >= 0 ? selectedLanguage - 1 : languages.length - 1;
     }
 
     public void decrementLanguage() {
