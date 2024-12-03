@@ -13,13 +13,9 @@ public class Starter {
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "True");
-        // SomeController controller = new SomeController();
-
-        // SomePUI pui =  new SomePUI(controller, FRAME_RATE);
 
         LOGGER.logInfo("App started");
-        Database db = Database.getInstance();
-        db.initializeDatabase();
+        Database.getInstance();
 
         ApplicationController controller = new ApplicationController(new Application());
         Screen screen = new Screen(controller);

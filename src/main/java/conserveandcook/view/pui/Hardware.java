@@ -2,6 +2,7 @@ package conserveandcook.view.pui;
 
 import ch.mvcbase.PuiBase;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
 import conserveandcook.view.pui.components.BarcodeScanner;
 import conserveandcook.view.pui.components.Joystick;
@@ -25,8 +26,8 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
 
     @Override
     public void initializeComponents(Application model) {
-        joystick = new Joystick("/dev/input/js0");
-        scanner = new BarcodeScanner("/dev/input/event5");
+        joystick = new Joystick(Config.get("joystick_path"));
+        scanner = new BarcodeScanner(Config.get("barcode_scanner_path"));
     }
 
     @Override

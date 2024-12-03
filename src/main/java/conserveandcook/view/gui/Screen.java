@@ -3,6 +3,7 @@ package conserveandcook.view.gui;
 import ch.mvcbase.GuiBase;
 import conserveandcook.controller.ApplicationController;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.screens.GameScreen;
 import conserveandcook.view.gui.screens.LanguageScreen;
 import conserveandcook.view.gui.screens.StartScreen;
 
@@ -14,12 +15,14 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     protected final ApplicationController controller;
     private final StartScreen startScreen;
     private final LanguageScreen languageScreen;
+    private final GameScreen gameScreen;
 
     public Screen(ApplicationController controller) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
         this.startScreen = new StartScreen();
         this.languageScreen = new LanguageScreen();
+        this.gameScreen = new GameScreen();
     }
 
     @Override
@@ -30,6 +33,7 @@ public class Screen extends GuiBase<Application, ApplicationController> {
         frame = switch (model.getCurrentScreen()) {
             case "start" -> startScreen.getCurrentFrame(language);
             case "language" -> languageScreen.getCurrentFrame(language);
+            case "game" -> gameScreen.getCurrentFrame(language);
             default -> frame;
         };
 
