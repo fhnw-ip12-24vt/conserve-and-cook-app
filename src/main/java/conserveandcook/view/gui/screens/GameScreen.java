@@ -1,12 +1,9 @@
 package conserveandcook.view.gui.screens;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class GameScreen implements Screen {
     private int currentFrame = 0;
-    private Timer gametimer;
-    private int timeremaining = 120; //Spielzeit in Sekunden
+    private int gameDuration = 120;
+    private long lastUpdateTime;
 
     @Override
     public String getTitle() {
@@ -19,32 +16,25 @@ public class GameScreen implements Screen {
         return backgroundPath + "/frame_" + frameName + ".png";
     }
 
-    public void startGameTimer() {
-        gametimer = new Timer();
-        gametimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                timeremaining--;
-                updateTimerDisplay();
-                if (timeremaining <= 0) {
-                    gametimer.cancel();
-                    endGame();
-                }
-            }
+    public void startGame() {
+        lastUpdateTime = System.nanoTime();
+    }
+
+    public void gameTimer() {
+        long currentTime = System.nanoTime();
+        long goneTime = currentTime - lastUpdateTime;
+
+        if (goneTime >= 1000000000L) {
+            gameDuration--;
+            lastUpdateTime = currentTime;
+            //updateFrame() // TODO: (AS) Methode muss noch geschrieben werden + GUI Anbindung
         }
+        if (gameDuration <=0) {
+            GameOver();
+        }
+        // private void updateFrame () // TODO: (AS) Methode & Umwandlung in Format XX:XX
     }
-
-    private void updateTimerDisplay() { //Anzeige von 60 Sekunden in 1 Minuten
-        int minutes = timeremaining / 60;
-        int seconds = timeremaining % 60;
-        String formatierteZeit = ; // Zeit in String formatieren
-        System.out.println(formatierteZeit); //Hier könnte die Anbindung ins GUI gemacht werden
-    }
-
-    private void endGame() {
+    private void GameOver (){
         System.out.println("GAME OVER");
     }
 }
-
-
-
