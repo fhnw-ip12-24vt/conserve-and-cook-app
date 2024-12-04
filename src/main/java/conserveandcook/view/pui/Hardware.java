@@ -17,23 +17,37 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
 
     @Override
     public void setupEventHandler(ApplicationController controller) {
-        joystick.onNorth(controller::up);
-        joystick.onEast(controller::nextScreen);
-        joystick.onWest(controller::prevScreen);
-        joystick.onSouth(controller::down);
-        scanner.onScan(controller::scan);
+        if (joystick != null) {
+            joystick.onNorth(controller::up);
+            joystick.onEast(controller::nextScreen);
+            joystick.onWest(controller::prevScreen);
+            joystick.onSouth(controller::down);
+        }
+
+        if (scanner != null) {
+            scanner.onScan(controller::scan);
+        }
     }
 
     @Override
     public void initializeComponents(Application model) {
-        joystick = new Joystick(Config.get("joystick_path"));
-        scanner = new BarcodeScanner(Config.get("barcode_scanner_path"));
+        if (Config.isEnabled("joystick")) {
+            joystick = new Joystick(Config.get("joystick.path"));
+        }
+
+        if (Config.isEnabled("barcode_scanner")) {
+            scanner = new BarcodeScanner(Config.get("barcode_scanner.path"));
+        }
     }
 
     @Override
-    public void shutdown(){
+    public void shutdown() {
         super.shutdown();
-        joystick.shutdown();
-        scanner.shutdown();
+        if (scanner != null) {
+            scanner.shutdown();
+        }
+        if (joystick != null) {
+            joystick.shutdown();
+        }
     }
 }
