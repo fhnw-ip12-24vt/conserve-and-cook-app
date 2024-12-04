@@ -2,7 +2,7 @@ package conserveandcook.model;
 
 public class Application {
     private int currentScreen = 0;
-    private static final String[] screens = {"start", "language", "game"};
+    private static final String[] screens = {"start", "language", "game", "result"};
 
     private int selectedLanguage = 0;
     private static final String[] languages = {"de", "fr", "it", "en"};
