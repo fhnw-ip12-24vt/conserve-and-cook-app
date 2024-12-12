@@ -39,6 +39,9 @@ public class Joystick extends Component {
     }
 
     private void listenToInput() {
+        if (Config.get("environment").equals("test")) {
+            return;
+        }
         try (FileInputStream fis = new FileInputStream(this.device)) {
             byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
             log.info("Reading joystick events from {}", this.device);
