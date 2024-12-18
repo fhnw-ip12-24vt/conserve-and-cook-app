@@ -10,8 +10,8 @@ import conserveandcook.view.gui.screens.StartScreen;
 
 public class Screen extends GuiBase<Application, ApplicationController> {
 
-    public static final int HEIGHT = 1080;
-    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 540;
+    public static final int WIDTH = 960;
 
     protected final ApplicationController controller;
     private final StartScreen startScreen;
@@ -22,10 +22,10 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     public Screen(ApplicationController controller) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
-        this.startScreen = new StartScreen();
-        this.languageScreen = new LanguageScreen();
-        this.gameScreen = new GameScreen();
-        this.resultScreen = new ResultScreen();
+        this.startScreen = new StartScreen(this);
+        this.languageScreen = new LanguageScreen(this);
+        this.gameScreen = new GameScreen(this);
+        this.resultScreen = new ResultScreen(this);
     }
 
     @Override
@@ -33,15 +33,17 @@ public class Screen extends GuiBase<Application, ApplicationController> {
         String frame = "";
         String language = model.getSelectedLanguage();
 
-        frame = switch (model.getCurrentScreen()) {
-            case "start" -> startScreen.getCurrentFrame(language);
-            case "language" -> languageScreen.getCurrentFrame(language);
-            case "game" -> gameScreen.getCurrentFrame(language);
-            case "result" -> resultScreen.getCurrentFrame(language);
-            default -> frame;
-        };
+        if (model.getCurrentScreen() == "game") {
+            gameScreen.draw(model);
+            return;
+        }
 
-        drawImage(frame, 0, 0);
+        switch (model.getCurrentScreen()) {
+            case "start" -> startScreen.draw(model);
+            case "game" -> gameScreen.draw(model);
+            case "language" -> languageScreen.draw(model);
+            case "result" -> resultScreen.draw(model);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package conserveandcook.controller;
 import ch.mvcbase.ControllerBase;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
+import conserveandcook.model.Recipe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,16 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.incrementLanguage();
+            case "game":
+                try {
+                    model.setSelectedRecipe(Recipe.getRandomRecipe());
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                }
+
+                Ingredient[] possibleIngredients = model.getSelectedRecipe().getIngredients();
+                int randomIngredientIndex = (int) (Math.random() * possibleIngredients.length);
+                model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[randomIngredientIndex]);
         }
     }
 

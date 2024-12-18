@@ -1,17 +1,16 @@
 package conserveandcook.view.gui.screens;
 
-public class ResultScreen implements Screen {
-    private int currentFrame = 0;
+import ch.trick17.gui.Gui;
+import conserveandcook.model.Application;
 
-    @Override
-    public String getTitle() {
-        return "result";
+public class ResultScreen extends AbstractScreen {
+
+    public ResultScreen(Gui gui) {
+        super(gui);
     }
 
     @Override
-    public String getCurrentFrame(String language) {
-        String backgroundPath = "img/result";
-        String frameName = String.format("%01d", currentFrame);
-        return backgroundPath + "/frame_" + frameName + ".png";
+    public void draw(Application model) {
+        drawBackground("img/result/frame_0.png");
     }
 }

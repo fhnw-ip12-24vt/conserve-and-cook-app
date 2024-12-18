@@ -8,6 +8,7 @@ public class Application {
     private static final String[] languages = {"de", "fr", "it", "en"};
 
     private final Ingredient[] selectedIngredients = new Ingredient[3];
+    private Recipe selectedRecipe;
 
     public void incrementLanguage() {
         selectedLanguage = selectedLanguage - 1 >= 0 ? selectedLanguage - 1 : languages.length - 1;
@@ -51,5 +52,13 @@ public class Application {
 
     public static String[] getLanguages(){
         return languages;
+    }
+
+    public Recipe getSelectedRecipe() {
+        return selectedRecipe;
+    }
+
+    public void setSelectedRecipe(Recipe selectedRecipe) {
+        this.selectedRecipe = selectedRecipe;
     }
 }
