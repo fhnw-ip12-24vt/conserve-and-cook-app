@@ -20,8 +20,8 @@ public class Ingredient {
 
     public static Ingredient getIngredientById(String id) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from ingredient where id = " + id + " limit 1";
-        ResultSet results = db.executeQuery(query);
+        String query = "select * from ingredient where id = ? limit 1";
+        ResultSet results = db.executeQuery(query, id);
 
         // Check if we've got a row
         if (!results.next()) {
@@ -37,8 +37,8 @@ public class Ingredient {
 
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from ingredient where recipe_id = " + recipeId + " limit 3";
-        ResultSet results = db.executeQuery(query);
+        String query = "select * from ingredient where recipe_id = ? limit 3";
+        ResultSet results = db.executeQuery(query, recipeId);
         Ingredient[] ingredients = new Ingredient[3];
 
         int index = 0;

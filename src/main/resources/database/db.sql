@@ -1,54 +1,53 @@
 CREATE TABLE languages
 (
-    id   INT         NOT NULL,
-    name VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id)
+    id     INT           NOT NULL,
+    name   VARCHAR(20)   NOT NULL,
+    PRIMARY KEY (id),
 );
 
 CREATE TABLE translations
 (
-    id          INT          NOT NULL,
-    text        VARCHAR(255) NOT NULL,
-    language_id INT          NOT NULL,
-    FOREIGN KEY (language_id) REFERENCES languages (id)
+    id            INT            NOT NULL,
+    text          VARCHAR(255)   NOT NULL,
+    language_id   INT            NOT NULL,
+    FOREIGN KEY (language_id)    REFERENCES languages (id)
 );
 
 CREATE TABLE regions
 (
-    id    INT         NOT NULL,
-    title VARCHAR(20) NOT NULL,
+    id      INT           NOT NULL,
+    title   VARCHAR(20)   NOT NULL,
     PRIMARY KEY (id)
 );
 
-create table recipe
+CREATE TABLE recipe
 (
-    id        INT
-        primary key,
-    region_id INT
-        references regions,
-    name      TEXT
+    id          INT   NOT NULL,
+    region_id   INT   NOT NULL,
+    name        TEXT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (region_id)   REFERENCES recipe (id)
 );
 
-create table ingredient
+CREATE TABLE ingredient
 (
-    id          INT       not null
-        primary key,
-    title       CHAR(255) not null,
-    co2_score   INT       not null,
-    category_id INT,
-    recipe_id   INT       not null
-        constraint ingredient_recipe_id_fk
-            references recipe
+    id            INT         NOT NULL,
+    title         CHAR(255)   NOT NULL,
+    co2_score     INT         NOT NULL,
+    category_id   INT         NOT NULL,
+    recipe_id     INT         NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (recipe_id)   REFERENCES recipe (id)
 );
 
 
 CREATE TABLE ingredient_to_recipe
 (
-    id            INT NOT NULL,
-    recipe_id     INT NOT NULL,
-    ingredient_id INT NOT NULL,
+    id              INT   NOT NULL,
+    recipe_id       INT   NOT NULL,
+    ingredient_id   INT   NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (recipe_id) REFERENCES recipe (id),
+    FOREIGN KEY (recipe_id)     REFERENCES recipe (id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
 );
 
