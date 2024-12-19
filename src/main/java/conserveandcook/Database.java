@@ -33,20 +33,22 @@ public class Database {
         return connection;
     }
 
-    public void executeUpdate(String sql) {
+    public void executeUpdate(String sql, Object... params) {
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            setParameters(preparedStatement, params);
+            preparedStatement.executeUpdate();
             LOGGER.logInfo("SQL update executed: " + sql);
         } catch (SQLException e) {
             LOGGER.logException("Error executing update: " + e.getMessage(), e);
         }
     }
 
-    public ResultSet executeQuery(String sql) {
+    public ResultSet executeQuery(String sql, Object... params) {
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            setParameters(preparedStatement, params);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.getMetaData().getColumnCount() > 1) {
                 return resultSet;
             }
@@ -54,5 +56,11 @@ public class Database {
             LOGGER.logException("Error executing query: " + e.getMessage(), e);
         }
         return null;
+    }
+
+    private void setParameters(PreparedStatement preparedStatement, Object... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            preparedStatement.setObject(i + 1, params[i]);
+        }
     }
 }
