@@ -30,7 +30,7 @@ public class Application {
     }
 
     public void previousRegion(){
-        selectedRegion = selectedRegion - 1 > 0 ? selectedRegion - 1 : languages.length - 1;
+        selectedRegion = selectedRegion - 1 > 0 ? selectedRegion - 1 : regions.length - 1;
     }
 
     public String getCurrentScreen() {

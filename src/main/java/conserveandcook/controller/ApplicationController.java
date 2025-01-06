@@ -31,6 +31,8 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.incrementLanguage();
+            case "regions":
+                model.nextRegion();
         }
     }
 
@@ -38,22 +40,11 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.decrementLanguage();
-        }
-    }
-
-    public void right() {
-        switch (model.getSelectedRegion()) {
-            case "regions":
-                model.nextRegion();
-        }
-    }
-
-    public void left() {
-        switch (model.getSelectedRegion()) {
-            case "regions":
+            case "region":
                 model.previousRegion();
         }
     }
+
 
     public void scan(String barcode) {
         if (model.getCurrentScreen().equals("game")) {
