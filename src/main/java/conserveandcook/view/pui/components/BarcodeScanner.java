@@ -1,6 +1,7 @@
 package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
+import conserveandcook.misc.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,11 @@ public class BarcodeScanner extends Component {
     }
 
     private void listenToInput() {
+        if (Config.get("environment").equals("test"))  {
+            return;
+        }
         try (FileInputStream inputStream = new FileInputStream(devicePath)) {
-            System.out.println("Listening for barcode scans on " + devicePath + "...");
+            log.info("Listening for barcode scans on " + devicePath);
             StringBuilder barcode = new StringBuilder();
             // Mapping of key codes to characters
             String[] keyMap = {
@@ -92,5 +96,11 @@ public class BarcodeScanner extends Component {
 
     public void onScan(Consumer<String> task) {
         this.onScan = task;
+    }
+
+    public void mockScan(String payload){
+        if(onScan != null) {
+            onScan.accept(payload);
+        }
     }
 }
