@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
 
 public abstract class AbstractScreen {
@@ -46,6 +47,10 @@ public abstract class AbstractScreen {
     }
 
     protected void drawBackground(String frame) {
-        gui.drawImage(frame, 0, 0);
+        double scale = switch (Config.get("environment")) {
+            case "local" -> 0.5;
+            default -> 1;
+        };
+        gui.drawImage(frame, 0, 0, scale);
     }
 }

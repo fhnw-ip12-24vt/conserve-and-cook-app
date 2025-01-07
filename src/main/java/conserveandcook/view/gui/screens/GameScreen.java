@@ -16,7 +16,6 @@ public class GameScreen extends AbstractScreen {
         Ingredient[] ingredients = model.getSelectedIngredients();
         for (Ingredient ingredient : ingredients) {
             if (ingredient != null) {
-                System.out.println(ingredient.getName());
                 drawBorder(ingredient.getCategory());
             }
         }
@@ -40,7 +39,6 @@ public class GameScreen extends AbstractScreen {
                 y = (double) 190 / 2;
                 break;
             default:
-                System.out.println("Invalid category");
                 return;
         }
         gui.drawImage(borderPath, x, y, 0.5);
