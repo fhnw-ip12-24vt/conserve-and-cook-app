@@ -31,7 +31,7 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.incrementLanguage();
-            case "regions":
+            case "region":
                 model.nextRegion();
         }
     }

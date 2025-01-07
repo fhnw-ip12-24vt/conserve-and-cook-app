@@ -4,7 +4,7 @@ public class RegionScreen implements conserveandcook.view.gui.screens.Screen {
 
     @Override
     public String getTitle() {
-        return "regions";
+        return "region";
     }
 
     @Override

@@ -2,7 +2,7 @@ package conserveandcook.model;
 
 public class Application {
     private int currentScreen = 0;
-    private static final String[] screens = {"start", "language"};
+    private static final String[] screens = {"start", "language", "region"};
 
     private int selectedLanguage = 0;
     private static final String[] languages = {"de", "fr", "it", "en"};
@@ -26,11 +26,11 @@ public class Application {
         this.currentScreen = Math.max(this.currentScreen - 1, 0);
     }
     public void nextRegion(){
-        selectedRegion = selectedRegion + 1 < regions.length ? selectedRegion + 1 : 0;
+        this.selectedRegion = this.selectedRegion + 1 >= regions.length ? 0 : selectedRegion + 1;
     }
 
     public void previousRegion(){
-        selectedRegion = selectedRegion - 1 > 0 ? selectedRegion - 1 : regions.length - 1;
+        this.selectedRegion = this.selectedRegion - 1 >= 0 ? this.selectedRegion - 1 : regions.length - 1;
     }
 
     public String getCurrentScreen() {
