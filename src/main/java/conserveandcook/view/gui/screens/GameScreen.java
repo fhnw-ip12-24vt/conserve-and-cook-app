@@ -2,7 +2,7 @@ package conserveandcook.view.gui.screens;
 
 public class GameScreen implements Screen {
     private int currentFrame = 0;
-    private int gameDuration = 120;
+    private int gameDuration = 120; //2 Minuten
     private long lastUpdateTime;
 
     @Override
@@ -26,15 +26,26 @@ public class GameScreen implements Screen {
 
         if (goneTime >= 1000000000L) {
             gameDuration--;
+            currentFrame = (currentFrame + 1) % 10;
             lastUpdateTime = currentTime;
-            //updateFrame() // TODO: (AS) Methode muss noch geschrieben werden + GUI Anbindung
         }
-        if (gameDuration <=0) {
+
+        if (gameDuration <= 0) {
             GameOver();
         }
-        // private void updateFrame () // TODO: (AS) Methode & Umwandlung in Format XX:XX
+
+        drawTime();
     }
-    private void GameOver (){
+
+    private void drawTime() {
+        int minutes = gameDuration / 60;
+        int seconds = gameDuration % 60;
+        String time = String.format("%02d:%02d", minutes, seconds);
+        // 50, 50 habe ich mal als Platzhalter für die Position
+        System.out.println("Draw String: " + time + " at (50, 50)");
+    }
+
+    private void GameOver() {
         System.out.println("GAME OVER");
     }
 }
