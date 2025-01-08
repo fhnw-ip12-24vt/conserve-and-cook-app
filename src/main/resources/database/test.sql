@@ -1,0 +1,83 @@
+DROP TABLE if exists languages;
+CREATE TABLE if not exists languages
+(
+    id   INT NOT NULL,
+    name VARCHAR(20)     NOT NULL,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE if exists translations;
+CREATE TABLE if not exists translations
+(
+    id          INT primary key NOT NULL,
+    text        VARCHAR(255)    NOT NULL,
+    language_id INT             NOT NULL,
+    FOREIGN KEY (language_id) REFERENCES languages (id)
+);
+
+DROP TABLE if exists regions;
+CREATE TABLE if not exists regions
+(
+    id    INT         NOT NULL,
+    title VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+DROP TABLE if exists recipe;
+create table if not exists recipe
+(
+    id        INT not null primary key,
+    region_id INT references regions,
+    name      TEXT
+);
+
+DROP TABLE if exists ingredient;
+create table if not exists ingredient
+(
+    id          INT       not null primary key,
+    title       CHAR(255) not null,
+    co2_score   INT       not null,
+    category_id INT,
+    recipe_id   INT       not null,
+    FOREIGN KEY (recipe_id) REFERENCES recipe (id)
+);
+
+
+DROP TABLE if exists ingredient_to_recipe;
+CREATE TABLE if not exists ingredient_to_recipe
+(
+    id            INT NOT NULL,
+    recipe_id     INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (recipe_id) REFERENCES recipe (id),
+    FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
+);
+
+INSERT INTO regions (id, title)
+VALUES (1, 'europe');
+INSERT INTO regions (id, title)
+VALUES (2, 'asia');
+INSERT INTO regions (id, title)
+VALUES (3, 'africa');
+INSERT INTO regions (id, title)
+VALUES (4, 'america');
+
+INSERT INTO languages (id, name)
+VALUES (1, 'deutsch');
+INSERT INTO languages (id, name)
+VALUES (2, 'französisch');
+INSERT INTO languages (id, name)
+VALUES (3, 'english');
+INSERT INTO languages (id, name)
+VALUES (4, 'italienisch');
+
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
+VALUES (644824915043, 'Rindfleisch', 10, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
+VALUES (4250236825175, 'Poulet', 20, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
+VALUES (121212, 'Tofu', 20, 2, 1);
+
+INSERT INTO recipe (id, region_id, name)
+VALUES (1, 1, 'Burger');

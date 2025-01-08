@@ -4,18 +4,20 @@ import conserveandcook.misc.Config;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.Statement;
+
 public abstract class AbstractTest {
 
     @BeforeEach
     public final void setup() {
-        Config.set("joystick_enabled", "false");
-        Config.set("barcode_scanner_enabled", "false");
-        Config.set("environment", "test");
-        Config.set("database_path", "src/main/resources/database/database.db");
+        Config.loadTestProperties();
     }
-
 
     @AfterEach
     public void shutdown() {
     }
+
+    // TODO: (SK) Fix SQLITE_LOCKED error
 }
