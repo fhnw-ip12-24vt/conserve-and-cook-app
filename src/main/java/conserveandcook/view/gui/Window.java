@@ -9,10 +9,12 @@ import conserveandcook.view.gui.screens.LanguageScreen;
 import conserveandcook.view.gui.screens.ResultScreen;
 import conserveandcook.view.gui.screens.StartScreen;
 
+import java.util.Objects;
+
 public class Window extends GuiBase<Application, ApplicationController> {
 
-    public static final int HEIGHT = 540;
-    public static final int WIDTH = 960;
+    public static final int HEIGHT = 1080;
+    public static final int WIDTH = 1920;
 
     protected final ApplicationController controller;
     private final StartScreen startScreen;
@@ -29,20 +31,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.resultScreen = new ResultScreen(this);
 
         // Fullscreen when running on local doesn't work
-        boolean runningOnPi = Config.get("environment").equals("production");
+        boolean runningOnPi = Objects.equals(Config.get("environment"), "production");
         this.setFullScreen(runningOnPi);
     }
 
     @Override
     protected void redraw(Application model) {
-        String frame = "";
-        String language = model.getSelectedLanguage();
-
-        if (model.getCurrentScreen() == "game") {
-            gameScreen.draw(model);
-            return;
-        }
-
         switch (model.getCurrentScreen()) {
             case "start" -> startScreen.draw(model);
             case "game" -> gameScreen.draw(model);

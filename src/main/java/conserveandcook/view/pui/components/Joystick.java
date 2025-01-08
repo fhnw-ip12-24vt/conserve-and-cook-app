@@ -43,7 +43,7 @@ public class Joystick extends Component {
         }
         try (FileInputStream fis = new FileInputStream(this.device)) {
             byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
-            LOGGER.logInfo("Reading joystick events from ", this.device);
+            LOGGER.logInfo("Reading joystick events from " + this.device);
 
             while (true) {
                 int bytesRead = fis.read(buffer);

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
+import java.util.Objects;
 import java.util.Properties;
 
 public class Config {
@@ -47,7 +48,7 @@ public class Config {
 
     public static boolean isEnabled(String key) {
         String enabled = get(key + ".enabled");
-        if (enabled.equals("false")) {
+        if (Objects.equals(enabled, "false")) {
             return false;
         }
         return true;

@@ -37,29 +37,36 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.incrementLanguage();
+                break;
             case "game":
                 try {
                     model.setSelectedRecipe(Recipe.getRandomRecipe());
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 }
-
-                Ingredient[] possibleIngredients = model.getSelectedRecipe().getIngredients();
-                int randomIngredientIndex = (int) (Math.random() * possibleIngredients.length);
-                model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[randomIngredientIndex]);
+                break;
         }
     }
 
+    // TODO: (SK) Remove temporary code, replace with Scanner-Code
+    private int tmp = 0;
     public void down() {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.decrementLanguage();
+                break;
+            case "game":
+                Ingredient[] possibleIngredients = model.getSelectedRecipe().getIngredients();
+                // int randomIngredientIndex = (int) (Math.random() * possibleIngredients.length);
+                model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
+                tmp++;
+                break;
         }
     }
 
     public void scan(String barcode) {
         if (model.getCurrentScreen().equals("game")) {
-            try{
+            try {
                 Ingredient scannedIngredient = Ingredient.getIngredientById(barcode);
                 model.addSelectedIngredient(scannedIngredient);
             } catch (Exception e) {

@@ -41,6 +41,6 @@ public class GameScreen extends AbstractScreen {
             default:
                 return;
         }
-        gui.drawImage(borderPath, x, y, 0.5);
+        gui.drawImage(borderPath, x, y, 1);
     }
 }
