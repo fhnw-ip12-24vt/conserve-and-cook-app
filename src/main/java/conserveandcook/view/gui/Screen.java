@@ -5,6 +5,7 @@ import conserveandcook.controller.ApplicationController;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.GameScreen;
 import conserveandcook.view.gui.screens.LanguageScreen;
+import conserveandcook.view.gui.screens.RegionScreen;
 import conserveandcook.view.gui.screens.ResultScreen;
 import conserveandcook.view.gui.screens.StartScreen;
 
@@ -16,6 +17,7 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     protected final ApplicationController controller;
     private final StartScreen startScreen;
     private final LanguageScreen languageScreen;
+    private final RegionScreen regionScreen;
     private final GameScreen gameScreen;
     private final ResultScreen resultScreen;
 
@@ -24,6 +26,7 @@ public class Screen extends GuiBase<Application, ApplicationController> {
         this.controller = controller;
         this.startScreen = new StartScreen();
         this.languageScreen = new LanguageScreen();
+        this.regionScreen = new RegionScreen();
         this.gameScreen = new GameScreen();
         this.resultScreen = new ResultScreen();
     }
@@ -32,10 +35,12 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     protected void redraw(Application model) {
         String frame = "";
         String language = model.getSelectedLanguage();
+        String region = model.getSelectedRegion();
 
         frame = switch (model.getCurrentScreen()) {
             case "start" -> startScreen.getCurrentFrame(language);
             case "language" -> languageScreen.getCurrentFrame(language);
+            case "region" -> regionScreen.getCurrentFrame(region);
             case "game" -> gameScreen.getCurrentFrame(language);
             case "result" -> resultScreen.getCurrentFrame(language);
             default -> frame;
