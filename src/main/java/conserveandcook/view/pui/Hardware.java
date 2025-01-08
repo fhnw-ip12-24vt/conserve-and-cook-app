@@ -33,7 +33,6 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
     public void initializeComponents(Application model) {
         if (Config.isEnabled("joystick")) {
             joystick = new Joystick(Config.get("joystick.path"));
-            System.out.println(Config.get("joystick.path"));
         }
 
         if (Config.isEnabled("barcode_scanner")) {

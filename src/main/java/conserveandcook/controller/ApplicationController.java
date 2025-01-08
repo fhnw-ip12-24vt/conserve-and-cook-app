@@ -56,10 +56,10 @@ public class ApplicationController extends ControllerBase<Application> {
                 model.decrementLanguage();
                 break;
             case "game":
-                Ingredient[] possibleIngredients = model.getSelectedRecipe().getIngredients();
-                // int randomIngredientIndex = (int) (Math.random() * possibleIngredients.length);
-                model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-                tmp++;
+                if (model.getSelectedRecipe() != null) {
+                    model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
+                    tmp++;
+                }
                 break;
         }
     }

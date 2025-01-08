@@ -27,16 +27,16 @@ public class GameScreen extends AbstractScreen {
         double x, y;
         switch (category) {
             case 0:
-                x = (double) 690 / 2;
-                y = (double) 175 / 2;
+                x = (double) 690 ;
+                y = (double) 175 ;
                 break;
             case 1:
-                x = (double) 930 / 2;
-                y = (double) 535 / 2;
+                x = (double) 930 ;
+                y = (double) 535 ;
                 break;
             case 2:
-                x = (double) 1210 / 2;
-                y = (double) 190 / 2;
+                x = (double) 1210;
+                y = (double) 190 ;
                 break;
             default:
                 return;
