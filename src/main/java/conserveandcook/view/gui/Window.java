@@ -13,8 +13,9 @@ import java.util.Objects;
 
 public class Window extends GuiBase<Application, ApplicationController> {
 
-    public static final int HEIGHT = 1080;
-    public static final int WIDTH = 1920;
+    public static final int HEIGHT = Integer.parseInt(Config.get("screen.height"));
+    public static final int WIDTH = Integer.parseInt(Config.get("screen.width"));
+
 
     protected final ApplicationController controller;
     private final StartScreen startScreen;

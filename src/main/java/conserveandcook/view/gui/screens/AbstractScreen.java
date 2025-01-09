@@ -12,6 +12,7 @@ public abstract class AbstractScreen {
     private long lastGifFrameDrawnAt;
     private int frames;
     private long gifInterval;
+    public static double SCALE = Double.parseDouble(Config.get("screen.scale"));
 
     public AbstractScreen(Gui gui) {
         this.gui = gui;
@@ -47,10 +48,6 @@ public abstract class AbstractScreen {
     }
 
     protected void drawBackground(String frame) {
-        double scale = switch (Config.get("environment")) {
-            case "local" -> 0.5;
-            default -> 1;
-        };
-        gui.drawImage(frame, 0, 0, scale);
+        gui.drawImage(frame, 0, 0, SCALE);
     }
 }
