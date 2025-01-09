@@ -37,6 +37,8 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.incrementLanguage();
+            case "region":
+                model.nextRegion();
                 break;
             case "game":
                 try {
@@ -54,6 +56,8 @@ public class ApplicationController extends ControllerBase<Application> {
         switch (model.getCurrentScreen()) {
             case "language":
                 model.decrementLanguage();
+            case "region":
+                model.previousRegion();
                 break;
             case "game":
                 if (model.getSelectedRecipe() != null) {

@@ -6,6 +6,7 @@ import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.GameScreen;
 import conserveandcook.view.gui.screens.LanguageScreen;
+import conserveandcook.view.gui.screens.RegionScreen;
 import conserveandcook.view.gui.screens.ResultScreen;
 import conserveandcook.view.gui.screens.StartScreen;
 
@@ -20,6 +21,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     protected final ApplicationController controller;
     private final StartScreen startScreen;
     private final LanguageScreen languageScreen;
+    private final RegionScreen regionScreen;
     private final GameScreen gameScreen;
     private final ResultScreen resultScreen;
 
@@ -28,6 +30,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.controller = controller;
         this.startScreen = new StartScreen(this);
         this.languageScreen = new LanguageScreen(this);
+        this.regionScreen = new RegionScreen();
         this.gameScreen = new GameScreen(this);
         this.resultScreen = new ResultScreen(this);
 
