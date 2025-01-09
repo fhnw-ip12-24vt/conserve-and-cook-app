@@ -30,7 +30,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.controller = controller;
         this.startScreen = new StartScreen(this);
         this.languageScreen = new LanguageScreen(this);
-        this.regionScreen = new RegionScreen();
+        this.regionScreen = new RegionScreen(this);
         this.gameScreen = new GameScreen(this);
         this.resultScreen = new ResultScreen(this);
 
@@ -43,6 +43,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     protected void redraw(Application model) {
         switch (model.getCurrentScreen()) {
             case "start" -> startScreen.draw(model);
+            case "region" -> regionScreen.draw(model);
             case "game" -> gameScreen.draw(model);
             case "language" -> languageScreen.draw(model);
             case "result" -> resultScreen.draw(model);
