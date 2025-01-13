@@ -1,27 +1,21 @@
 package conserveandcook.view.gui.screens;
 
-public class LanguageScreen implements conserveandcook.view.gui.screens.Screen {
-    private long lastGifFrameDrawnAt;
-    private int currentFrame;
+import ch.trick17.gui.Gui;
+import conserveandcook.model.Application;
 
-    final int FRAMES = 4;
-    final long GIF_INTERVAL = 2200 * 100000; // 0.25 seconds
+public class LanguageScreen extends AbstractScreen {
+    static final int FRAMES = 4;
+    static final long GIF_INTERVAL = 2200 * 100000; // 0.25 seconds
 
-    @Override
-    public String getTitle() {
-        return "language";
+    public LanguageScreen(Gui gui) {
+        super(gui, FRAMES, GIF_INTERVAL);
     }
 
-    public String getCurrentFrame(String language) {
-        String backgroundPath = "img/language/";
-
-        long now = System.nanoTime();
-
-        if (now - lastGifFrameDrawnAt > GIF_INTERVAL) {
-            lastGifFrameDrawnAt = now;
-            currentFrame = currentFrame + 1 < FRAMES ? currentFrame + 1 : 0;
-        }
-        String frameName = String.format("%01d", currentFrame);
-        return backgroundPath + language + "/frame_" + frameName + ".png";
+    @Override
+    public void draw(Application model) {
+        String lang = model.getSelectedLanguage();
+        String gifNumber = getGifNumber();
+        String currentFrame = "img/language/" + lang + gifNumber + ".png";
+        drawBackground(currentFrame);
     }
 }

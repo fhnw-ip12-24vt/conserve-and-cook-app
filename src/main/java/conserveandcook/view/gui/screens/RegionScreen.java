@@ -1,15 +1,17 @@
 package conserveandcook.view.gui.screens;
 
-public class RegionScreen implements conserveandcook.view.gui.screens.Screen {
+import ch.trick17.gui.Gui;
+import conserveandcook.model.Application;
 
-    @Override
-    public String getTitle() {
-        return "region";
+public class RegionScreen extends AbstractScreen {
+    public RegionScreen(Gui gui) {
+        super(gui);
     }
 
     @Override
-    public String getCurrentFrame(String regions) {
+    public void draw(Application model) {
         String backgroundPath = "img/regions/";
-        return backgroundPath + regions + ".png";
+        String path = backgroundPath + model.getSelectedRegion() + ".png";
+        drawBackground(path);
     }
 }
