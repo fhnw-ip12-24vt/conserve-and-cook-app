@@ -46,7 +46,7 @@ public class GameScreen extends AbstractScreen {
         gui.drawImage(borderPath, x * SCALE, y * SCALE, SCALE);
     }
 
-    public void gameTimer() {
+    private void gameTimer() {
         long currentTime = System.nanoTime();
         long goneTime = currentTime - lastUpdateTime;
 
