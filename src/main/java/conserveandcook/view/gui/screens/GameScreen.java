@@ -54,7 +54,9 @@ public class GameScreen extends AbstractScreen {
             gameOver();
             return;
         }
-        if (goneTime >= 1000000000L) {
+
+        long second = 1000000000L; // one second in nanoseconds
+        if (goneTime >= second) {
             gameDuration--;
             lastUpdateTime = currentTime;
         }
