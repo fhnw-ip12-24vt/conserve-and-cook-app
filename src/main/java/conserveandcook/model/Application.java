@@ -8,6 +8,7 @@ public class Application {
     private static final String[] languages = {"de", "fr", "it", "en"};
 
     private final Ingredient[] selectedIngredients = new Ingredient[3];
+    private Recipe selectedRecipe;
 
     private int selectedRegion = 0;
     private static final String[] regions = {"Amerika","Asien","Europa"};
@@ -65,5 +66,13 @@ public class Application {
 
     public static String[] getLanguages(){
         return languages;
+    }
+
+    public Recipe getSelectedRecipe() {
+        return selectedRecipe;
+    }
+
+    public void setSelectedRecipe(Recipe selectedRecipe) {
+        this.selectedRecipe = selectedRecipe;
     }
 }

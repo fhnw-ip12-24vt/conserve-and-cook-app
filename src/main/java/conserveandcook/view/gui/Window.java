@@ -2,6 +2,7 @@ package conserveandcook.view.gui;
 
 import ch.mvcbase.GuiBase;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.GameScreen;
 import conserveandcook.view.gui.screens.LanguageScreen;
@@ -9,10 +10,13 @@ import conserveandcook.view.gui.screens.RegionScreen;
 import conserveandcook.view.gui.screens.ResultScreen;
 import conserveandcook.view.gui.screens.StartScreen;
 
-public class Screen extends GuiBase<Application, ApplicationController> {
+import java.util.Objects;
 
-    public static final int HEIGHT = 1080;
-    public static final int WIDTH = 1920;
+public class Window extends GuiBase<Application, ApplicationController> {
+
+    public static final int HEIGHT = Integer.parseInt(Config.get("screen.height"));
+    public static final int WIDTH = Integer.parseInt(Config.get("screen.width"));
+
 
     protected final ApplicationController controller;
     private final StartScreen startScreen;
@@ -21,32 +25,29 @@ public class Screen extends GuiBase<Application, ApplicationController> {
     private final GameScreen gameScreen;
     private final ResultScreen resultScreen;
 
-    public Screen(ApplicationController controller) {
+    public Window(ApplicationController controller) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
-        this.startScreen = new StartScreen();
-        this.languageScreen = new LanguageScreen();
-        this.regionScreen = new RegionScreen();
-        this.gameScreen = new GameScreen();
-        this.resultScreen = new ResultScreen();
+        this.startScreen = new StartScreen(this);
+        this.languageScreen = new LanguageScreen(this);
+        this.regionScreen = new RegionScreen(this);
+        this.gameScreen = new GameScreen(this);
+        this.resultScreen = new ResultScreen(this);
+
+        // Fullscreen when running on local doesn't work
+        boolean runningOnPi = Objects.equals(Config.get("environment"), "production");
+        this.setFullScreen(runningOnPi);
     }
 
     @Override
     protected void redraw(Application model) {
-        String frame = "";
-        String language = model.getSelectedLanguage();
-        String region = model.getSelectedRegion();
-
-        frame = switch (model.getCurrentScreen()) {
-            case "start" -> startScreen.getCurrentFrame(language);
-            case "language" -> languageScreen.getCurrentFrame(language);
-            case "region" -> regionScreen.getCurrentFrame(region);
-            case "game" -> gameScreen.getCurrentFrame(language);
-            case "result" -> resultScreen.getCurrentFrame(language);
-            default -> frame;
-        };
-
-        drawImage(frame, 0, 0);
+        switch (model.getCurrentScreen()) {
+            case "start" -> startScreen.draw(model);
+            case "region" -> regionScreen.draw(model);
+            case "game" -> gameScreen.draw(model);
+            case "language" -> languageScreen.draw(model);
+            case "result" -> resultScreen.draw(model);
+        }
     }
 
     @Override

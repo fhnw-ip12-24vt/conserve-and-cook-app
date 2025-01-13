@@ -1,19 +1,52 @@
 package conserveandcook.view.gui.screens;
 
+import ch.trick17.gui.Gui;
+import conserveandcook.model.Application;
+import conserveandcook.model.Ingredient;
+
 public class GameScreen implements Screen {
     private int currentFrame = 0;
     private int gameDuration = 120; //2 Minuten
     private long lastUpdateTime;
 
-    @Override
-    public String getTitle() {
-        return "game";
+public class GameScreen extends AbstractScreen {
+
+    public GameScreen(Gui g) {
+        super(g);
     }
 
-    public String getCurrentFrame(String language) {
-        String backgroundPath = "img/game";
-        String frameName = String.format("%01d", currentFrame);
-        return backgroundPath + "/frame_" + frameName + ".png";
+    public void draw(Application model) {
+        drawBackground("img/game/frame_0.png");
+
+        Ingredient[] ingredients = model.getSelectedIngredients();
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient != null) {
+                drawBorder(ingredient.getCategory());
+            }
+        }
+
+    }
+
+    private void drawBorder(int category) {
+        String borderPath = "img/game/border.png";
+        double x, y;
+        switch (category) {
+            case 0:
+                x = (double) 690 ;
+                y = (double) 175 ;
+                break;
+            case 1:
+                x = (double) 930 ;
+                y = (double) 535 ;
+                break;
+            case 2:
+                x = (double) 1210;
+                y = (double) 190 ;
+                break;
+            default:
+                return;
+        }
+        gui.drawImage(borderPath, x * SCALE, y * SCALE, SCALE);
     }
 
     public void startGame() {

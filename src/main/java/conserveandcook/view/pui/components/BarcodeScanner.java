@@ -2,8 +2,7 @@ package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
 import conserveandcook.misc.Config;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static ch.mvcbase.MvcLogger.LOGGER;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -11,7 +10,6 @@ import java.nio.ByteOrder;
 import java.util.function.Consumer;
 
 public class BarcodeScanner extends Component {
-    private static final Logger log = LoggerFactory.getLogger(BarcodeScanner.class);
     private final String devicePath;
     private Thread barcodeScannerThread;
     private Consumer<String> onScan;
@@ -29,7 +27,7 @@ public class BarcodeScanner extends Component {
 
     public void shutdown() {
         barcodeScannerThread.interrupt();
-        log.info("Shutting down Barcode-Scanner");
+        LOGGER.logInfo("Shutting down Barcode Scanner");
     }
 
     private void listenToInput() {
@@ -37,8 +35,9 @@ public class BarcodeScanner extends Component {
             return;
         }
         try (FileInputStream inputStream = new FileInputStream(devicePath)) {
-            log.info("Listening for barcode scans on " + devicePath);
+            LOGGER.logInfo("Listening for barcode scans on " + devicePath);
             StringBuilder barcode = new StringBuilder();
+
             // Mapping of key codes to characters
             String[] keyMap = {
                     "", "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
@@ -56,7 +55,9 @@ public class BarcodeScanner extends Component {
                     }
                 } else if (event.value == 0) { // Key released
                     if (event.code == 28) { // Enter key
-                        log.info("Barcode scanned: {}", barcode);
+                        LOGGER.logInfo("Barcode scanned: {}", barcode);
+
+                        // Run the onScan worker, if it has been set
                         if(onScan != null) {
                             onScan.accept(barcode.toString());
                         }
@@ -65,7 +66,7 @@ public class BarcodeScanner extends Component {
                 }
             }
         } catch (IOException e) {
-            log.error("Error reading from {}: {}", devicePath, e.getMessage(), e);
+            LOGGER.logError("Error reading from {}: {}",devicePath, e.getMessage(),e);
         }
     }
 
