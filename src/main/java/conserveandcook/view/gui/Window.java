@@ -4,11 +4,7 @@ import ch.mvcbase.GuiBase;
 import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
-import conserveandcook.view.gui.screens.GameScreen;
-import conserveandcook.view.gui.screens.LanguageScreen;
-import conserveandcook.view.gui.screens.RegionScreen;
-import conserveandcook.view.gui.screens.ResultScreen;
-import conserveandcook.view.gui.screens.StartScreen;
+import conserveandcook.view.gui.screens.*;
 
 import java.util.Objects;
 
@@ -24,6 +20,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     private final RegionScreen regionScreen;
     private final GameScreen gameScreen;
     private final ResultScreen resultScreen;
+    private final NameScreen nameScreen;
 
     public Window(ApplicationController controller) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
@@ -33,6 +30,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.regionScreen = new RegionScreen(this);
         this.gameScreen = new GameScreen(this);
         this.resultScreen = new ResultScreen(this);
+        this.nameScreen = new NameScreen(this);
 
         // Fullscreen when running on local doesn't work
         boolean runningOnPi = Objects.equals(Config.get("environment"), "production");
@@ -42,11 +40,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
     @Override
     protected void redraw(Application model) {
         switch (model.getCurrentScreen()) {
-            case "start" -> startScreen.draw(model);
-            case "region" -> regionScreen.draw(model);
-            case "game" -> gameScreen.draw(model);
-            case "language" -> languageScreen.draw(model);
-            case "result" -> resultScreen.draw(model);
+            case START -> startScreen.draw(model);
+            case LANGUAGE -> languageScreen.draw(model);
+            case REGION -> regionScreen.draw(model);
+            case GAME -> gameScreen.draw(model);
+            case NAME -> nameScreen.draw(model);
+            case RESULT -> resultScreen.draw(model);
         }
     }
 
