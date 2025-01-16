@@ -49,7 +49,7 @@ public class ApplicationController extends ControllerBase<Application> {
                 }
                 break;
             case NAME:
-                model.decrementName();
+                model.decrementLetter();
                 break;
         }
     }
@@ -70,7 +70,7 @@ public class ApplicationController extends ControllerBase<Application> {
                 }
                 break;
             case NAME:
-                model.incrementName();
+                model.incrementLetter();
                 break;
         }
     }

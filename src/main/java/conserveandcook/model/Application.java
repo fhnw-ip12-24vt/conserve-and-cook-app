@@ -1,41 +1,37 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AvailableScreens;
+import conserveandcook.misc.Languages;
 
 public class Application {
     private int currentScreen = 0;
-    private static final AvailableScreens[] screens = {
-            AvailableScreens.START,
-            AvailableScreens.LANGUAGE,
-            AvailableScreens.REGION,
-            AvailableScreens.GAME,
-            AvailableScreens.NAME,
-            AvailableScreens.RESULT
-    };
+    private static final AvailableScreens[] screens = AvailableScreens.values();
 
     private int selectedLanguage = 0;
-    private static final String[] languages = {"de", "fr", "it", "en"};
+    private static final Languages[] languages = Languages.values();
 
     private final Ingredient[] selectedIngredients = new Ingredient[3];
     private Recipe selectedRecipe;
 
     private int selectedRegion = 0;
-    private static final String[] regions = {"Amerika", "Asien", "Europa"};
+    private static final Regions[] regions = Regions.values();
 
-    private final int[] name = {0, 0, 0};
+    public static final int NAME_LENGTH = 3;
+    private final int[] name = new int[NAME_LENGTH];
     private final char[] nameCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
     private int selectedChar = 0;
 
     public void incrementLanguage() {
-        selectedLanguage = selectedLanguage - 1 >= 0 ? selectedLanguage - 1 : languages.length - 1;
+        selectedLanguage = decrementWrapped(selectedLanguage, languages.length -1);
     }
 
     public void decrementLanguage() {
-        selectedLanguage = selectedLanguage + 1 < languages.length ? selectedLanguage + 1 : 0;
+        selectedLanguage = incrementWrapped(selectedLanguage, languages.length -1);
     }
 
     public void incrementScreen() {
-        this.currentScreen = this.currentScreen + 1 >= screens.length ? 0 : this.currentScreen + 1;
+        this.currentScreen = incrementWrapped(this.currentScreen, screens.length - 1);
     }
 
     public void decrementScreen() {
@@ -43,22 +39,22 @@ public class Application {
     }
 
     public void nextRegion() {
-        this.selectedRegion = this.selectedRegion + 1 >= regions.length ? 0 : selectedRegion + 1;
+        this.selectedRegion = incrementWrapped(this.selectedRegion, regions.length -1);
     }
 
     public void previousRegion() {
-        this.selectedRegion = this.selectedRegion - 1 >= 0 ? this.selectedRegion - 1 : regions.length - 1;
+        this.selectedRegion = decrementWrapped(this.selectedRegion, regions.length - 1);
     }
 
     public AvailableScreens getCurrentScreen() {
         return screens[currentScreen];
     }
 
-    public String getSelectedLanguage() {
+    public Languages getSelectedLanguage() {
         return languages[selectedLanguage];
     }
 
-    public String getSelectedRegion() {
+    public Regions getSelectedRegion() {
         return regions[selectedRegion];
     }
 
@@ -78,7 +74,7 @@ public class Application {
         return selectedIngredients;
     }
 
-    public static String[] getLanguages() {
+    public static Languages[] getLanguages() {
         return languages;
     }
 
@@ -94,22 +90,46 @@ public class Application {
         return name;
     }
 
+    public int getSelectedChar() {
+        return selectedChar;
+    }
+
+    public void incrementSelectedChar() {
+        selectedChar = incrementWrapped(selectedChar, name.length - 1);
+    }
+
+    public void decrementSelectedChar() {
+        selectedChar = decrementWrapped(selectedChar, name.length - 1);
+    }
+
     public char[] getNameCharacters() {
         return nameCharacters;
     }
 
-    public void decrementName() {
+    public void decrementLetter() {
         this.name[this.selectedChar] = decrementWrapped(this.name[this.selectedChar], this.nameCharacters.length - 1);
     }
 
-    public void incrementName() {
+    public void incrementLetter() {
         this.name[this.selectedChar] = incrementWrapped(this.name[this.selectedChar], this.nameCharacters.length - 1);
     }
 
+    /**
+     * This function returns the next int, or wraps around to 0 if the next int exceeds the max
+     * @param current int to increment
+     * @param max int that represents the maximum value after which to wrap around
+     * @return int result
+     */
     public int incrementWrapped(int current, int max) {
         return current + 1 > max ? 0 : current + 1;
     }
 
+    /**
+     * This function returns the previous int, or wraps around to the max if the next int is below 0
+     * @param current int to decrement
+     * @param max int to which the function wraps in case the previous int is below 0
+     * @return int result
+     */
     public int decrementWrapped(int current, int max) {
         return current - 1 >= 0 ? current - 1 : max;
     }
