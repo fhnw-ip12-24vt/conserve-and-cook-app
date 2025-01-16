@@ -11,7 +11,7 @@ public class RegionScreen extends AbstractScreen {
     @Override
     public void draw(Application model) {
         String backgroundPath = "img/regions/";
-        String path = backgroundPath + model.getSelectedRegion() + ".png";
+        String path = backgroundPath + model.getSelectedRegion().toString().toLowerCase() + ".png";
         drawBackground(path);
     }
 }
