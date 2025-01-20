@@ -59,10 +59,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
         setOnKeyReleased(key -> {
             switch (key) {
-                case "right" -> controller.nextScreen();
-                case "left" -> controller.prevScreen();
+                case "right" -> controller.right();
+                case "left" -> controller.left();
                 case "up" -> controller.up();
                 case "down" -> controller.down();
+                case "d" -> controller.nextScreen();
+                case "a" -> controller.prevScreen();
             }
         });
     }

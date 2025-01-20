@@ -75,6 +75,18 @@ public class ApplicationController extends ControllerBase<Application> {
         }
     }
 
+    public void left(){
+        switch (model.getCurrentScreen()) {
+            case NAME -> model.decrementSelectedChar();
+        }
+    }
+
+    public void right(){
+        switch (model.getCurrentScreen()) {
+            case NAME -> model.incrementSelectedChar();
+        }
+    }
+
     public void scan(String barcode) {
         if (model.getCurrentScreen().equals(AvailableScreens.GAME)) {
             try {
