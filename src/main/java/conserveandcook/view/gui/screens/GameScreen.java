@@ -55,7 +55,7 @@ public class GameScreen extends AbstractScreen {
         // TODO: (SK) Remove temporary code, replace with Scanner-Code
         if (model.getSelectedRecipe() != null) {
             model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-            tmp++;
+            tmp = model.incrementWrapped(tmp,2);
         }
     }
 

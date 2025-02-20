@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Application {
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
     private int currentScreen = 0;
     private static final AvailableScreens[] availableScreens = AvailableScreens.values();
 
