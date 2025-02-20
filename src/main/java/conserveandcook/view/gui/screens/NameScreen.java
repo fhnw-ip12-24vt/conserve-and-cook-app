@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.AvailableScreens;
 
 public class NameScreen extends AbstractScreen {
     char[] characters;
@@ -33,5 +34,30 @@ public class NameScreen extends AbstractScreen {
 
         gui.setFontSize(fontSize);
         gui.drawString(String.valueOf(letter), (x + nextLetter) * SCALE, y * SCALE);
+    }
+
+    @Override
+    public AvailableScreens next() {
+        return AvailableScreens.RESULT;
+    }
+
+    @Override
+    public void left(Application model) {
+        model.decrementSelectedChar();
+    }
+
+    @Override
+    public void right(Application model) {
+        model.incrementSelectedChar();
+    }
+
+    @Override
+    public void up(Application model) {
+        model.decrementLetter();
+    }
+
+    @Override
+    public void down(Application model) {
+        model.incrementLetter();
     }
 }

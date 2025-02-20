@@ -3,10 +3,20 @@ package conserveandcook.model;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AvailableScreens;
 import conserveandcook.misc.Languages;
+import conserveandcook.view.gui.screens.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Application {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
     private int currentScreen = 0;
-    private static final AvailableScreens[] screens = AvailableScreens.values();
+    private static final AvailableScreens[] availableScreens = AvailableScreens.values();
+
+    public static final Map<AvailableScreens, AbstractScreen> screens = new HashMap<>();
+    public AbstractScreen activeScreen = screens.get(AvailableScreens.START);
 
     private int selectedLanguage = 0;
     private static final Languages[] languages = Languages.values();
@@ -22,33 +32,57 @@ public class Application {
     private final char[] nameCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
     private int selectedChar = 0;
 
+    public AbstractScreen getActiveScreen() {
+        if (activeScreen == null) {
+            activeScreen = screens.get(AvailableScreens.START);
+        }
+        return activeScreen;
+    }
+
     public void incrementLanguage() {
-        selectedLanguage = decrementWrapped(selectedLanguage, languages.length -1);
+        selectedLanguage = decrementWrapped(selectedLanguage, languages.length - 1);
     }
 
     public void decrementLanguage() {
-        selectedLanguage = incrementWrapped(selectedLanguage, languages.length -1);
+        selectedLanguage = incrementWrapped(selectedLanguage, languages.length - 1);
     }
 
     public void incrementScreen() {
-        this.currentScreen = incrementWrapped(this.currentScreen, screens.length - 1);
+        this.currentScreen = incrementWrapped(this.currentScreen, availableScreens.length - 1);
+        if (activeScreen == null) {
+            return;
+        }
+        AvailableScreens next = activeScreen.next();
+        if (next == null) {
+            return;
+        }
+        activeScreen = screens.get(next);
     }
 
     public void decrementScreen() {
         this.currentScreen = Math.max(this.currentScreen - 1, 0);
+        if (activeScreen == null) {
+            return;
+        }
+        AvailableScreens prev = activeScreen.prev();
+        if (prev == null) {
+            return;
+        }
+        activeScreen = screens.get(prev);
+    }
+
+    public AvailableScreens getCurrentScreen() {
+        return availableScreens[currentScreen];
     }
 
     public void nextRegion() {
-        this.selectedRegion = incrementWrapped(this.selectedRegion, regions.length -1);
+        this.selectedRegion = incrementWrapped(this.selectedRegion, regions.length - 1);
     }
 
     public void previousRegion() {
         this.selectedRegion = decrementWrapped(this.selectedRegion, regions.length - 1);
     }
 
-    public AvailableScreens getCurrentScreen() {
-        return screens[currentScreen];
-    }
 
     public Languages getSelectedLanguage() {
         return languages[selectedLanguage];
@@ -116,8 +150,9 @@ public class Application {
 
     /**
      * This function returns the next int, or wraps around to 0 if the next int exceeds the max
+     *
      * @param current int to increment
-     * @param max int that represents the maximum value after which to wrap around
+     * @param max     int that represents the maximum value after which to wrap around
      * @return int result
      */
     public int incrementWrapped(int current, int max) {
@@ -126,8 +161,9 @@ public class Application {
 
     /**
      * This function returns the previous int, or wraps around to the max if the next int is below 0
+     *
      * @param current int to decrement
-     * @param max int to which the function wraps in case the previous int is below 0
+     * @param max     int to which the function wraps in case the previous int is below 0
      * @return int result
      */
     public int decrementWrapped(int current, int max) {

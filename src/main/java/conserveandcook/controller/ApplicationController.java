@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationController extends ControllerBase<Application> {
-    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     /**
      * The Controller needs a Model.
@@ -35,67 +34,22 @@ public class ApplicationController extends ControllerBase<Application> {
     }
 
     public void up() {
-        switch (model.getCurrentScreen()) {
-            case LANGUAGE:
-                model.incrementLanguage();
-            case REGION:
-                model.nextRegion();
-                break;
-            case GAME:
-                try {
-                    model.setSelectedRecipe(Recipe.getRandomRecipe());
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-                break;
-            case NAME:
-                model.decrementLetter();
-                break;
-        }
+        model.getActiveScreen().up(model);
     }
 
-    // TODO: (SK) Remove temporary code, replace with Scanner-Code
-    private int tmp = 0;
     public void down() {
-        switch (model.getCurrentScreen()) {
-            case LANGUAGE:
-                model.decrementLanguage();
-            case REGION:
-                model.previousRegion();
-                break;
-            case GAME:
-                if (model.getSelectedRecipe() != null) {
-                    model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-                    tmp++;
-                }
-                break;
-            case NAME:
-                model.incrementLetter();
-                break;
-        }
+        model.getActiveScreen().down(model);
     }
 
-    public void left(){
-        switch (model.getCurrentScreen()) {
-            case NAME -> model.decrementSelectedChar();
-        }
+    public void left() {
+        model.getActiveScreen().left(model);
     }
 
-    public void right(){
-        switch (model.getCurrentScreen()) {
-            case NAME -> model.incrementSelectedChar();
-        }
+    public void right() {
+        model.getActiveScreen().right(model);
     }
 
     public void scan(String barcode) {
-        if (model.getCurrentScreen().equals(AvailableScreens.GAME)) {
-            try {
-                Ingredient scannedIngredient = Ingredient.getIngredientById(barcode);
-                model.addSelectedIngredient(scannedIngredient);
-            } catch (Exception e) {
-                log.info(e.getMessage());
-            }
-            // TODO: (SK) Implement game logic
-        }
+        model.getActiveScreen().scan(model, barcode);
     }
 }
