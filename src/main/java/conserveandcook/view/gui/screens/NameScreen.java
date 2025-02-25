@@ -33,13 +33,7 @@ public class NameScreen extends AbstractScreen {
         int x = 545;
         int y = 655;
 
-//        if (letter == 'Q') {
-//            fontSize -= 25;
-//            y -= 30;
-//            x += 10;
-//        }
         int nextLetter = 350 * index;
-
 
         gui.setFontSize(fontSize);
         gui.drawString(String.valueOf(letter), (x + nextLetter) * SCALE, y * SCALE);
