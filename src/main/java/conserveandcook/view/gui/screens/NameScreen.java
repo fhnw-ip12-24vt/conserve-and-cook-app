@@ -9,6 +9,8 @@ public class NameScreen extends AbstractScreen {
 
     public NameScreen(Gui gui) {
         super(gui);
+        gui.loadFont("font/Conserveandcook-Regular.ttf");
+        gui.setFontFamily("Conserveandcook-Regular");
     }
 
     @Override
@@ -19,6 +21,7 @@ public class NameScreen extends AbstractScreen {
 
         drawBackground(path);
 
+
         int[] name = model.getName();
         for (int i = 0; i < name.length; i++) {
             drawLetter(i, characters[name[i]]);
@@ -26,11 +29,17 @@ public class NameScreen extends AbstractScreen {
     }
 
     private void drawLetter(int index, char letter) {
-        int fontSize = 140;
-        int x = 530;
-        int y = 675;
+        int fontSize = 105;
+        int x = 545;
+        int y = 655;
 
+//        if (letter == 'Q') {
+//            fontSize -= 25;
+//            y -= 30;
+//            x += 10;
+//        }
         int nextLetter = 350 * index;
+
 
         gui.setFontSize(fontSize);
         gui.drawString(String.valueOf(letter), (x + nextLetter) * SCALE, y * SCALE);
