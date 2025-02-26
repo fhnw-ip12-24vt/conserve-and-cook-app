@@ -4,11 +4,7 @@ import ch.mvcbase.GuiBase;
 import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
-import conserveandcook.view.gui.screens.GameScreen;
-import conserveandcook.view.gui.screens.LanguageScreen;
-import conserveandcook.view.gui.screens.RegionScreen;
-import conserveandcook.view.gui.screens.ResultScreen;
-import conserveandcook.view.gui.screens.StartScreen;
+import conserveandcook.view.gui.screens.*;
 
 import java.util.Objects;
 
@@ -17,22 +13,18 @@ public class Window extends GuiBase<Application, ApplicationController> {
     public static final int HEIGHT = Integer.parseInt(Config.get("screen.height"));
     public static final int WIDTH = Integer.parseInt(Config.get("screen.width"));
 
-
     protected final ApplicationController controller;
-    private final StartScreen startScreen;
-    private final LanguageScreen languageScreen;
-    private final RegionScreen regionScreen;
-    private final GameScreen gameScreen;
-    private final ResultScreen resultScreen;
 
     public Window(ApplicationController controller) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
-        this.startScreen = new StartScreen(this);
-        this.languageScreen = new LanguageScreen(this);
-        this.regionScreen = new RegionScreen(this);
-        this.gameScreen = new GameScreen(this);
-        this.resultScreen = new ResultScreen(this);
+
+        Application.screens.put(AvailableScreens.START, new StartScreen(this));
+        Application.screens.put(AvailableScreens.LANGUAGE, new LanguageScreen(this));
+        Application.screens.put(AvailableScreens.REGION, new RegionScreen(this));
+        Application.screens.put(AvailableScreens.GAME, new GameScreen(this));
+        Application.screens.put(AvailableScreens.RESULT, new ResultScreen(this));
+        Application.screens.put(AvailableScreens.NAME, new NameScreen(this));
 
         // Fullscreen when running on local doesn't work
         boolean runningOnPi = Objects.equals(Config.get("environment"), "production");
@@ -41,13 +33,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
     @Override
     protected void redraw(Application model) {
-        switch (model.getCurrentScreen()) {
-            case "start" -> startScreen.draw(model);
-            case "region" -> regionScreen.draw(model);
-            case "game" -> gameScreen.draw(model);
-            case "language" -> languageScreen.draw(model);
-            case "result" -> resultScreen.draw(model);
-        }
+        model.getActiveScreen().draw(model);
     }
 
     @Override
@@ -60,10 +46,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
         setOnKeyReleased(key -> {
             switch (key) {
-                case "right" -> controller.nextScreen();
-                case "left" -> controller.prevScreen();
+                case "right" -> controller.right();
+                case "left" -> controller.left();
                 case "up" -> controller.up();
                 case "down" -> controller.down();
+                case "d" -> controller.nextScreen();
+                case "a" -> controller.prevScreen();
             }
         });
     }

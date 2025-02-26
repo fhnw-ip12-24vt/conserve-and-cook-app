@@ -4,11 +4,11 @@ import ch.mvcbase.ControllerBase;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
 import conserveandcook.model.Recipe;
+import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationController extends ControllerBase<Application> {
-    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     /**
      * The Controller needs a Model.
@@ -34,49 +34,22 @@ public class ApplicationController extends ControllerBase<Application> {
     }
 
     public void up() {
-        switch (model.getCurrentScreen()) {
-            case "language":
-                model.incrementLanguage();
-            case "region":
-                model.nextRegion();
-                break;
-            case "game":
-                try {
-                    model.setSelectedRecipe(Recipe.getRandomRecipe());
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-                break;
-        }
+        model.getActiveScreen().up(model);
     }
 
-    // TODO: (SK) Remove temporary code, replace with Scanner-Code
-    private int tmp = 0;
     public void down() {
-        switch (model.getCurrentScreen()) {
-            case "language":
-                model.decrementLanguage();
-            case "region":
-                model.previousRegion();
-                break;
-            case "game":
-                if (model.getSelectedRecipe() != null) {
-                    model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-                    tmp++;
-                }
-                break;
-        }
+        model.getActiveScreen().down(model);
+    }
+
+    public void left() {
+        model.getActiveScreen().left(model);
+    }
+
+    public void right() {
+        model.getActiveScreen().right(model);
     }
 
     public void scan(String barcode) {
-        if (model.getCurrentScreen().equals("game")) {
-            try {
-                Ingredient scannedIngredient = Ingredient.getIngredientById(barcode);
-                model.addSelectedIngredient(scannedIngredient);
-            } catch (Exception e) {
-                log.info(e.getMessage());
-            }
-            // TODO: (SK) Implement game logic
-        }
+        model.getActiveScreen().scan(model, barcode);
     }
 }
