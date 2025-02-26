@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.AvailableScreens;
 
 public class StartScreen extends AbstractScreen {
     static final int FRAMES = 4;
@@ -15,5 +16,10 @@ public class StartScreen extends AbstractScreen {
     public void draw(Application model) {
         String currentFrame = getGifFrame("img/start/");
         drawBackground(currentFrame);
+    }
+
+    @Override
+    public AvailableScreens next() {
+        return AvailableScreens.LANGUAGE;
     }
 }
