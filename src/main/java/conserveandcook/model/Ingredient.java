@@ -70,4 +70,8 @@ public class Ingredient {
     public int getCategory() {
         return category;
     }
+
+    public int getId() {
+        return id;
+    }
 }

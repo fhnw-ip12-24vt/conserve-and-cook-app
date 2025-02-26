@@ -35,11 +35,12 @@ public class GameScreen extends AbstractScreen {
                 drawIngredient(ingredient, selectedRecipe);
             }
 
+            for (Ingredient ingredient : selectedIngredients) {
+                if (ingredient != null) {
+                    drawSelectedIngredient(ingredient, selectedRecipe);
+                }
+            }
         }
-
-        for (Ingredient ingredient : selectedIngredients) {
-        }
-
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GameScreen extends AbstractScreen {
         // TODO: (SK) Remove temporary code, replace with Scanner-Code
         if (model.getSelectedRecipe() != null) {
             model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-            tmp = model.incrementWrapped(tmp, 2);
+            tmp = model.incrementWrapped(tmp, 8);
         }
     }
 
@@ -96,6 +97,20 @@ public class GameScreen extends AbstractScreen {
             ingredientIndex = 0;
             prevCategory = category;
         }
+    }
+
+    private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+        String name = ingredient.getName() + ".png";
+        String recipeId = String.valueOf(selectedRecipe.getId());
+
+        String path = Path.of("img/recipe", recipeId, name).toString();
+        path = path.replace('\\', '/');
+
+        int category = ingredient.getCategory();
+
+        int yOffset = category * 240;
+
+        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
     }
 
     private void drawRecipe(Recipe recipe) {
