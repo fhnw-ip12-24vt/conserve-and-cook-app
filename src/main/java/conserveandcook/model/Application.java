@@ -1,11 +1,9 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AvailableScreens;
-import conserveandcook.misc.Languages;
-import conserveandcook.view.gui.screens.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import conserveandcook.view.gui.screens.AbstractScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +13,7 @@ public class Application {
     private static final AvailableScreens[] availableScreens = AvailableScreens.values();
 
     public static final Map<AvailableScreens, AbstractScreen> screens = new HashMap<>();
-    public AbstractScreen activeScreen = screens.get(AvailableScreens.START);
+    public AbstractScreen activeScreen = screens.get(AvailableScreens.GAME);
 
     private int selectedLanguage = 0;
     private static final Languages[] languages = Languages.values();

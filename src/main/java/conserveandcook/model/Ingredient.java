@@ -37,15 +37,16 @@ public class Ingredient {
 
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from ingredient where recipe_id = ? limit 3";
+        int ingredientCount = 9;
+        String query = "select * from ingredient where recipe_id = ? order by category_id limit 9;";
         ResultSet results = db.executeQuery(query, recipeId);
-        Ingredient[] ingredients = new Ingredient[3];
+        Ingredient[] ingredients = new Ingredient[ingredientCount];
 
         int index = 0;
         if(results == null) {
             throw new SQLException("Exactly three ingredients were expected, received zero");
         }
-        while (results.next()) {
+        while (results.next() && index < ingredientCount) {
             ingredients[index] = new Ingredient
                     (
                             results.getInt(1),

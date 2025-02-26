@@ -1,14 +1,13 @@
 package conserveandcook.model;
 
 import conserveandcook.AbstractTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IngredientTest extends AbstractTest {
-    String testId1 = "644824915043";
-    String testId2 = "4250236825175";
+    String testId1 = "1";
+    String testId2 = "2";
 
     @Test
     public void ingredientTest() {
@@ -18,9 +17,9 @@ public class IngredientTest extends AbstractTest {
             // Act
             i1 = Ingredient.getIngredientById(testId1);
             // Assert
-            assertEquals("Rindfleisch", i1.getName());
+            assertEquals("ananas", i1.getName());
             assertEquals(10, i1.getCo2());
-            assertEquals(0, i1.getCategory());
+            assertEquals(1, i1.getCategory());
         } catch (Exception e) {
             fail(e);
         }
@@ -34,9 +33,9 @@ public class IngredientTest extends AbstractTest {
             // Act
             i2 = Ingredient.getIngredientById(testId2);
             // Assert
-            assertEquals("Poulet", i2.getName());
+            assertEquals("avocado", i2.getName());
             assertEquals(20, i2.getCo2());
-            assertEquals(1, i2.getCategory());
+            assertEquals(2, i2.getCategory());
         } catch (Exception e) {
             fail(e);
         }
@@ -66,13 +65,13 @@ public class IngredientTest extends AbstractTest {
             i2 = Ingredient.getIngredientById(testId2);
             model.addSelectedIngredient(i1);
             Ingredient[] selected = model.getSelectedIngredients();
-            assertEquals("Rindfleisch", i1.getName());
-            assertNull(selected[1]);
+            assertEquals("ananas", selected[1].getName());
+            assertNull(selected[0]);
             assertNull(selected[2]);
             model.addSelectedIngredient(i2);
-            assertEquals("Rindfleisch", i1.getName());
-            assertEquals("Poulet", i2.getName());
-            assertNull(selected[2]);
+            assertEquals("ananas", i1.getName());
+            assertEquals("avocado", i2.getName());
+            assertNull(selected[0]);
         } catch (Exception e) {
             fail(e);
         }
