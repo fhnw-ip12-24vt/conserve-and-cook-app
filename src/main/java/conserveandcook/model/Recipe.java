@@ -61,15 +61,16 @@ public class Recipe {
     public int calculateScore(Ingredient[] selectedIngredients) {
         int score = 0;
 
-        int[][] minMax = getMinMaxScores();
-        int[] minScoresByCat = minMax[0];
-        int[] maxScoresByCat = minMax[1];
-
         for (int i = 0; i < 3; i++) {
             Ingredient ingredient = selectedIngredients[i];
             int ingScore = ingredient.getCo2();
-            int max = maxScoresByCat[i];
-            int min = minScoresByCat[i];
+            int min = 0, max = 0;
+            try {
+                max = getMaxScore();
+                min = getMinScore();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
 
             int x = max - min;
             int y = ingScore - min;
@@ -82,31 +83,29 @@ public class Recipe {
         return score;
     }
 
-    // TODO: (SK) Refactor this!
-    /**
-     * Calculates the min and max value of each category
-     * @return the min array in [0], and the max array in [1]
-     */
-    private int[][] getMinMaxScores() {
-        int[] minScoresByCat = {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE};
-        int[] maxScoresByCat = new int[3];
+    public int getMaxScore() throws SQLException {
+        Database db = Database.getInstance();
+        String query = "SELECT id, max(co2_score) FROM ingredient WHERE recipe_id = ?";
+        ResultSet results = db.executeQuery(query, id);
 
-        for (int category = 0; category < 3; category++) {
-            for (int index = 0; index < 3; index++) {
-                int ingredientScore = this.ingredients[(3 * category) + index].getCo2();
-
-                if (ingredientScore > maxScoresByCat[category]) {
-                    maxScoresByCat[category] = ingredientScore;
-                }
-
-                if (ingredientScore < minScoresByCat[category]) {
-                    minScoresByCat[category] = ingredientScore;
-                }
-            }
+        // Check if we've got a row
+        if (results == null || !results.next()) {
+            throw new SQLException("Exactly one value was expected, received zero");
         }
 
-        return new int[][]{minScoresByCat, maxScoresByCat};
-
+        return results.getInt(2);
     }
 
+    public int getMinScore() throws SQLException {
+        Database db = Database.getInstance();
+        String query = "SELECT id, min(co2_score) FROM ingredient WHERE recipe_id = ?";
+        ResultSet results = db.executeQuery(query, id);
+
+        // Check if we've got a row
+        if (results == null || !results.next()) {
+            throw new SQLException("Exactly one value was expected, received zero");
+        }
+
+        return results.getInt(2);
+    }
 }

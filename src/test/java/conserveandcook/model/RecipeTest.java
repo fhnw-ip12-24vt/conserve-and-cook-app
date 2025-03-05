@@ -43,6 +43,34 @@ public class RecipeTest extends AbstractTest {
     }
 
     @Test
+    public void maxScoreTest() throws SQLException {
+        // Arrange
+        Recipe r1;
+        int score;
+
+        // Act
+        r1 = Recipe.getRandomRecipe();
+        score = r1.getMaxScore();
+
+        // Assert
+        assertEquals(40, score);
+    }
+
+    @Test
+    public void minScoreTest() throws SQLException {
+        // Arrange
+        Recipe r1;
+        int score;
+
+        // Act
+        r1 = Recipe.getRandomRecipe();
+        score = r1.getMinScore();
+
+        // Assert
+        assertEquals(3, score);
+    }
+
+    @Test
     public void scoreTest() throws SQLException {
         // Arrange
         Recipe r1;
@@ -79,7 +107,7 @@ public class RecipeTest extends AbstractTest {
 
         // Assert
         int score = r1.calculateScore(m.getSelectedIngredients());
-        assertEquals(300, score);
+        assertEquals(100, score);
     }
 
     @Test

@@ -12,7 +12,11 @@ public class ResultScreen extends AbstractScreen {
 
     @Override
     public void draw(Application model) {
+        model.setScore(model.getSelectedRecipe().calculateScore(model.getSelectedIngredients()));
+        int score = model.getScore();
         drawBackground("img/result/frame_0.png");
+        gui.setFontSize(70);
+        gui.drawString(score + " Punkte", 500, 100);
     }
 
     @Override

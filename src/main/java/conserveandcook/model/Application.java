@@ -24,6 +24,8 @@ public class Application {
     private int selectedRegion = 0;
     private static final Regions[] regions = Regions.values();
 
+    private int score = 0;
+
     public static final int NAME_LENGTH = 3;
     private final int[] name = new int[NAME_LENGTH];
     private final char[] nameCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
@@ -143,6 +145,14 @@ public class Application {
 
     public void incrementLetter() {
         this.name[this.selectedChar] = incrementWrapped(this.name[this.selectedChar], this.nameCharacters.length - 1);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     /**
