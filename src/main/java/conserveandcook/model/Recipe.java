@@ -61,8 +61,6 @@ public class Recipe {
     public int calculateScore(Ingredient[] selectedIngredients) {
         int score = 0;
 
-        int[] scores = new int[3];
-        int[][] scoresByCat = new int[3][3];
         int[][] minMax = getMinMaxScores();
         int[] minScoresByCat = minMax[0];
         int[] maxScoresByCat = minMax[1];
@@ -85,15 +83,18 @@ public class Recipe {
     }
 
     // TODO: (SK) Refactor this!
+    /**
+     * Calculates the min and max value of each category
+     * @return the min array in [0], and the max array in [1]
+     */
     private int[][] getMinMaxScores() {
-        int[][] scoresByCat = new int[3][3];
         int[] minScoresByCat = {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE};
         int[] maxScoresByCat = new int[3];
 
         for (int category = 0; category < 3; category++) {
-            for (int j = 0; j < 3; j++) {
-                int ingredientScore = this.ingredients[(3 * category) + j].getCo2();
-                scoresByCat[category][j] = ingredientScore;
+            for (int index = 0; index < 3; index++) {
+                int ingredientScore = this.ingredients[(3 * category) + index].getCo2();
+
                 if (ingredientScore > maxScoresByCat[category]) {
                     maxScoresByCat[category] = ingredientScore;
                 }
@@ -109,4 +110,3 @@ public class Recipe {
     }
 
 }
-
