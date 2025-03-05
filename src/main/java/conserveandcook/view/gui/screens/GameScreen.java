@@ -13,9 +13,7 @@ import java.nio.file.Path;
 public class GameScreen extends AbstractScreen {
     private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
-    // TODO: (SK) Remove temporary variable
     private int ingredientIndex = 0;
-    private int tmp;
     private int prevCategory = 0;
 
     public GameScreen(Gui g) {
@@ -24,6 +22,13 @@ public class GameScreen extends AbstractScreen {
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
+        if (model.getSelectedRecipe() == null){
+            try {
+                model.setSelectedRecipe(Recipe.getRandomRecipe());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
 
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
         Recipe selectedRecipe = model.getSelectedRecipe();
@@ -52,24 +57,6 @@ public class GameScreen extends AbstractScreen {
             log.info(e.getMessage());
         }
         // TODO: (SK) Implement game logic
-    }
-
-    @Override
-    public void up(Application model) {
-        try {
-            model.setSelectedRecipe(Recipe.getRandomRecipe());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public void down(Application model) {
-        // TODO: (SK) Remove temporary code, repl ace with Scanner-Code
-        if (model.getSelectedRecipe() != null) {
-            model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-            tmp = model.incrementWrapped(tmp, 8);
-        }
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Application {
     private static final AvailableScreens[] availableScreens = AvailableScreens.values();
 
     public static final Map<AvailableScreens, AbstractScreen> screens = new HashMap<>();
-    public AbstractScreen activeScreen = screens.get(AvailableScreens.GAME);
+    public AbstractScreen activeScreen = screens.get(AvailableScreens.START);
 
     private int selectedLanguage = 0;
     private static final Languages[] languages = Languages.values();
