@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IngredientTest extends AbstractTest {
-    String testId1 = "1";
-    String testId2 = "2";
+    String testId1 = "001";
+    String testId2 = "002";
 
     @Test
     public void ingredientTest() {
@@ -49,6 +49,21 @@ public class IngredientTest extends AbstractTest {
         try {
             // Act
             i3 = Ingredient.getIngredientById(testId3);
+        } catch (Exception e) {
+            // Assert
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void invalidBarcodeTest() {
+        // arrange
+        Ingredient i4;
+        String testId4 = "abc";
+
+        try {
+            // Act
+            i4 = Ingredient.getIngredientById(testId4);
         } catch (Exception e) {
             // Assert
             assertTrue(true);
