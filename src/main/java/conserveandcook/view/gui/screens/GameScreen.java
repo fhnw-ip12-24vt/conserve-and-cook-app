@@ -65,7 +65,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void down(Application model) {
-        // TODO: (SK) Remove temporary code, replace with Scanner-Code
+        // TODO: (SK) Remove temporary code, repl ace with Scanner-Code
         if (model.getSelectedRecipe() != null) {
             model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
             tmp = model.incrementWrapped(tmp, 8);
@@ -78,14 +78,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
-        String name = ingredient.getName() + ".png";
-        String recipeId = String.valueOf(selectedRecipe.getId());
-
-        String path = Path.of("img/recipe", recipeId, name).toString();
-        path = path.replace('\\', '/');
+        String path = getPathOfImage(ingredient, selectedRecipe);
 
         int category = ingredient.getCategory();
-
         int yOffset = category * 240;
         int xOffset = ingredientIndex * 230;
 
@@ -100,17 +95,21 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+        String path = getPathOfImage(ingredient, selectedRecipe);
+
+        int category = ingredient.getCategory();
+        int yOffset = category * 240;
+
+        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
+    }
+
+    private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
         String name = ingredient.getName() + ".png";
         String recipeId = String.valueOf(selectedRecipe.getId());
 
         String path = Path.of("img/recipe", recipeId, name).toString();
         path = path.replace('\\', '/');
-
-        int category = ingredient.getCategory();
-
-        int yOffset = category * 240;
-
-        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
+        return path;
     }
 
     private void drawRecipe(Recipe recipe) {
