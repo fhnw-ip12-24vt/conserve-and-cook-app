@@ -3,6 +3,7 @@ package conserveandcook.view.gui.screens;
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AvailableScreens;
+import conserveandcook.view.gui.Window;
 
 public class RegionScreen extends AbstractScreen {
     public RegionScreen(Gui gui) {
@@ -14,6 +15,9 @@ public class RegionScreen extends AbstractScreen {
         String backgroundPath = "img/regions/";
         String path = backgroundPath + model.getSelectedRegion().toString().toLowerCase() + ".png";
         drawBackground(path);
+
+        gui.setFontSize((int) (100 * SCALE));
+        gui.drawString("Select Region", (Window.WIDTH / 2) - 150, 80);
     }
 
     @Override
