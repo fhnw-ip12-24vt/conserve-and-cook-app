@@ -15,8 +15,7 @@ public class NameScreen extends AbstractScreen {
 
     @Override
     public void draw(Application model) {
-        String backgroundPath = "img/name/";
-        String path = backgroundPath + "background.png";
+        String path = "img/name/" + model.getSelectedLanguage().name().toLowerCase() + ".png";
         characters = model.getNameCharacters();
 
         drawBackground(path);
