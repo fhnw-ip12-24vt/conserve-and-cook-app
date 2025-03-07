@@ -87,7 +87,7 @@ public class RecipeTest extends AbstractTest {
 
         // Assert
         int score = r1.calculateScore(m.getSelectedIngredients());
-        assertEquals(100, score);
+        assertEquals((100/3)*1000, score);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class RecipeTest extends AbstractTest {
 
         // Assert
         int score = r1.calculateScore(m.getSelectedIngredients());
-        assertEquals(100, score);
+        assertEquals((100 / 3)*1000, score);
     }
 
     @Test

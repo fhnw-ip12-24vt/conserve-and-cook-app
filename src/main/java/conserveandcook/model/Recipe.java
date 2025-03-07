@@ -80,7 +80,7 @@ public class Recipe {
             score += ((int) dblScore) * 100;
         }
 
-        return score;
+        return (score / 3) * 1000;
     }
 
     public int getMaxScore() throws SQLException {
