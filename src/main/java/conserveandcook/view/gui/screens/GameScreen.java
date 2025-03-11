@@ -8,11 +8,13 @@ import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+
 public class GameScreen extends AbstractScreen {
     private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
-    // TODO: (SK) Remove temporary variable
-    private int tmp;
+    private int ingredientIndex = 0;
+    private int prevCategory = 0;
 
     public GameScreen(Gui g) {
         super(g);
@@ -20,14 +22,30 @@ public class GameScreen extends AbstractScreen {
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
-
-        Ingredient[] ingredients = model.getSelectedIngredients();
-        for (Ingredient ingredient : ingredients) {
-            if (ingredient != null) {
-                drawBorder(ingredient.getCategory());
+        if (model.getSelectedRecipe() == null){
+            try {
+                model.setSelectedRecipe(Recipe.getRandomRecipe());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
             }
         }
 
+        Ingredient[] selectedIngredients = model.getSelectedIngredients();
+        Recipe selectedRecipe = model.getSelectedRecipe();
+        if (selectedRecipe != null) {
+            drawRecipe(selectedRecipe);
+            Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
+
+            for (Ingredient ingredient : ingredients) {
+                drawIngredient(ingredient, selectedRecipe);
+            }
+
+            for (Ingredient ingredient : selectedIngredients) {
+                if (ingredient != null) {
+                    drawSelectedIngredient(ingredient, selectedRecipe);
+                }
+            }
+        }
     }
 
     @Override
@@ -42,47 +60,51 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public void up(Application model) {
-        try {
-            model.setSelectedRecipe(Recipe.getRandomRecipe());
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public void down(Application model) {
-        // TODO: (SK) Remove temporary code, replace with Scanner-Code
-        if (model.getSelectedRecipe() != null) {
-            model.addSelectedIngredient(model.getSelectedRecipe().getIngredients()[tmp]);
-            tmp = model.incrementWrapped(tmp,2);
-        }
-    }
-
-    @Override
     public AvailableScreens next() {
         return AvailableScreens.NAME;
     }
 
-    private void drawBorder(int category) {
-        String borderPath = "img/game/border.png";
-        double x, y;
-        switch (category) {
-            case 0:
-                x = (double) 690 ;
-                y = (double) 175 ;
-                break;
-            case 1:
-                x = (double) 930 ;
-                y = (double) 535 ;
-                break;
-            case 2:
-                x = (double) 1210;
-                y = (double) 190 ;
-                break;
-            default:
-                return;
+    private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+        String path = getPathOfImage(ingredient, selectedRecipe);
+
+        int category = ingredient.getCategory();
+        int yOffset = category * 240;
+        int xOffset = ingredientIndex * 230;
+
+        gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE);
+
+        if (category == prevCategory) {
+            ingredientIndex = ingredientIndex + 1 > 3 ? 0 : ingredientIndex + 1;
+        } else {
+            ingredientIndex = 0;
+            prevCategory = category;
         }
-        gui.drawImage(borderPath, x * SCALE, y * SCALE, SCALE);
+    }
+
+    private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+        String path = getPathOfImage(ingredient, selectedRecipe);
+
+        int category = ingredient.getCategory();
+        int yOffset = category * 240;
+
+        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
+    }
+
+    private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
+        String name = ingredient.getName() + ".png";
+        String recipeId = String.valueOf(selectedRecipe.getId());
+
+        String path = Path.of("img/recipe", recipeId, name).toString();
+        path = path.replace('\\', '/');
+        return path;
+    }
+
+    private void drawRecipe(Recipe recipe) {
+        int x = 120, y = 235;
+        String id = String.valueOf(recipe.getId());
+        String path = Path.of("img/recipe", id, "recipe.png").toString();
+        path = path.replace('\\', '/');
+
+        gui.drawImage(path, x * SCALE, y * SCALE, SCALE);
     }
 }

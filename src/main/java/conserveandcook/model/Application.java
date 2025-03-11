@@ -1,11 +1,9 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AvailableScreens;
-import conserveandcook.misc.Languages;
-import conserveandcook.view.gui.screens.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import conserveandcook.view.gui.screens.AbstractScreen;
 
 import java.util.HashMap;
 import java.util.Map;
