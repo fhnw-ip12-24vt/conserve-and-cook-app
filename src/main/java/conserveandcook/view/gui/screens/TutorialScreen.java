@@ -51,7 +51,6 @@ public class TutorialScreen extends AbstractScreen {
             case 4 -> "Scanne die Zutaten. Nutze den Barcodescanner,\n um Zutaten aus dem Kochbuch auszuwählen. \n" +
                     "Genau wie an der Supermarktkasse! \nFalls du eine andere Zutat möchtest,\n scanne einfach eine neue ein";
             case 5 -> "Das war's!\nViel Spass beim Kochen!";
-
             default -> "";
         };
     }
@@ -95,7 +94,7 @@ public class TutorialScreen extends AbstractScreen {
 
             case 5:
                 x = 735;
-                y = 400;
+                y = 450;
                 fontsize = 80;
                 break;
 
