@@ -1,7 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
-import conserveandcook.misc.Config;
+import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
 import conserveandcook.model.Recipe;
@@ -21,7 +21,7 @@ public class GameScreen extends AbstractScreen {
     private int debugIndex = 0;
     private int debugCategory = 0;
 
-    boolean runningOnPi = Config.get("environment").equals("production");
+    boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
     public GameScreen(Gui g) {
         super(g);
