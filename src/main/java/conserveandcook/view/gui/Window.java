@@ -20,6 +20,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
         Application.screens.put(AvailableScreens.START, new StartScreen(this));
         Application.screens.put(AvailableScreens.LANGUAGE, new LanguageScreen(this));
+        Application.screens.put(AvailableScreens.TUTORIAL, new TutorialScreen(this));
         Application.screens.put(AvailableScreens.REGION, new RegionScreen(this));
         Application.screens.put(AvailableScreens.GAME, new GameScreen(this));
         Application.screens.put(AvailableScreens.RESULT, new ResultScreen(this));

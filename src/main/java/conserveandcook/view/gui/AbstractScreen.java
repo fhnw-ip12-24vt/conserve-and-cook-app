@@ -26,6 +26,10 @@ public abstract class AbstractScreen {
     public void up(Application model) {};
     public void down(Application model) {};
 
+    /**
+     * Draws a given frame on the full width & height of the window.
+     * @param frame Path to the image. Avoid leading /
+     */
     protected void drawBackground(String frame) {
         gui.drawImage(frame, 0, 0, SCALE);
     }

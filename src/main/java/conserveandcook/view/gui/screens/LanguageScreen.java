@@ -33,7 +33,7 @@ public class LanguageScreen extends AbstractGif {
 
     @Override
     public AvailableScreens next() {
-        return AvailableScreens.REGION;
+        return AvailableScreens.TUTORIAL;
     }
 
     @Override
