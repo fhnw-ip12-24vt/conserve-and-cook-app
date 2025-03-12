@@ -3,15 +3,14 @@ package conserveandcook.view.gui;
 import ch.mvcbase.GuiBase;
 import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
+import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.*;
 
-import java.util.Objects;
-
 public class Window extends GuiBase<Application, ApplicationController> {
 
-    public static final int HEIGHT = Integer.parseInt(Config.get("screen.height"));
-    public static final int WIDTH = Integer.parseInt(Config.get("screen.width"));
+    public static int HEIGHT = Integer.parseInt(Config.get("screen.height"));
+    public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
 
     protected final ApplicationController controller;
 
@@ -26,8 +25,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
         Application.screens.put(AvailableScreens.RESULT, new ResultScreen(this));
         Application.screens.put(AvailableScreens.NAME, new NameScreen(this));
 
+        WIDTH = (int) this.getWidth();
+        HEIGHT = (int) this.getHeight();
+        this.setResizable(true);
+
         // Fullscreen when running on local doesn't work
-        boolean runningOnPi = Objects.equals(Config.get("environment"), "production");
+        boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
         this.setFullScreen(runningOnPi);
     }
 
