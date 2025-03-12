@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
 import conserveandcook.model.Recipe;
@@ -16,6 +17,11 @@ public class GameScreen extends AbstractScreen {
 
     private int ingredientIndex = 0;
     private int prevCategory = 0;
+
+    private int debugIndex = 0;
+    private int debugCategory = 0;
+
+    boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
     public GameScreen(Gui g) {
         super(g);
@@ -58,6 +64,30 @@ public class GameScreen extends AbstractScreen {
             log.info(e.getMessage());
         }
         // TODO: (SK) Implement game logic
+    }
+
+    @Override
+    public void down(Application model) {
+        // TODO: (SK) Remove temporary code, repl ace with Scanner-Code
+        if (!runningOnPi && model.getSelectedRecipe() != null) {
+            model.addSelectedIngredient(model.getSelectedRecipe()
+                    .getIngredients()[(3 * debugCategory) + debugIndex]);
+            debugIndex = model.incrementWrapped(debugIndex, 2);
+        }
+    }
+
+    @Override
+    public void left(Application model) {
+        if (!runningOnPi) {
+            debugCategory = model.incrementWrapped(debugCategory, 2);
+        }
+    }
+
+    @Override
+    public void right(Application model) {
+        if (!runningOnPi) {
+            debugCategory = model.decrementWrapped(debugCategory, 2);
+        }
     }
 
     @Override
