@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 
 public class NameScreen extends AbstractScreen {
@@ -15,8 +16,7 @@ public class NameScreen extends AbstractScreen {
 
     @Override
     public void draw(Application model) {
-        String backgroundPath = "img/name/";
-        String path = backgroundPath + "background.png";
+        String path = "img/name/" + model.getSelectedLanguage().name().toLowerCase() + ".png";
         characters = model.getNameCharacters();
 
         drawBackground(path);
