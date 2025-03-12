@@ -1,7 +1,7 @@
 package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
-import conserveandcook.misc.Config;
+import conserveandcook.misc.Environments;
 
 import java.io.FileInputStream;
 import java.time.Duration;
@@ -38,7 +38,7 @@ public class Joystick extends Component {
     }
 
     private void listenToInput() {
-        if (Config.get("environment").equals("test")) {
+        if (Environments.get() == Environments.TEST) {
             return;
         }
         try (FileInputStream fis = new FileInputStream(this.device)) {
@@ -201,7 +201,7 @@ public class Joystick extends Component {
 
     // For testing
     public void mockInput() {
-        if (Config.get("environment").equals("test")) {
+        if (Environments.get() == Environments.TEST) {
             executor = Executors.newSingleThreadExecutor();
             setDirection(true, whileNorthWorker, onNorth);
             setDirection(true, whileEastWorker, onEast);

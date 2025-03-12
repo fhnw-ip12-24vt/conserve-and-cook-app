@@ -4,6 +4,7 @@ import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
 import conserveandcook.model.Recipe;
+import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

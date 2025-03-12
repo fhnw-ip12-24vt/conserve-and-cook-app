@@ -2,8 +2,8 @@ package conserveandcook.model;
 
 import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
+import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
-import conserveandcook.view.gui.screens.AbstractScreen;
 
 import java.util.HashMap;
 import java.util.Map;
