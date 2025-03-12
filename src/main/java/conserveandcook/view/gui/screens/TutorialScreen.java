@@ -16,22 +16,11 @@ public class TutorialScreen extends AbstractScreen {
     @Override
     public void draw(Application model) {
         drawBackground("img/tutorial/frame_" + frameIndex + ".png");
-        // TODO: (VW) "and" mit "&" ersetzen in der Font
-        drawText("01234567 8901 23456789012345678901 2345 67890123 45678901234567890");
-    }
 
-    private void drawText(String text) {
-        gui.setTextAlignCenter();
         Result coordinates = getCoordinates();
+        gui.setTextAlignCenter();
         gui.setFontSize((int) (coordinates.fontsize() * SCALE));
-
-        String[] lines = splitStringByWordLength(text, coordinates.wordLength());
-
-        int yOffset = 0;
-        for (String line : lines) {
-            gui.drawString(line, coordinates.x() * SCALE, (coordinates.y() + yOffset) * SCALE);
-            yOffset += gui.getFontSize() + 20;
-        }
+        gui.drawString(getText(), coordinates.x() * SCALE, (coordinates.y()) * SCALE);
     }
 
     @Override
@@ -50,74 +39,64 @@ public class TutorialScreen extends AbstractScreen {
         return null;
     }
 
+    // TODO: (SK) Replace this function with i18n results
+    private String getText() {
+        return switch (frameIndex) {
+            case 0 -> "Willkommen bei \nConserve and Cook";
+            case 1 -> "Dein Ziel ist es, \nleckere Gerichte \naus aller Welt zu kochen";
+            case 2 -> "Die Region bestimmt, \nwelche Rezepte du kochen wirst!";
+            case 3 -> "Wähle 3 Zutaten. \n Du Bekommst neun zur Auswahl" +
+                    "\n und musst drei davon einscannen, \n" +
+                    "bevor die Zeit abläuft.";
+            case 4 -> "Scanne die Zutaten. Nutze den Barcodescanner,\n um Zutaten aus dem Kochbuch auszuwählen. \n" +
+                    "Genau wie an der Supermarktkasse! \nFalls du eine andere Zutat möchtest,\n scanne einfach eine neue ein";
+            case 5 -> "Das war's!\nViel Spass beim Kochen!";
 
-    private record Result(int x, int y, int fontsize, int wordLength) {
+            default -> "";
+        };
     }
 
-    public String[] splitStringByWordLength(String text, int wordLength) {
-        int textLength = text.length();
-
-        if (textLength <= wordLength) {
-            return new String[]{text};
-        }
-        int requiredLines;
-        if (textLength % wordLength == 0) {
-            requiredLines = textLength / wordLength;
-        } else {
-            requiredLines = (textLength / wordLength) + 1;
-        }
-        String[] lines = new String[requiredLines];
-        for (int i = 0; i < requiredLines; i++) {
-            String line = text.substring(i, i + wordLength);
-            if (line.contains(" ")) {
-                line = line.substring(0, line.lastIndexOf(" "));
-            }
-            lines[i] = line;
-        }
-
-        return lines;
+    private record Result(int x, int y, int fontsize) {
     }
 
     private Result getCoordinates() {
-        int x, y, wordLength = 30;
-        int fontsize = 65;
+        int x, y, fontsize = 65;
 
         switch (frameIndex) {
             case 0:
-                x = 650;
-                y = 330;
+                x = 670;
+                y = 350;
+                fontsize = 75;
                 break;
 
             case 1:
                 x = 655;
                 y = 330;
-                wordLength = 32;
+                fontsize = 70;
                 break;
 
             case 2:
                 x = 1170;
-                y = 660;
-                fontsize = 45;
+                y = 700;
+                fontsize = 50;
                 break;
 
             case 3:
                 x = 1025;
-                y = 260;
-                fontsize = 45;
-                wordLength = 35;
+                y = 300;
+                fontsize = 50;
                 break;
 
             case 4:
                 x = 975;
-                y = 245;
+                y = 300;
                 fontsize = 50;
-                wordLength = 35;
                 break;
 
             case 5:
                 x = 735;
-                y = 350;
-                fontsize = 50;
+                y = 400;
+                fontsize = 80;
                 break;
 
             default:
@@ -125,6 +104,6 @@ public class TutorialScreen extends AbstractScreen {
                 y = 100;
                 break;
         }
-        return new Result(x, y, fontsize, wordLength);
+        return new Result(x, y, fontsize);
     }
 }
