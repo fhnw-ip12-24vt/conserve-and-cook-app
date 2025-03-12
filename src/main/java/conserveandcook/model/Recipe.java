@@ -70,6 +70,7 @@ public class Recipe {
                 min = getMinScore();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
+                return 0;
             }
 
             int x = max - min;
@@ -77,10 +78,10 @@ public class Recipe {
 
             double division = (double) y / x;
             double dblScore = 1 - division;
-            score += ((int) dblScore) * 100;
+            score += (int) (dblScore * 100);
         }
 
-        return (score / 3) * 1000;
+        return (score / 3) * 125;
     }
 
     public int getMaxScore() throws SQLException {
