@@ -286,6 +286,9 @@
         <!-- Run the JAR file locally -->
         <profile>
             <id>run-local</id>
+            <properties>
+                <env>local</env>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -301,7 +304,7 @@
                         </executions>
                         <configuration>
                             <executable>java</executable>
-                            <commandlineArgs>-jar "${project.build.directory}/${jar.name}.jar"</commandlineArgs>
+                            <commandlineArgs>-Denv=${env} -jar "${project.build.directory}/${jar.name}.jar"</commandlineArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -346,6 +349,11 @@
                                         <scp trust="true"
                                              localFile="${project.basedir}/src/main/resources/database/database.db"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/database.db"
+                                             port="${pi.port}">
+                                        </scp>
+                                        <scp trust="true"
+                                             localFile="${project.basedir}/app.properties"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/app.properties"
                                              port="${pi.port}">
                                         </scp>
 

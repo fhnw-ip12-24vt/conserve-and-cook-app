@@ -2,11 +2,14 @@ package conserveandcook.view.pui;
 
 import ch.mvcbase.PuiBase;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
+import conserveandcook.view.pui.components.BarcodeScanner;
 import conserveandcook.view.pui.components.Joystick;
 
 public class Hardware extends PuiBase<Application, ApplicationController> {
     private Joystick joystick;
+    private BarcodeScanner scanner;
 
     public Hardware(ApplicationController controller, int frameRate) {
         super(controller, frameRate);
@@ -14,25 +17,37 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
 
     @Override
     public void setupEventHandler(ApplicationController controller) {
-        joystick.onNorth(controller::up);
-        joystick.onEast(controller::nextScreen);
-        joystick.onWest(controller::prevScreen);
-        joystick.onSouth(controller::down);
-    }
+        if (joystick != null) {
+            joystick.onNorth(controller::up);
+            joystick.onEast(controller::nextScreen);
+            joystick.onWest(controller::prevScreen);
+            joystick.onSouth(controller::down);
+        }
 
-    @Override
-    public void updateComponents(Application model) {
-        // nothing to do in first place
+        if (scanner != null) {
+            scanner.onScan(controller::scan);
+        }
     }
 
     @Override
     public void initializeComponents(Application model) {
-        joystick = new Joystick("/dev/input/js0");
+        if (Config.isEnabled("joystick")) {
+            joystick = new Joystick(Config.get("joystick.path"));
+        }
+
+        if (Config.isEnabled("barcode_scanner")) {
+            scanner = new BarcodeScanner(Config.get("barcode_scanner.path"));
+        }
     }
 
     @Override
-    public void shutdown(){
+    public void shutdown() {
         super.shutdown();
-        joystick.shutdown();
+        if (scanner != null) {
+            scanner.shutdown();
+        }
+        if (joystick != null) {
+            joystick.shutdown();
+        }
     }
 }

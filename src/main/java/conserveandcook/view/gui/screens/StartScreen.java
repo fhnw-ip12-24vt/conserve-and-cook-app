@@ -1,27 +1,19 @@
 package conserveandcook.view.gui.screens;
 
-public class StartScreen implements conserveandcook.view.gui.screens.Screen {
-    private long lastGifFrameDrawnAt;
-    private int currentFrame;
+import ch.trick17.gui.Gui;
+import conserveandcook.model.Application;
 
-    final int FRAMES = 4;
-    final long GIF_INTERVAL = 2500 * 100000; // 0.25 seconds
+public class StartScreen extends AbstractScreen {
+    static final int FRAMES = 4;
+    static final long GIF_INTERVAL = 2500 * 100000; // 0.25 seconds
 
-    @Override
-    public String getTitle() {
-        return "start";
+    public StartScreen(Gui gui) {
+        super(gui, FRAMES, GIF_INTERVAL);
     }
 
     @Override
-    public String getCurrentFrame(String language) {
-        String backgroundPath = "img/start/frame_";
-        long now = System.nanoTime();
-
-        if (now - lastGifFrameDrawnAt > GIF_INTERVAL) {
-            lastGifFrameDrawnAt = now;
-            currentFrame = currentFrame + 1 < FRAMES ? currentFrame + 1 : 0;
-        }
-        String frameName = String.format("%01d", currentFrame);
-        return backgroundPath + frameName + ".png";
+    public void draw(Application model) {
+        String currentFrame = getGifFrame("img/start/");
+        drawBackground(currentFrame);
     }
 }

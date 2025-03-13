@@ -1,16 +1,16 @@
 package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import conserveandcook.misc.Config;
 
 import java.io.FileInputStream;
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static ch.mvcbase.MvcLogger.LOGGER;
+
 public class Joystick extends Component {
-    private static final Logger log = LoggerFactory.getLogger(Joystick.class);
     private final String device;
     private Thread serialReaderThread;
 
@@ -34,13 +34,16 @@ public class Joystick extends Component {
 
     public void shutdown() {
         serialReaderThread.interrupt();
-        log.info("Shutting down Joystick");
+        LOGGER.logInfo("Shutting down joystick device: " + device);
     }
 
     private void listenToInput() {
+        if (Config.get("environment").equals("test")) {
+            return;
+        }
         try (FileInputStream fis = new FileInputStream(this.device)) {
             byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
-            log.info("Reading joystick events from {}", this.device);
+            LOGGER.logInfo("Reading joystick events from " + this.device);
 
             while (true) {
                 int bytesRead = fis.read(buffer);
@@ -49,7 +52,7 @@ public class Joystick extends Component {
                 }
             }
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            LOGGER.logException(e.getMessage(), e);
             shutdown();
         }
     }
@@ -136,7 +139,6 @@ public class Joystick extends Component {
         }
     };
 
-
     public void whileNorth(Runnable task, Duration delay) {
         whileNorth = task;
         whilePressedDelay = delay;
@@ -195,5 +197,16 @@ public class Joystick extends Component {
 
     public void onWest(Runnable task) {
         this.onWest = task;
+    }
+
+    // For testing
+    public void mockInput() {
+        if (Config.get("environment").equals("test")) {
+            executor = Executors.newSingleThreadExecutor();
+            setDirection(true, whileNorthWorker, onNorth);
+            setDirection(true, whileEastWorker, onEast);
+            setDirection(true, whileSouthWorker, onSouth);
+            setDirection(true, whileWestWorker, onWest);
+        }
     }
 }
