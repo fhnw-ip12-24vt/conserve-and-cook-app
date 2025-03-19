@@ -143,7 +143,7 @@ public class GameScreen extends AbstractScreen {
         if (gameOver) {
             return AvailableScreens.GAMEOVER;
         }
-        return AvailableScreens.NAME;
+        return AvailableScreens.RESULT;
     }
 
     private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
