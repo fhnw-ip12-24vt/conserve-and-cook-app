@@ -2,16 +2,14 @@ package conserveandcook.misc;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Properties;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
-
-import java.util.Objects;
-import java.util.Properties;
 
 public class Config {
     private static final String PATH = ".properties";
     private static Config INSTANCE;
-    private Properties properties;
+    private final Properties properties;
 
     private Config() {
         properties = new Properties();
@@ -48,13 +46,12 @@ public class Config {
 
     public static boolean isEnabled(String key) {
         String enabled = get(key + ".enabled");
-        if (Objects.equals(enabled, "false")) {
-            return false;
-        }
-        return true;
+        return !enabled.equals("false");
     }
 
-    // For testing purposes, ran before each test case
+    /**
+     * For testing purposes, ran before each test case
+     */
     public static void loadTestProperties() {
         Config config = getInstance();
         try {

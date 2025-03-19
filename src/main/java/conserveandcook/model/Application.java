@@ -56,6 +56,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(next);
+        activeScreen.init(this);
     }
 
     public void decrementScreen() {
@@ -68,6 +69,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(prev);
+        activeScreen.init(this);
     }
 
     public AvailableScreens getCurrentScreen() {
