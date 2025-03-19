@@ -4,6 +4,8 @@ import conserveandcook.Database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Ingredient {
     private final int id;
@@ -21,6 +23,15 @@ public class Ingredient {
     public static Ingredient getIngredientById(String id) throws SQLException {
         Database db = Database.getInstance();
         String query = "select * from ingredient where id = ? limit 1";
+
+        // Check for three digits
+        Pattern pattern = Pattern.compile("\\d{3}");
+        Matcher matcher = pattern.matcher(id);
+        if (matcher.find()) {
+            id = matcher.group();
+        } else {
+            throw new SQLException("Invalid barcode: No id found");
+        }
         ResultSet results = db.executeQuery(query, id);
 
         // Check if we've got a row
@@ -37,15 +48,16 @@ public class Ingredient {
 
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from ingredient where recipe_id = ? limit 3";
+        int ingredientCount = 9;
+        String query = "select * from ingredient where recipe_id = ? order by category_id limit 9;";
         ResultSet results = db.executeQuery(query, recipeId);
-        Ingredient[] ingredients = new Ingredient[3];
+        Ingredient[] ingredients = new Ingredient[ingredientCount];
 
         int index = 0;
-        if(results == null) {
+        if (results == null) {
             throw new SQLException("Exactly three ingredients were expected, received zero");
         }
-        while (results.next()) {
+        while (results.next() && index < ingredientCount) {
             ingredients[index] = new Ingredient
                     (
                             results.getInt(1),
@@ -68,5 +80,9 @@ public class Ingredient {
 
     public int getCategory() {
         return category;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -19,8 +19,8 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
     public void setupEventHandler(ApplicationController controller) {
         if (joystick != null) {
             joystick.onNorth(controller::up);
-            joystick.onEast(controller::nextScreen);
-            joystick.onWest(controller::prevScreen);
+            joystick.onEast(controller::right);
+            joystick.onWest(controller::left);
             joystick.onSouth(controller::down);
         }
 

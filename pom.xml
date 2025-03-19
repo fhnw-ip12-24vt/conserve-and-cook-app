@@ -346,8 +346,9 @@
                                                  failonerror="false" usepty="true" useSystemIn="true"
                                                  command="unzip '${pi.deploydirectory}/${jar.name}.zip' -d '${pi.deploydirectory}'"/>
 
+                                        <!-- TODO: (SK) Replace test.db with database.db once we have all the necessary assets -->
                                         <scp trust="true"
-                                             localFile="${project.basedir}/src/main/resources/database/database.db"
+                                             localFile="${project.basedir}/src/main/resources/database/test.db"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/database.db"
                                              port="${pi.port}">
                                         </scp>

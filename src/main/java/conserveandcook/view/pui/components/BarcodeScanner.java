@@ -1,13 +1,15 @@
 package conserveandcook.view.pui.components;
 
 import com.pi4j.catalog.components.base.Component;
-import conserveandcook.misc.Config;
-import static ch.mvcbase.MvcLogger.LOGGER;
+import conserveandcook.misc.Environments;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.function.Consumer;
+
+import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class BarcodeScanner extends Component {
     private final String devicePath;
@@ -31,7 +33,7 @@ public class BarcodeScanner extends Component {
     }
 
     private void listenToInput() {
-        if (Config.get("environment").equals("test"))  {
+        if (Environments.get() == Environments.TEST) {
             return;
         }
         try (FileInputStream inputStream = new FileInputStream(devicePath)) {
@@ -58,7 +60,7 @@ public class BarcodeScanner extends Component {
                         LOGGER.logInfo("Barcode scanned: {}", barcode);
 
                         // Run the onScan worker, if it has been set
-                        if(onScan != null) {
+                        if (onScan != null) {
                             onScan.accept(barcode.toString());
                         }
                         barcode.setLength(0); // Reset barcode buffer
@@ -66,7 +68,7 @@ public class BarcodeScanner extends Component {
                 }
             }
         } catch (IOException e) {
-            LOGGER.logError("Error reading from {}: {}",devicePath, e.getMessage(),e);
+            LOGGER.logError("Error reading from {}: {}", devicePath, e.getMessage(), e);
         }
     }
 
@@ -99,8 +101,8 @@ public class BarcodeScanner extends Component {
         this.onScan = task;
     }
 
-    public void mockScan(String payload){
-        if(onScan != null) {
+    public void mockScan(String payload) {
+        if (onScan != null) {
             onScan.accept(payload);
         }
     }
