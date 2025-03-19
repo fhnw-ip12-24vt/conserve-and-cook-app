@@ -36,13 +36,6 @@ public class GameScreen extends AbstractScreen {
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
-        if (model.getSelectedRecipe() == null) {
-            try {
-                model.setSelectedRecipe(Recipe.getRandomRecipe());
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        }
 
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
         Recipe selectedRecipe = model.getSelectedRecipe();
@@ -71,7 +64,6 @@ public class GameScreen extends AbstractScreen {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-        // TODO: (SK) Implement game logic
     }
 
     @Override
@@ -100,11 +92,21 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void init(Application model) {
+        // Reset Timer
         if (Environments.get() == Environments.LOCAL) {
             this.gameDuration = 10;
         } else {
             this.gameDuration = 120;
         }
+
+        // Select new random recipe, whenever the screen is initialized
+        try {
+            model.setSelectedRecipe(Recipe.getRandomRecipe());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        model.resetIngredients();
     }
 
     private void gameTimer() {

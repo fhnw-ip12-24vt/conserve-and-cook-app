@@ -18,7 +18,6 @@ public class GameoverScreen extends AbstractScreen {
         drawBackground("img/gameover/" + lang + ".png");
 
         long currentTime = System.currentTimeMillis();
-        System.out.println(currentTime-time);
         if(currentTime - time >= IDLE_TIME) {
             model.incrementScreen();
         }

@@ -104,6 +104,11 @@ public class Application {
          */
         selectedIngredients[ingredient.getCategory()] = ingredient;
     }
+    public void resetIngredients() {
+        for (int i = 0; i < 3; i++) {
+            this.selectedIngredients[i] = null;
+        }
+    }
 
     public Ingredient[] getSelectedIngredients() {
         return selectedIngredients;
