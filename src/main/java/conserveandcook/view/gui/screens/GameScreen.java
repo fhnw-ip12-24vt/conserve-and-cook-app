@@ -133,7 +133,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void gameOver() {
-        gui.drawString("Game Over", 50, 50);
         this.gameOver = true;
         controller.nextScreen();
     }
