@@ -20,6 +20,7 @@ public class GameScreen extends AbstractScreen {
 
     private int debugIndex = 0;
     private int debugCategory = 0;
+    private static final double ingredientScale = 0.25;
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
@@ -29,7 +30,7 @@ public class GameScreen extends AbstractScreen {
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
-        if (model.getSelectedRecipe() == null){
+        if (model.getSelectedRecipe() == null) {
             try {
                 model.setSelectedRecipe(Recipe.getRandomRecipe());
             } catch (Exception e) {
@@ -44,6 +45,7 @@ public class GameScreen extends AbstractScreen {
             Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
 
             for (Ingredient ingredient : ingredients) {
+                System.out.println(ingredient.getId() + ingredient.getName());
                 drawIngredient(ingredient, selectedRecipe);
             }
 
@@ -102,7 +104,7 @@ public class GameScreen extends AbstractScreen {
         int yOffset = category * 240;
         int xOffset = ingredientIndex * 230;
 
-        gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE);
+        gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE *ingredientScale);
 
         if (category == prevCategory) {
             ingredientIndex = ingredientIndex + 1 > 3 ? 0 : ingredientIndex + 1;
@@ -118,15 +120,15 @@ public class GameScreen extends AbstractScreen {
         int category = ingredient.getCategory();
         int yOffset = category * 240;
 
-        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
+        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE * ingredientScale);
     }
 
     private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
         String name = ingredient.getName() + ".png";
+//        name = name.substring(0, 1).toUpperCase() + name.substring(1);
         String recipeId = String.valueOf(selectedRecipe.getId());
 
-        String path = Path.of("img/recipe", recipeId, name).toString();
-        path = path.replace('\\', '/');
+        String path = "img/recipe/" + recipeId + "/" + name;
         return path;
     }
 
