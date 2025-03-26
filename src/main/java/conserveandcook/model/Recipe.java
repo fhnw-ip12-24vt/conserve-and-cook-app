@@ -18,7 +18,9 @@ public class Recipe {
 
     public static Recipe getRandomRecipe() throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from recipe order by random() limit 1";
+        // TODO: (SK) Replace this code once all the recipes are drawn
+//        String query = "select * from recipe order by random() limit 1";
+        String query = "select * from recipe where id = 1 limit 1";
         ResultSet results = db.executeQuery(query);
 
         // Check if we've got a row
