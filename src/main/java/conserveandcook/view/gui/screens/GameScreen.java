@@ -45,7 +45,6 @@ public class GameScreen extends AbstractScreen {
             Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
 
             for (Ingredient ingredient : ingredients) {
-                System.out.println(ingredient.getId() + ingredient.getName());
                 drawIngredient(ingredient, selectedRecipe);
             }
 
