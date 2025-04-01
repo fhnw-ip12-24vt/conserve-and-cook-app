@@ -26,6 +26,12 @@ public abstract class AbstractScreen {
     public void up(Application model) {};
     public void down(Application model) {};
 
+    /**
+     * Call this method to reset the state of the view.
+     * @param model
+     */
+    public void init(Application model) {};
+
     protected void drawBackground(String frame) {
         gui.drawImage(frame, 0, 0, SCALE);
     }

@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
@@ -13,6 +14,11 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 
 public class GameScreen extends AbstractScreen {
+    private int gameDuration; // 2 minutes in seconds
+    private long lastUpdateTime;
+    private boolean gameOver;
+    private final ApplicationController controller;
+
     private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
     private int ingredientIndex = 0;
@@ -23,19 +29,13 @@ public class GameScreen extends AbstractScreen {
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
-    public GameScreen(Gui g) {
+    public GameScreen(Gui g, ApplicationController controller) {
         super(g);
+        this.controller = controller;
     }
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
-        if (model.getSelectedRecipe() == null){
-            try {
-                model.setSelectedRecipe(Recipe.getRandomRecipe());
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        }
 
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
         Recipe selectedRecipe = model.getSelectedRecipe();
@@ -53,6 +53,7 @@ public class GameScreen extends AbstractScreen {
                 }
             }
         }
+        gameTimer();
     }
 
     @Override
@@ -63,7 +64,6 @@ public class GameScreen extends AbstractScreen {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-        // TODO: (SK) Implement game logic
     }
 
     @Override
@@ -91,8 +91,58 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
+    public void init(Application model) {
+        // Reset Timer
+        if (Environments.get() == Environments.LOCAL) {
+            this.gameDuration = 10;
+        } else {
+            this.gameDuration = 120;
+        }
+
+        // Select new random recipe, whenever the screen is initialized
+        try {
+            model.setSelectedRecipe(Recipe.getRandomRecipe());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+
+        model.resetIngredients();
+    }
+
+    private void gameTimer() {
+        long currentTime = System.nanoTime();
+        long goneTime = currentTime - lastUpdateTime;
+
+        if (gameDuration <= 0) {
+            gameOver();
+            return;
+        }
+
+        long second = 1_000_000_000L; // one second in nanoseconds
+        if (goneTime >= second) {
+            gameDuration--;
+            lastUpdateTime = currentTime;
+        }
+
+        int minutes = gameDuration / 60;
+        int seconds = gameDuration % 60;
+        String time = String.format("%02d:%02d", minutes, seconds);
+
+        gui.setFontSize((int)(80 * SCALE));
+        gui.drawString(time, 70, 70);
+    }
+
+    private void gameOver() {
+        this.gameOver = true;
+        controller.nextScreen();
+    }
+
+    @Override
     public AvailableScreens next() {
-        return AvailableScreens.NAME;
+        if (gameOver) {
+            return AvailableScreens.GAMEOVER;
+        }
+        return AvailableScreens.RESULT;
     }
 
     private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
@@ -138,4 +188,5 @@ public class GameScreen extends AbstractScreen {
 
         gui.drawImage(path, x * SCALE, y * SCALE, SCALE);
     }
+
 }

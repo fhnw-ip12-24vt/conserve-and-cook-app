@@ -5,6 +5,7 @@ public enum AvailableScreens {
     LANGUAGE,
     REGION,
     GAME,
+    GAMEOVER,
     RESULT,
     NAME,
 }
