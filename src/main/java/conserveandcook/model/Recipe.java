@@ -65,6 +65,9 @@ public class Recipe {
 
         for (int i = 0; i < 3; i++) {
             Ingredient ingredient = selectedIngredients[i];
+            if (ingredient == null) {
+                continue;
+            }
             int ingScore = ingredient.getCo2();
             int min = 0, max = 0;
             try {
