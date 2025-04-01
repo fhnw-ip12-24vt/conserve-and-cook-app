@@ -56,6 +56,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(next);
+        activeScreen.init(this);
     }
 
     public void decrementScreen() {
@@ -68,6 +69,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(prev);
+        activeScreen.init(this);
     }
 
     public AvailableScreens getCurrentScreen() {
@@ -101,6 +103,11 @@ public class Application {
             By selecting another, you overwrite the first.
          */
         selectedIngredients[ingredient.getCategory()] = ingredient;
+    }
+    public void resetIngredients() {
+        for (int i = 0; i < 3; i++) {
+            this.selectedIngredients[i] = null;
+        }
     }
 
     public Ingredient[] getSelectedIngredients() {

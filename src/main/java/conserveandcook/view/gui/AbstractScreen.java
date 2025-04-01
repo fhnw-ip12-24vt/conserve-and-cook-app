@@ -27,6 +27,12 @@ public abstract class AbstractScreen {
     public void down(Application model) {};
 
     /**
+     * Call this method to reset the state of the view.
+     * @param model
+     */
+    public void init(Application model) {};
+
+    /**
      * Draws a given frame on the full width & height of the window.
      * @param frame Path to the image. Avoid leading /
      */

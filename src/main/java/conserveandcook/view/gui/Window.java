@@ -18,11 +18,13 @@ public class Window extends GuiBase<Application, ApplicationController> {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
 
+        // Register screens in the model
         Application.screens.put(AvailableScreens.START, new StartScreen(this));
         Application.screens.put(AvailableScreens.LANGUAGE, new LanguageScreen(this));
         Application.screens.put(AvailableScreens.TUTORIAL, new TutorialScreen(this));
         Application.screens.put(AvailableScreens.REGION, new RegionScreen(this));
-        Application.screens.put(AvailableScreens.GAME, new GameScreen(this));
+        Application.screens.put(AvailableScreens.GAME, new GameScreen(this, controller));
+        Application.screens.put(AvailableScreens.GAMEOVER, new GameoverScreen(this));
         Application.screens.put(AvailableScreens.RESULT, new ResultScreen(this));
         Application.screens.put(AvailableScreens.NAME, new NameScreen(this));
 
