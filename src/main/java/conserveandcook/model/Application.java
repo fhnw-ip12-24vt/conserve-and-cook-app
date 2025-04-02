@@ -1,5 +1,6 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.I18n;
 import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AvailableScreens;
@@ -40,14 +41,16 @@ public class Application {
     public void incrementLanguage() {
         selectedLanguage = decrementWrapped(selectedLanguage, languages.length - 1);
         language = languages[selectedLanguage];
+        I18n.setLanguage(language);
     }
 
     public void decrementLanguage() {
         selectedLanguage = incrementWrapped(selectedLanguage, languages.length - 1);
         language = languages[selectedLanguage];
+        I18n.setLanguage(language);
     }
 
-    public static Languages getLanguage() {
+    public Languages getLanguage() {
         return language;
     }
 

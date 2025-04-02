@@ -6,7 +6,7 @@ public enum Languages {
     IT(3),
     EN(4);
 
-    int index;
+    final int index;
 
     Languages(int index) {
         this.index = index;
