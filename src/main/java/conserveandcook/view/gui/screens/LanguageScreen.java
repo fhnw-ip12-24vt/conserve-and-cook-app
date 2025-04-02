@@ -2,11 +2,10 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.AbstractGif;
 import conserveandcook.view.gui.AvailableScreens;
 
-import java.util.Locale;
-
-public class LanguageScreen extends AbstractScreen {
+public class LanguageScreen extends AbstractGif {
     static final int FRAMES = 4;
     static final long GIF_INTERVAL = 2200 * 100000; // 0.25 seconds
 
@@ -34,7 +33,7 @@ public class LanguageScreen extends AbstractScreen {
 
     @Override
     public AvailableScreens next() {
-        return AvailableScreens.REGION;
+        return AvailableScreens.TUTORIAL;
     }
 
     @Override

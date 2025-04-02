@@ -2,9 +2,10 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.AbstractGif;
 import conserveandcook.view.gui.AvailableScreens;
 
-public class StartScreen extends AbstractScreen {
+public class StartScreen extends AbstractGif {
     static final int FRAMES = 4;
     static final long GIF_INTERVAL = 2500 * 100000; // 0.25 seconds
 
