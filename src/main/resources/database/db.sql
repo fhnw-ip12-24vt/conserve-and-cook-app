@@ -51,6 +51,17 @@ CREATE TABLE ingredient_to_recipe
     FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
 );
 
+create table highscore
+(
+    score INTEGER not null,
+    name  TEXT,
+    id    integer not null
+        constraint highscore_pk
+            primary key autoincrement
+);
+
+
+
 INSERT INTO regions (id, title)
 VALUES (1, 'europe');
 INSERT INTO regions (id, title)

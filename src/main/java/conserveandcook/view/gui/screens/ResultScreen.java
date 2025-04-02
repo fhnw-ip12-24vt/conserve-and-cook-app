@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Highscore;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
@@ -18,6 +19,11 @@ public class ResultScreen extends AbstractScreen {
         drawBackground("img/result/frame_0.png");
         gui.setFontSize(70);
         gui.drawString(score + " Punkte", 500, 100);
+    }
+
+    private void saveHighscore() {
+        Highscore highscore = Highscore.getInstance();
+        // TODO: Save Highscore (only once)
     }
 
     @Override
