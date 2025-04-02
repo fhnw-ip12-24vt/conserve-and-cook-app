@@ -31,7 +31,10 @@ public class I18nTest extends AbstractTest {
     @ParameterizedTest
     @ValueSource(strings = {"intro", "explanation"})
     public void testNoLanguage(String key){
-        // Act
+        // Arrange
+        I18n.setLanguage(null);
+
+        // Assert
         assertThrows(NullPointerException.class, () -> I18n.translate(key));
     }
 

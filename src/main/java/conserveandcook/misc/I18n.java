@@ -20,6 +20,11 @@ public class I18n {
         return INSTANCE;
     }
 
+    /**
+     * Translates a given key into the target language. Language can be specified over a setter.
+     * @param key
+     * @return The translated String
+     */
     public static String translate(String key) {
         I18n i18n = getInstance();
         Database db = Database.getInstance();
