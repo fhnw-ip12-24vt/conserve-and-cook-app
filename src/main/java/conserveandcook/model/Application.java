@@ -76,6 +76,14 @@ public class Application {
         return availableScreens[currentScreen];
     }
 
+    public void timeoutScreen(){
+        activeScreen = screens.get(AvailableScreens.START);
+        if (activeScreen == null) {
+            return;
+        }
+        activeScreen.init(this);
+    }
+
     public void nextRegion() {
         this.selectedRegion = incrementWrapped(this.selectedRegion, regions.length - 1);
     }
