@@ -59,6 +59,7 @@ public class Joystick extends Component {
 
     private void parseEvent(byte[] buffer) {
         // The direction in which the joystick was moved
+        LOGGER.logInfo("New event: " + new String(buffer));
         int value = (short) ((buffer[4] & 0xFF) | ((buffer[5] & 0xFF) << 8));
 
         byte type = buffer[6]; // type 1 = Button Press, type 2 = Axis movement

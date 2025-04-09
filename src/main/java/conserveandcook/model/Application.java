@@ -162,7 +162,7 @@ public class Application {
      * @param max     int that represents the maximum value after which to wrap around
      * @return int result
      */
-    public int incrementWrapped(int current, int max) {
+    public static int incrementWrapped(int current, int max) {
         return current + 1 > max ? 0 : current + 1;
     }
 
@@ -173,7 +173,7 @@ public class Application {
      * @param max     int to which the function wraps in case the previous int is below 0
      * @return int result
      */
-    public int decrementWrapped(int current, int max) {
+    public static int decrementWrapped(int current, int max) {
         return current - 1 >= 0 ? current - 1 : max;
     }
 }

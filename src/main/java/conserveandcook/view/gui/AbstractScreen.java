@@ -3,16 +3,19 @@ package conserveandcook.view.gui;
 import ch.trick17.gui.Gui;
 import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
+import conserveandcook.view.gui.components.ComponentList;
 
 public abstract class AbstractScreen {
     protected final Gui gui;
     public static double SCALE = Double.parseDouble(Config.get("screen.scale"));
+    protected ComponentList components = new ComponentList();
 
     protected AbstractScreen(Gui gui) {
         this.gui = gui;
     }
 
     public abstract void draw(Application model);
+    public void initComponents() {};
 
     public AvailableScreens next(){
         return null;
