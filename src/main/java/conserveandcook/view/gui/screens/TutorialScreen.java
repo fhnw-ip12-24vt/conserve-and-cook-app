@@ -42,7 +42,7 @@ public class TutorialScreen extends AbstractScreen {
     // TODO: (SK) Replace this function with i18n results
     private String getText() {
         return switch (frameIndex) {
-            case 0 -> "Willkommen bei \nConserve and Cook";
+            case 0 -> "Willkommen bei \nConserve & Cook";
             case 1 -> "Dein Ziel ist es, \nleckere Gerichte \naus aller Welt zu kochen";
             case 2 -> "Die Region bestimmt, \nwelche Rezepte du kochen wirst!";
             case 3 -> "Wähle 3 Zutaten. \n Du Bekommst neun zur Auswahl" +
@@ -64,19 +64,19 @@ public class TutorialScreen extends AbstractScreen {
         switch (frameIndex) {
             case 0:
                 x = 670;
-                y = 350;
+                y = 365;
                 fontsize = 75;
                 break;
 
             case 1:
                 x = 655;
-                y = 330;
+                y = 340;
                 fontsize = 70;
                 break;
 
             case 2:
                 x = 1170;
-                y = 700;
+                y = 740;
                 fontsize = 50;
                 break;
 

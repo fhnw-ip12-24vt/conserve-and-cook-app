@@ -6,6 +6,7 @@ public enum AvailableScreens {
     TUTORIAL,
     REGION,
     GAME,
+    GAMEOVER,
     RESULT,
     NAME,
 }

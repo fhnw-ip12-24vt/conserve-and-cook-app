@@ -1,5 +1,6 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.I18n;
 import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AbstractScreen;
@@ -17,6 +18,7 @@ public class Application {
 
     private int selectedLanguage = 0;
     private static final Languages[] languages = Languages.values();
+    private static Languages language;
 
     private final Ingredient[] selectedIngredients = new Ingredient[3];
     private Recipe selectedRecipe;
@@ -40,10 +42,18 @@ public class Application {
 
     public void incrementLanguage() {
         selectedLanguage = decrementWrapped(selectedLanguage, languages.length - 1);
+        language = languages[selectedLanguage];
+        I18n.setLanguage(language);
     }
 
     public void decrementLanguage() {
         selectedLanguage = incrementWrapped(selectedLanguage, languages.length - 1);
+        language = languages[selectedLanguage];
+        I18n.setLanguage(language);
+    }
+
+    public Languages getLanguage() {
+        return language;
     }
 
     public void incrementScreen() {
@@ -56,6 +66,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(next);
+        activeScreen.init(this);
     }
 
     public void decrementScreen() {
@@ -68,6 +79,7 @@ public class Application {
             return;
         }
         activeScreen = screens.get(prev);
+        activeScreen.init(this);
     }
 
     public AvailableScreens getCurrentScreen() {
@@ -101,6 +113,11 @@ public class Application {
             By selecting another, you overwrite the first.
          */
         selectedIngredients[ingredient.getCategory()] = ingredient;
+    }
+    public void resetIngredients() {
+        for (int i = 0; i < 3; i++) {
+            this.selectedIngredients[i] = null;
+        }
     }
 
     public Ingredient[] getSelectedIngredients() {
