@@ -16,7 +16,7 @@ public class ResultScreen extends AbstractScreen {
         model.setScore(model.getSelectedRecipe().calculateScore(model.getSelectedIngredients()));
         int score = model.getScore();
         drawBackground("img/result/frame_0.png");
-        gui.setFontSize(70);
+        gui.setFontSize((int) (140 * SCALE));
         gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
     }
 
