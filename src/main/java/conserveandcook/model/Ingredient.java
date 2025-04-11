@@ -28,7 +28,7 @@ public class Ingredient {
         Pattern pattern = Pattern.compile("\\d{3}");
         Matcher matcher = pattern.matcher(id);
         if (matcher.find()) {
-            id = matcher.group();
+            id = "1"+matcher.group();
         } else {
             throw new SQLException("Invalid barcode: No id found");
         }
@@ -36,7 +36,7 @@ public class Ingredient {
 
         // Check if we've got a row
         if (!results.next()) {
-            throw new SQLException("Exactly one ingredient was expected, received zero");
+            throw new SQLException("Exactly one ingredient was expected, received zero. Id: " + id);
         }
         return new Ingredient(
                 results.getInt(1),

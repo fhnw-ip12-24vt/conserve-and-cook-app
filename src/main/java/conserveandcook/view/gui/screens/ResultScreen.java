@@ -17,7 +17,7 @@ public class ResultScreen extends AbstractScreen {
         int score = model.getScore();
         drawBackground("img/result/frame_0.png");
         gui.setFontSize(70);
-        gui.drawString(score + " Punkte", 500, 100);
+        gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
     }
 
     @Override

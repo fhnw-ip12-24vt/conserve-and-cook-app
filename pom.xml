@@ -348,7 +348,7 @@
 
                                         <!-- TODO: (SK) Replace test.db with database.db once we have all the necessary assets -->
                                         <scp trust="true"
-                                             localFile="${project.basedir}/src/main/resources/database/test.db"
+                                             localFile="${project.basedir}/src/main/resources/database/database.db"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/database.db"
                                              port="${pi.port}">
                                         </scp>
