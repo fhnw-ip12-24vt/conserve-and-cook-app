@@ -72,12 +72,15 @@ VALUES (3, 'english');
 INSERT INTO languages (id, name)
 VALUES (4, 'italienisch');
 
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
-VALUES (644824915043, 'Rindfleisch', 10, 0, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
-VALUES (4250236825175, 'Poulet', 20, 1, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id)
-VALUES (121212, 'Tofu', 20, 2, 1);
-
 INSERT INTO recipe (id, region_id, name)
 VALUES (1, 1, 'Burger');
+
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1004, 'poulet', 20, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1005, 'rind', 40, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1007, 'schwein', 30, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1001, 'ananas', 10, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1003, 'kaese', 20, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1009, 'zwiebel', 5, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1002, 'avocado', 20, 2, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1006, 'salat', 3, 2, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1008, 'tomate', 5, 2, 1);
