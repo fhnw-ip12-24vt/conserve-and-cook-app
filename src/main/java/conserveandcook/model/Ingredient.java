@@ -28,7 +28,7 @@ public class Ingredient {
         Pattern pattern = Pattern.compile("\\d{3}");
         Matcher matcher = pattern.matcher(id);
         if (matcher.find()) {
-            id = "1"+matcher.group();
+            id = matcher.group();
         } else {
             throw new SQLException("Invalid barcode: No id found");
         }

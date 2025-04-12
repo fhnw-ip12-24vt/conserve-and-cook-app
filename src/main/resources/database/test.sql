@@ -75,12 +75,22 @@ VALUES (4, 'italienisch');
 INSERT INTO recipe (id, region_id, name)
 VALUES (1, 1, 'Burger');
 
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1004, 'poulet', 20, 0, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1005, 'rind', 40, 0, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1007, 'schwein', 30, 0, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1001, 'ananas', 10, 1, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1003, 'kaese', 20, 1, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1009, 'zwiebel', 5, 1, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1002, 'avocado', 20, 2, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1006, 'salat', 3, 2, 1);
-INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1008, 'tomate', 5, 2, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (1, 'poulet', 20, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (0, 'rind', 40, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (66, 'schwein', 30, 0, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (78, 'ananas', 10, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (18, 'kaese', 20, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (8, 'zwiebel', 5, 1, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (16, 'avocado', 20, 2, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (7, 'salat', 3, 2, 1);
+INSERT INTO ingredient (id, title, co2_score, category_id, recipe_id) VALUES (6, 'tomate', 5, 2, 1);
+
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (1, 1, 78);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (2, 1, 16);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (3, 1, 18);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (4, 1, 1);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (5, 1, 0);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (6, 1, 7);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (7, 1, 66);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (8, 1, 6);
+INSERT INTO ingredient_to_recipe (id, recipe_id, ingredient_id) VALUES (9, 1, 8);

@@ -78,9 +78,9 @@ public class RecipeTest extends AbstractTest {
 
         // Act
         r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("007");
-        Ingredient i2 = Ingredient.getIngredientById("001");
-        Ingredient i3 = Ingredient.getIngredientById("006");
+        Ingredient i1 = Ingredient.getIngredientById("066");
+        Ingredient i2 = Ingredient.getIngredientById("078");
+        Ingredient i3 = Ingredient.getIngredientById("007");
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);
@@ -98,9 +98,9 @@ public class RecipeTest extends AbstractTest {
 
         // Act
         r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("004");
-        Ingredient i2 = Ingredient.getIngredientById("009");
-        Ingredient i3 = Ingredient.getIngredientById("006");
+        Ingredient i1 = Ingredient.getIngredientById("001");
+        Ingredient i2 = Ingredient.getIngredientById("008");
+        Ingredient i3 = Ingredient.getIngredientById("007");
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);
@@ -118,9 +118,9 @@ public class RecipeTest extends AbstractTest {
 
         // Act
         r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("005");
-        Ingredient i2 = Ingredient.getIngredientById("003");
-        Ingredient i3 = Ingredient.getIngredientById("002");
+        Ingredient i1 = Ingredient.getIngredientById("000");
+        Ingredient i2 = Ingredient.getIngredientById("018");
+        Ingredient i3 = Ingredient.getIngredientById("016");
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);
