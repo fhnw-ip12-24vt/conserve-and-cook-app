@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
@@ -10,6 +11,8 @@ import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
     /** Game duration in seconds */
@@ -93,12 +96,12 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void init(Application model) {
         // Reset Timer
-        if (Environments.get() == Environments.LOCAL) {
-            this.gameDuration = 10;
+        String gameDurationString = Config.get("game.duration");
+        if (gameDurationString != null) {
+            this.gameDuration = Integer.parseInt(gameDurationString);
         } else {
-            // TODO: (SK) Remove the 30 seconds
-            // this.gameDuration = 120;
-            this.gameDuration = 30;
+            LOGGER.logError("Invalid property: game.duration must be greater than 0");
+            this.gameDuration = 120;
         }
 
         // Select new random recipe, whenever the screen is initialized
