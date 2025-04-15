@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
@@ -11,7 +12,10 @@ import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static ch.mvcbase.MvcLogger.LOGGER;
+
 public class GameScreen extends AbstractScreen {
+    /** Game duration in seconds */
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
@@ -92,9 +96,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void init(Application model) {
         // Reset Timer
-        if (Environments.get() == Environments.LOCAL) {
-            this.gameDuration = 10;
+        String gameDurationString = Config.get("game.duration");
+        if (gameDurationString != null) {
+            this.gameDuration = Integer.parseInt(gameDurationString);
         } else {
+            LOGGER.logError("Invalid property: game.duration must be greater than 0");
             this.gameDuration = 120;
         }
 
@@ -127,8 +133,8 @@ public class GameScreen extends AbstractScreen {
         int seconds = gameDuration % 60;
         String time = String.format("%02d:%02d", minutes, seconds);
 
-        gui.setFontSize((int)(80 * SCALE));
-        gui.drawString(time, 70, 70);
+        gui.setFontSize((int) (80 * SCALE));
+        gui.drawString(time, 140 * SCALE, 140 * SCALE);
     }
 
     private void gameOver() {
@@ -171,7 +177,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
-        String path = "img/ingredient/" + ingredient.getName() + ".png";
+        String name = ingredient.getName();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        String path = "img/ingredient/" + name + ".png";
         return path;
     }
 

@@ -36,7 +36,7 @@ public class Ingredient {
 
         // Check if we've got a row
         if (!results.next()) {
-            throw new SQLException("Exactly one ingredient was expected, received zero");
+            throw new SQLException("Exactly one ingredient was expected, received zero. Id: " + id);
         }
         return new Ingredient(
                 results.getInt(1),
