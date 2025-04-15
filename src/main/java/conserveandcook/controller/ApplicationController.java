@@ -2,11 +2,6 @@ package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
 import conserveandcook.model.Application;
-import conserveandcook.model.Ingredient;
-import conserveandcook.model.Recipe;
-import conserveandcook.view.gui.AvailableScreens;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ApplicationController extends ControllerBase<Application> {
 
