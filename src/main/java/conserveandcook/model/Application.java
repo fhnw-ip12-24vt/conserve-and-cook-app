@@ -33,6 +33,8 @@ public class Application {
     private final char[] nameCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
     private int selectedChar = 0;
 
+    private int idleTime = 0;
+
     public AbstractScreen getActiveScreen() {
         if (activeScreen == null) {
             activeScreen = screens.get(AvailableScreens.START);
@@ -178,6 +180,14 @@ public class Application {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getIdleTime() {
+        return idleTime;
+    }
+
+    public void setIdleTime(int idleTime) {
+        this.idleTime = idleTime;
     }
 
     /**
