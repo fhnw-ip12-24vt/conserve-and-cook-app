@@ -2,6 +2,7 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.model.Ingredient;
@@ -11,9 +12,10 @@ import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.Path;
+import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
+    /** Game duration in seconds */
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
@@ -26,6 +28,7 @@ public class GameScreen extends AbstractScreen {
 
     private int debugIndex = 0;
     private int debugCategory = 0;
+    private static final double ingredientScale = 0.25;
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
@@ -93,9 +96,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void init(Application model) {
         // Reset Timer
-        if (Environments.get() == Environments.LOCAL) {
-            this.gameDuration = 10;
+        String gameDurationString = Config.get("game.duration");
+        if (gameDurationString != null) {
+            this.gameDuration = Integer.parseInt(gameDurationString);
         } else {
+            LOGGER.logError("Invalid property: game.duration must be greater than 0");
             this.gameDuration = 120;
         }
 
@@ -128,8 +133,8 @@ public class GameScreen extends AbstractScreen {
         int seconds = gameDuration % 60;
         String time = String.format("%02d:%02d", minutes, seconds);
 
-        gui.setFontSize((int)(80 * SCALE));
-        gui.drawString(time, 70, 70);
+        gui.setFontSize((int) (80 * SCALE));
+        gui.drawString(time, 140 * SCALE, 140 * SCALE);
     }
 
     private void gameOver() {
@@ -152,7 +157,7 @@ public class GameScreen extends AbstractScreen {
         int yOffset = category * 240;
         int xOffset = ingredientIndex * 230;
 
-        gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE);
+        gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE * ingredientScale);
 
         if (category == prevCategory) {
             ingredientIndex = ingredientIndex + 1 > 3 ? 0 : ingredientIndex + 1;
@@ -168,25 +173,20 @@ public class GameScreen extends AbstractScreen {
         int category = ingredient.getCategory();
         int yOffset = category * 240;
 
-        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE);
+        gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE * ingredientScale);
     }
 
     private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
-        String name = ingredient.getName() + ".png";
-        String recipeId = String.valueOf(selectedRecipe.getId());
-
-        String path = Path.of("img/recipe", recipeId, name).toString();
-        path = path.replace('\\', '/');
+        String name = ingredient.getName();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        String path = "img/ingredient/" + name + ".png";
         return path;
     }
 
     private void drawRecipe(Recipe recipe) {
         int x = 120, y = 235;
-        String id = String.valueOf(recipe.getId());
-        String path = Path.of("img/recipe", id, "recipe.png").toString();
-        path = path.replace('\\', '/');
+        String path = "img/recipe/" + recipe.getName() + ".png";
 
         gui.drawImage(path, x * SCALE, y * SCALE, SCALE);
     }
-
 }

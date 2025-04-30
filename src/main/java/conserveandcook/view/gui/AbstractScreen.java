@@ -23,8 +23,12 @@ public abstract class AbstractScreen {
     public AvailableScreens prev(){
         return null;
     }
-    public void left(Application model) {}
-    public void right(Application model) {}
+    public void left(Application model) {
+        model.decrementScreen();
+    }
+    public void right(Application model) {
+        model.incrementScreen();
+    }
     public void scan(Application model, String barcode) {}
     public void up(Application model) {};
     public void down(Application model) {};

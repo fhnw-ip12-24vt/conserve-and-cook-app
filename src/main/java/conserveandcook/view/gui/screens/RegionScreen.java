@@ -18,7 +18,7 @@ public class RegionScreen extends AbstractScreen {
 
         gui.setTextAlignCenter();
         gui.setFontSize((int) (100 * SCALE));
-        gui.drawString("Select Region", gui.getWidth() / 2, 80);
+        gui.drawString("Select Region", gui.getWidth() / 2, 160 * SCALE);
     }
 
     @Override
