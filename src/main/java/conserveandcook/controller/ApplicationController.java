@@ -47,4 +47,8 @@ public class ApplicationController extends ControllerBase<Application> {
     public void scan(String barcode) {
         model.getActiveScreen().scan(model, barcode);
     }
+
+    public void press(){
+        model.getActiveScreen().getComponents().press();
+    }
 }

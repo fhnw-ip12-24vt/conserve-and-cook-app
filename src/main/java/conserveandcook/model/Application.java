@@ -36,6 +36,7 @@ public class Application {
     public AbstractScreen getActiveScreen() {
         if (activeScreen == null) {
             activeScreen = screens.get(AvailableScreens.START);
+            activeScreen.init(this);
         }
         return activeScreen;
     }
