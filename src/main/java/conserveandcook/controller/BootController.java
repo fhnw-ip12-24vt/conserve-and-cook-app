@@ -22,6 +22,8 @@ public class BootController extends ControllerBase<Boot> {
 
         boolean result = runChecks();
         model.setSuccess(result);
+
+        // TODO: (NN) Das Fenster für das Spiel soll sich nur öffnen, wenn alle Checks erfolgreich sind.
     }
 
     public boolean runChecks() {
