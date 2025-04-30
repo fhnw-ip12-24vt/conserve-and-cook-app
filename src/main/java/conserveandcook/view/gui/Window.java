@@ -13,8 +13,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
     public static int TIMEOUT = Integer.parseInt(Config.get("screen.timeout"));
 
-    private final long startTime = System.currentTimeMillis();
-    private long idleTime = 0;
+    private long startTime = System.currentTimeMillis();
 
     protected final ApplicationController controller;
 
@@ -68,13 +67,16 @@ public class Window extends GuiBase<Application, ApplicationController> {
     }
 
     private void checkIdle(Application model) {
+        // Return early for performance reasons
+        if (model.getCurrentScreen() == AvailableScreens.START) return;
+
         int idleTime = model.getIdleTime();
         if (System.currentTimeMillis() - startTime > 1000) {
-            model.setIdleTime(idleTime++);
+            idleTime++;
+            model.setIdleTime(idleTime);
+            startTime = System.currentTimeMillis();
         }
 
-        if (idleTime > TIMEOUT && model.getCurrentScreen() != AvailableScreens.START) {
-            model.timeoutScreen();
-        }
+        if (idleTime > TIMEOUT) model.timeoutScreen();
     }
 }
