@@ -12,7 +12,7 @@ public class ButtonTest extends AbstractTest {
     @Test
     public void testRunnable() {
         // Arrange
-        Button b = new Button(() -> test = "Hello", 1, 1);
+        Button b = new Button(() -> test = "Hello");
 
         // Act
         b.setState(Button.States.ACTIVE);
@@ -25,7 +25,7 @@ public class ButtonTest extends AbstractTest {
     @Test
     public void testIdleState() {
         // Arrange
-        Button b = new Button(() -> test = "Hello", 1, 1);
+        Button b = new Button(() -> test = "Hello");
 
         // Act
         b.setState(Button.States.IDLE);
@@ -38,7 +38,7 @@ public class ButtonTest extends AbstractTest {
     @Test
     public void testDisabledState() {
         // Arrange
-        Button b = new Button(() -> test = "Hello", 1, 1);
+        Button b = new Button(() -> test = "Hello");
 
         // Act
         b.setState(Button.States.DISABLED);

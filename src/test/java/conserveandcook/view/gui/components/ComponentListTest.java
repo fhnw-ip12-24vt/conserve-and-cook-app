@@ -14,8 +14,8 @@ public class ComponentListTest extends AbstractTest {
     @Test
     public void drawTest() {
         // Arrange
-        ComponentList list = new ComponentList();
-        Button b = new Button(() -> s = "hello", 0, 0);
+        ComponentList list = new ComponentList(null);
+        Button b = new Button(() -> s = "hello", Button.Type.ARROW, 0,0);
 
         // Act
         list.add(b);
@@ -29,9 +29,9 @@ public class ComponentListTest extends AbstractTest {
     @Test
     public void drawManyTest() {
         // Arrange
-        ComponentList list = new ComponentList();
-        Button b = new Button(() -> s = "hello", 0, 0);
-        Button d = new Button(() -> s = "hello", 0, 0);
+        ComponentList list = new ComponentList(null);
+        Button b = new Button(() -> s = "hello", Button.Type.ARROW, 0,0);
+        Button d = new Button(() -> s = "hello", Button.Type.ARROW, 0,0);
         List<Button> arrayList = List.of(b,d);
 
         // Act

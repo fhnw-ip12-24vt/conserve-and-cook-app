@@ -2,7 +2,6 @@ package conserveandcook.view.gui.components;
 
 import ch.trick17.gui.Gui;
 
-import static ch.mvcbase.MvcLogger.LOGGER;
 import static conserveandcook.view.gui.AbstractScreen.SCALE;
 
 public class Button implements Component {
@@ -31,11 +30,18 @@ public class Button implements Component {
         this.y = y;
     }
 
-    public Button(Runnable onClick, int y, int x) {
-        this.state = States.IDLE;
+    public Button(Runnable onClick, Type type, int y, int x) {
+        this(States.IDLE, null, type, x, y);
         this.onClick = onClick;
-        this.y = y;
-        this.x = x;
+    }
+
+    public Button(Runnable onClick) {
+        this(States.IDLE, null, Type.NO_GUI, 0, 0);
+        this.onClick = onClick;
+    }
+
+    public Button(Type type) {
+        this(States.IDLE, null, type, 0, 0);
     }
 
     @Override
@@ -49,8 +55,9 @@ public class Button implements Component {
 
         path = "img/buttons/active_arrowRbutton.png";
 
-        gui.drawImage(path, x, y, SCALE);
-        LOGGER.logInfo("drawing " + path + " at " + x + "," + y);
+        if(type != Type.NO_GUI) {
+            gui.drawImage(path, x, y, SCALE);
+        }
     }
 
     @Override
@@ -59,6 +66,10 @@ public class Button implements Component {
         if (onClick != null) {
             onClick.run();
         }
+    }
+
+    public void setOnPress(Runnable task) {
+        this.onClick = task;
     }
 
     public void setState(States state) {
@@ -70,7 +81,7 @@ public class Button implements Component {
     }
 
     public enum Type {
-        ARROW, BUTTON
+        ARROW, BUTTON, NO_GUI
     }
 
     public enum Direction {

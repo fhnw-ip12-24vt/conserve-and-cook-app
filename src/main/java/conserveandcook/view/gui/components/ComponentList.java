@@ -7,20 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentList {
-    private final ArrayList<Component> list = new ArrayList<>();
+    private final ArrayList<Button> list = new ArrayList<>();
     private int activeIndex = 0;
+    private final Gui gui;
+
+    public ComponentList(Gui g) {
+        this.gui = g;
+    }
 
     public void drawEach(Gui g) {
+        ensureActive();
         list.iterator().forEachRemaining(component -> {
             component.draw(g);
         });
     }
 
-    public void add(Component component) {
+    public void add(Button component) {
         list.add(component);
     }
 
-    public void addMany(List<? extends Component> components) {
+    public void addMany(List<Button> components) {
         list.addAll(components);
     }
 
@@ -34,5 +40,17 @@ public class ComponentList {
 
     public int size() {
         return list.size();
+    }
+
+    public void press() {
+        list.get(activeIndex).onPress(gui);
+    }
+
+    private void ensureActive() {
+        if(list.isEmpty()) return;
+        Button activeButton = list.get(activeIndex);
+
+        if (activeButton == null) return;
+        activeButton.setState(Button.States.ACTIVE);
     }
 }

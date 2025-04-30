@@ -8,10 +8,11 @@ import conserveandcook.view.gui.components.ComponentList;
 public abstract class AbstractScreen {
     protected final Gui gui;
     public static double SCALE = Double.parseDouble(Config.get("screen.scale"));
-    protected ComponentList components = new ComponentList();
+    protected final ComponentList components;
 
     protected AbstractScreen(Gui gui) {
         this.gui = gui;
+        this.components = new ComponentList(gui);
     }
 
     public abstract void draw(Application model);
@@ -45,5 +46,9 @@ public abstract class AbstractScreen {
      */
     protected void drawBackground(String frame) {
         gui.drawImage(frame, 0, 0, SCALE);
+    }
+
+    public ComponentList getComponents() {
+        return components;
     }
 }
