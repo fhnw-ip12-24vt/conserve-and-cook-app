@@ -3,16 +3,11 @@ package conserveandcook.view.pui.components;
 import com.pi4j.catalog.components.base.Component;
 import conserveandcook.misc.Environments;
 
-import java.io.FileInputStream;
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static ch.mvcbase.MvcLogger.LOGGER;
-
 public class Joystick extends Component {
-    private final String device;
-    private Thread serialReaderThread;
 
     private Runnable onNorth, onEast, onSouth, onWest;
     private Runnable whileNorth, whileEast, whileSouth, whileWest;
@@ -21,82 +16,7 @@ public class Joystick extends Component {
     private Duration whilePressedDelay;
     private ExecutorService executor;
 
-    public Joystick(String device) {
-        this.device = device;
-        startReading();
-    }
-
-    private void startReading() {
-        serialReaderThread = new Thread(this::listenToInput, "SerialJoystickReader");
-        serialReaderThread.setDaemon(true);
-        serialReaderThread.start();
-    }
-
-    public void shutdown() {
-        serialReaderThread.interrupt();
-        LOGGER.logInfo("Shutting down joystick device: " + device);
-    }
-
-    private void listenToInput() {
-        if (Environments.get() == Environments.TEST) {
-            return;
-        }
-        try (FileInputStream fis = new FileInputStream(this.device)) {
-            byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
-            LOGGER.logInfo("Reading joystick events from " + this.device);
-
-            while (true) {
-                int bytesRead = fis.read(buffer);
-                if (bytesRead == 8) {
-                    parseEvent(buffer);
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.logException(e.getMessage(), e);
-            shutdown();
-        }
-    }
-
-    private void parseEvent(byte[] buffer) {
-        // The direction in which the joystick was moved
-        LOGGER.logInfo("New event: " + new String(buffer));
-        int value = (short) ((buffer[4] & 0xFF) | ((buffer[5] & 0xFF) << 8));
-
-        byte type = buffer[6]; // type 1 = Button Press, type 2 = Axis movement
-        byte axis = buffer[7]; // 1 = X-Axis, 2 = Y-Axis
-
-        if (value == 0) {
-            setNeutral();
-            return;
-        }
-
-        if (type == 1) {
-            return;    // Button Pressed
-        }
-
-        // Axis movement
-        switch (axis) {
-            case 1: // X-axis
-                isWest = (value > -30000);  // Move left
-                isEast = (value < 30000); // Move right
-                break;
-            case 0: // Y-axis
-                isNorth = (value < -30000);   // Move up
-                isSouth = (value > 30000); // Move down
-                break;
-            default: // No other axis
-                break;
-        }
-
-        executor = Executors.newSingleThreadExecutor();
-
-        setDirection(isNorth, whileNorthWorker, onNorth);
-        setDirection(isEast, whileEastWorker, onEast);
-        setDirection(isSouth, whileSouthWorker, onSouth);
-        setDirection(isWest, whileWestWorker, onWest);
-    }
-
-    private void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
+    public void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
         if (isInDirection) {
             executor.submit(worker);
             if (task != null) {
@@ -105,7 +25,7 @@ public class Joystick extends Component {
         }
     }
 
-    private void setNeutral() {
+    public void setNeutral() {
         isNorth = false;
         isEast = false;
         isWest = false;
@@ -209,5 +129,12 @@ public class Joystick extends Component {
             setDirection(true, whileSouthWorker, onSouth);
             setDirection(true, whileWestWorker, onWest);
         }
+    }
+
+    public void setInput(boolean isNorth, boolean isEast, boolean isSouth, boolean isWest) {
+        setDirection(isWest, whileNorthWorker, onNorth);
+        setDirection(isEast, whileEastWorker, onEast);
+        setDirection(isSouth, whileSouthWorker, onSouth);
+        setDirection(isWest, whileWestWorker, onWest);
     }
 }
