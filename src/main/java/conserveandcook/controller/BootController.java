@@ -20,7 +20,8 @@ public class BootController extends ControllerBase<Boot> {
         checks.push(new ImageCheck());
         checks.push(new DatabaseCheck());
 
-        runChecks();
+        boolean result = runChecks();
+        model.setSuccess(result);
     }
 
     public boolean runChecks() {

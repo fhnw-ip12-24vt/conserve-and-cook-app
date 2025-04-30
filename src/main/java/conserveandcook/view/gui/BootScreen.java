@@ -32,7 +32,6 @@ public class BootScreen extends GuiBase<Boot, BootController> {
             this.setFontSize(20);
             this.drawString(logs.get(i), x * SCALE, y * SCALE);
         }
-
     }
 
     @Override
