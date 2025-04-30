@@ -1,7 +1,10 @@
 package conserveandcook;
 
 import conserveandcook.controller.ApplicationController;
+import conserveandcook.controller.BootController;
 import conserveandcook.model.Application;
+import conserveandcook.model.Boot;
+import conserveandcook.view.gui.BootScreen;
 import conserveandcook.view.gui.Window;
 import conserveandcook.view.pui.Hardware;
 
@@ -22,6 +25,12 @@ public class Starter {
 
         // Initialize hardware connection
         Hardware pui = new Hardware(controller, FRAME_RATE);
+
+        // Open the boot window
+        BootController bootController = new BootController(new Boot());
+        BootScreen bootScreen = new BootScreen(bootController);
+        bootScreen.open();
+        bootScreen.runUntilClosed(1000 / Starter.FRAME_RATE);
 
         // Open the window
         Window gui = new Window(controller);
