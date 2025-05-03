@@ -42,15 +42,7 @@ public class Highscore {
      */
     public void resetHighscore() {
         // TODO: Finish the method, this is a place holder
-        TimerTask task = new TimerTask() {
-            public void run() {
-                database.executeUpdate("DELETE FROM highscore");
-            }
-        };
-        Timer timer = new Timer("Timer");
-
-        long period = 1000L;
-        timer.schedule(task, 0, period);
+        database.executeUpdate("DELETE FROM highscore");
     }
 
     /**
