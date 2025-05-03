@@ -5,6 +5,7 @@ import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
+import conserveandcook.model.Boot;
 import conserveandcook.view.gui.screens.*;
 
 public class Window extends GuiBase<Application, ApplicationController> {
@@ -13,10 +14,12 @@ public class Window extends GuiBase<Application, ApplicationController> {
     public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
 
     protected final ApplicationController controller;
+    private final Boot bootModel;
 
-    public Window(ApplicationController controller) {
+    public Window(ApplicationController controller, Boot bootModel) {
         super(controller, "Conserve & Cook", WIDTH, HEIGHT);
         this.controller = controller;
+        this.bootModel = bootModel;
 
         // Register screens in the model
         Application.screens.put(AvailableScreens.START, new StartScreen(this));
@@ -39,7 +42,11 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
     @Override
     protected void redraw(Application model) {
-        model.getActiveScreen().draw(model);
+        try {
+            model.getActiveScreen().draw(model);
+        } catch (Exception e) {
+            bootModel.log(e.getMessage());
+        }
     }
 
     @Override

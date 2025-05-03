@@ -1,22 +1,20 @@
 package conserveandcook.view.gui;
 
 import ch.mvcbase.GuiBase;
+import ch.trick17.gui.widget.Button;
 import conserveandcook.controller.BootController;
-import conserveandcook.misc.Config;
 import conserveandcook.model.Boot;
 
 import java.util.List;
 
 public class BootScreen extends GuiBase<Boot, BootController> {
 
-    public static int HEIGHT = Integer.parseInt(Config.get("screen.height"));
-    public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
-    public static double SCALE = 0.5;
-
     protected final BootController controller;
 
+    private Button bootAppButton;
+
     public BootScreen(BootController controller) {
-        super(controller, "Conserve & Cook | Boot Screen", (int) (WIDTH * SCALE), (int) (HEIGHT * SCALE));
+        super(controller, "Conserve & Cook | Boot Screen", 800, 400);
         this.controller = controller;
 
         this.setResizable(true);
@@ -26,16 +24,29 @@ public class BootScreen extends GuiBase<Boot, BootController> {
     protected void redraw(Boot model) {
         List<String> logs = model.getLogs();
         for (int i = 0; i < logs.size(); i++) {
-            int x = 20;
-            int y = 40 + (i * 40);
+            int x = 10;
+            int y = 20 + (i * 20);
 
             this.setFontSize(20);
-            this.drawString(logs.get(i), x * SCALE, y * SCALE);
+            this.drawString(logs.get(i), x, y);
         }
+
+        this.setFontSize(10);
+        bootAppButton.draw(this);
     }
 
     @Override
     public void initializeComponents(Boot model) {
+        bootAppButton = new Button("Boot App", false, 20, 250, 160, 50);
+        bootAppButton.setOnClick((Double x, Double y) -> {
+            try {
+                model.log("Trying to open application");
+                model.openApplication();
+            } catch (Exception e) {
+                model.log(e.getMessage());
+            }
+        });
 
+        this.addComponents(bootAppButton);
     }
 }
