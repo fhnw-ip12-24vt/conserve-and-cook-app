@@ -1,6 +1,7 @@
 package conserveandcook.misc;
 
 import conserveandcook.AbstractTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,10 +18,20 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class HighscoreTest extends AbstractTest {
 
+    @BeforeEach
+    public void tearDown() {
+        Highscore highscore = Highscore.getInstance();
+        highscore.resetHighscore();
+    }
+
+    static int order = 1;
+
     @ParameterizedTest
     @MethodSource("highscoreArguments")
     @Order(1)
     public void testAddHighscore(int score, String name) {
+        System.out.println("Order: " + order);
+        order++;
         // Arrange
        Highscore highscore = Highscore.getInstance();
        Map<String, Integer> highscoreMap;
@@ -38,11 +50,17 @@ public class HighscoreTest extends AbstractTest {
 
     @ParameterizedTest
     @MethodSource("illegalHighscoreArguments")
+    @Order(3)
     public void testIllegalHighscore(int score, String name) {
+        System.out.println("Order: " + order);
+        order++;
         // Arrange
         Highscore highscore = Highscore.getInstance();
         Map<String, Integer> highscoreMap;
         int size;
+
+        size = highscore.getHighscore().size();
+        System.out.println("Size: " + size);
 
         // Act
         assertThrows(IllegalArgumentException.class, () -> highscore.saveHighscore(score, name));
@@ -55,7 +73,9 @@ public class HighscoreTest extends AbstractTest {
 
     @Test
     @Order(2)
-    public void testResetHighscore() {
+    public void testResetHighscore() throws InterruptedException {
+        System.out.println("Order: " + order);
+        order++;
         // Arrange
         Highscore highscore = Highscore.getInstance();
         Map<String, Integer> highscoreMap;
@@ -84,7 +104,7 @@ public class HighscoreTest extends AbstractTest {
                 arguments(-400, "ABC"),
                 arguments(12, ""),
                 arguments(12, "SDFGHJKLKJH"),
-                arguments(null, null)
+                arguments(0, null)
         );
     }
 }
