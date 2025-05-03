@@ -8,7 +8,7 @@ import conserveandcook.view.pui.Hardware;
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class Starter {
-    public static final int FRAME_RATE = 50;
+    public static final int FRAME_RATE = 10;
 
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "True");
