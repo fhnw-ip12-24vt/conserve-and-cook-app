@@ -24,14 +24,10 @@ public class HighscoreTest extends AbstractTest {
         highscore.resetHighscore();
     }
 
-    static int order = 1;
-
     @ParameterizedTest
     @MethodSource("highscoreArguments")
     @Order(1)
     public void testAddHighscore(int score, String name) {
-        System.out.println("Order: " + order);
-        order++;
         // Arrange
        Highscore highscore = Highscore.getInstance();
        Map<String, Integer> highscoreMap;
@@ -52,30 +48,21 @@ public class HighscoreTest extends AbstractTest {
     @MethodSource("illegalHighscoreArguments")
     @Order(3)
     public void testIllegalHighscore(int score, String name) {
-        System.out.println("Order: " + order);
-        order++;
         // Arrange
         Highscore highscore = Highscore.getInstance();
         Map<String, Integer> highscoreMap;
-        int size;
-
-        size = highscore.getHighscore().size();
-        System.out.println("Size: " + size);
-
         // Act
         assertThrows(IllegalArgumentException.class, () -> highscore.saveHighscore(score, name));
         highscoreMap = highscore.getHighscore();
 
         // Assert
-        size = highscoreMap.size();
+        int size = highscoreMap.size();
         assertEquals(0, size);
     }
 
     @Test
     @Order(2)
     public void testResetHighscore() throws InterruptedException {
-        System.out.println("Order: " + order);
-        order++;
         // Arrange
         Highscore highscore = Highscore.getInstance();
         Map<String, Integer> highscoreMap;
@@ -100,7 +87,8 @@ public class HighscoreTest extends AbstractTest {
 
     private static Stream<Arguments> illegalHighscoreArguments() {
         return Stream.of(
-                arguments(0, "ABC"),
+                // TODO (Elena, 4.3) : Unclear whether 0 is illegal or not? Assumed to be legal, there for below commented
+                // arguments(0, "ABC"),
                 arguments(-400, "ABC"),
                 arguments(12, ""),
                 arguments(12, "SDFGHJKLKJH"),
