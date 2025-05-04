@@ -1,0 +1,14 @@
+[Unit]
+Description=ConserveAndCook Java GUI Application (inlcuded in Trick17the )
+After=graphical.target
+
+[Service]
+Type=simple
+User=pi
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStart=/usr/bin/java -jar /home/pi/deploy/Trick17App/Trick17App.jar
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target
