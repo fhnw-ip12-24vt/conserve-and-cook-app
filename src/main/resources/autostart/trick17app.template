@@ -1,5 +1,5 @@
 [Unit]
-Description=ConserveAndCook Java GUI Application (inlcuded in Trick17the )
+Description=ConserveAndCook Java GUI Application (inlcuded in Trick17 )
 After=graphical.target
 
 [Service]
