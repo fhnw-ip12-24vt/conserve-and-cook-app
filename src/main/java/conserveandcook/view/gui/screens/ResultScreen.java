@@ -18,10 +18,16 @@ public class ResultScreen extends AbstractScreen {
         drawBackground("img/result/frame_0.png");
         gui.setFontSize((int) (140 * SCALE));
         gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
+
+        drawComment();
     }
 
     @Override
     public AvailableScreens next() {
         return AvailableScreens.START;
+    }
+
+    private void drawComment(){
+        // TODO: (EH): Implement this function
     }
 }

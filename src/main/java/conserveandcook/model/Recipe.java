@@ -114,4 +114,13 @@ public class Recipe {
 
         return results.getInt(2);
     }
+
+    /**
+     *
+     * @return The comment of the Ingredient with the largest c02 value
+     */
+    public String getComment(){
+        // TODO: (EH): Remove the exception and implement this function
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

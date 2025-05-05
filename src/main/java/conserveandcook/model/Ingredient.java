@@ -12,12 +12,14 @@ public class Ingredient {
     private final String name;
     private final int co2;
     private final int category;
+    private final String comment;
 
-    private Ingredient(int id, String name, int co2, int category) {
+    private Ingredient(int id, String name, int co2, int category, String comment) {
         this.id = id;
         this.name = name;
         this.co2 = co2;
         this.category = category;
+        this.comment = comment;
     }
 
     public static Ingredient getIngredientById(String id) throws SQLException {
@@ -42,7 +44,8 @@ public class Ingredient {
                 results.getInt(1),
                 results.getString(2),
                 results.getInt(3),
-                results.getInt(4)
+                results.getInt(4),
+                results.getString(5)
         );
     }
 
@@ -65,7 +68,8 @@ public class Ingredient {
                             results.getInt(1),
                             results.getString(2),
                             results.getInt(3),
-                            results.getInt(4)
+                            results.getInt(4),
+                            results.getString(5)
                     );
             index++;
         }
@@ -86,5 +90,9 @@ public class Ingredient {
 
     public int getId() {
         return id;
+    }
+
+    public String getComment() {
+        return comment;
     }
 }
