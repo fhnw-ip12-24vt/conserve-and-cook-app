@@ -359,8 +359,8 @@
                                         </scp>
 
                                         <scp trust="true"
-                                             localFile="${project.basedir}/src/main/resources/autostart/trick17app.service.template"
-                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/autostart/trick17app.service.template"
+                                             localFile="${project.basedir}/src/assembly/autostart.service"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/autostart.service"
                                              port="${pi.port}" />
 
                                         <!-- Run application on Raspberry Pi -->
