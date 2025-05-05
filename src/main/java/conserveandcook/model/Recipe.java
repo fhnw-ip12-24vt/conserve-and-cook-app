@@ -18,12 +18,14 @@ public class Recipe {
 
     public static Recipe getRandomRecipe() throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from recipe order by random() limit 1";
+        // TODO: (SK) Replace this code once all the recipes are drawn
+//        String query = "select * from recipe order by random() limit 1";
+        String query = "select * from recipe where id = 1 limit 1";
         ResultSet results = db.executeQuery(query);
 
         // Check if we've got a row
         if (results == null || !results.next()) {
-            throw new SQLException("Exactly one ingredient was expected, received zero");
+            throw new SQLException("Exactly one recipe was expected, received zero");
         }
 
         int id = results.getInt(1);
@@ -89,7 +91,7 @@ public class Recipe {
 
     public int getMaxScore() throws SQLException {
         Database db = Database.getInstance();
-        String query = "SELECT id, max(co2_score) FROM ingredient WHERE recipe_id = ?";
+        String query = "SELECT i.id, max(i.co2_score) FROM ingredient i JOIN ingredient_to_recipe r on i.id = r.ingredient_id WHERE r.recipe_id = ?";
         ResultSet results = db.executeQuery(query, id);
 
         // Check if we've got a row
@@ -102,7 +104,7 @@ public class Recipe {
 
     public int getMinScore() throws SQLException {
         Database db = Database.getInstance();
-        String query = "SELECT id, min(co2_score) FROM ingredient WHERE recipe_id = ?";
+        String query = "SELECT i.id, min(i.co2_score) FROM ingredient i JOIN ingredient_to_recipe r on i.id = r.ingredient_id WHERE r.recipe_id = ?";
         ResultSet results = db.executeQuery(query, id);
 
         // Check if we've got a row

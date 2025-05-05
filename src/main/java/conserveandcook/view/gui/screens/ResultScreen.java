@@ -23,8 +23,8 @@ public class ResultScreen extends AbstractScreen {
         model.setScore(model.getSelectedRecipe().calculateScore(model.getSelectedIngredients()));
         int score = model.getScore();
         drawBackground("img/result/frame_0.png");
-        gui.setFontSize(70);
-        gui.drawString(score + " Punkte", 500, 100);
+        gui.setFontSize((int) (140 * SCALE));
+        gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
         // TODO (Elena, 4.5) : The following Arrays.toString does not convert to a 3 letter name
         // saveHighscore(model.getScore(), Arrays.toString(model.getName()));
         saveHighscore(model.getScore(), Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));

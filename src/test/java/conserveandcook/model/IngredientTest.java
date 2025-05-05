@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IngredientTest extends AbstractTest {
-    String testId1 = "001";
-    String testId2 = "002";
+    String testId1 = "078";
+    String testId2 = "016";
 
     @Test
     public void ingredientTest() {

@@ -2,54 +2,45 @@ package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
 import conserveandcook.model.Application;
-import conserveandcook.model.Ingredient;
-import conserveandcook.model.Recipe;
-import conserveandcook.view.gui.AvailableScreens;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ApplicationController extends ControllerBase<Application> {
-
-    /**
-     * The Controller needs a Model.
-     *
-     * @param model Model managed by this Controller
-     */
 
     public ApplicationController(Application model) {
         super(model);
     }
 
-    @Override
-    public void shutdown() {
-        super.shutdown();
-    }
-
     public void nextScreen() {
         model.incrementScreen();
+        model.setIdleTime(0);
     }
 
     public void prevScreen() {
         model.decrementScreen();
+        model.setIdleTime(0);
     }
 
     public void up() {
         model.getActiveScreen().up(model);
+        model.setIdleTime(0);
     }
 
     public void down() {
         model.getActiveScreen().down(model);
+        model.setIdleTime(0);
     }
 
     public void left() {
         model.getActiveScreen().left(model);
+        model.setIdleTime(0);
     }
 
     public void right() {
         model.getActiveScreen().right(model);
+        model.setIdleTime(0);
     }
 
     public void scan(String barcode) {
         model.getActiveScreen().scan(model, barcode);
+        model.setIdleTime(0);
     }
 }

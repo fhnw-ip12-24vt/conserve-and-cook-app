@@ -1,5 +1,6 @@
 package conserveandcook.model;
 
+import conserveandcook.misc.I18n;
 import conserveandcook.misc.Languages;
 import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AbstractScreen;
@@ -17,6 +18,7 @@ public class Application {
 
     private int selectedLanguage = 0;
     private static final Languages[] languages = Languages.values();
+    private static Languages language;
 
     private final Ingredient[] selectedIngredients = new Ingredient[3];
     private Recipe selectedRecipe;
@@ -31,6 +33,8 @@ public class Application {
     private final char[] nameCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ").toCharArray();
     private int selectedChar = 0;
 
+    private int idleTime = 0;
+
     public AbstractScreen getActiveScreen() {
         if (activeScreen == null) {
             activeScreen = screens.get(AvailableScreens.START);
@@ -40,10 +44,18 @@ public class Application {
 
     public void incrementLanguage() {
         selectedLanguage = decrementWrapped(selectedLanguage, languages.length - 1);
+        language = languages[selectedLanguage];
+        I18n.setLanguage(language);
     }
 
     public void decrementLanguage() {
         selectedLanguage = incrementWrapped(selectedLanguage, languages.length - 1);
+        language = languages[selectedLanguage];
+        I18n.setLanguage(language);
+    }
+
+    public Languages getLanguage() {
+        return language;
     }
 
     public void incrementScreen() {
@@ -74,6 +86,14 @@ public class Application {
 
     public AvailableScreens getCurrentScreen() {
         return availableScreens[currentScreen];
+    }
+
+    public void timeoutScreen(){
+        activeScreen = screens.get(AvailableScreens.START);
+        if (activeScreen == null) {
+            return;
+        }
+        activeScreen.init(this);
     }
 
     public void nextRegion() {
@@ -160,6 +180,14 @@ public class Application {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getIdleTime() {
+        return idleTime;
+    }
+
+    public void setIdleTime(int idleTime) {
+        this.idleTime = idleTime;
     }
 
     /**
