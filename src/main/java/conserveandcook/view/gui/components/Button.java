@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.components;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Languages;
 
 import static conserveandcook.view.gui.AbstractScreen.SCALE;
 
@@ -9,9 +10,10 @@ public class Button implements Component {
     private States state;
     private Direction direction;
     private Type type;
+    private Languages languages;
 
     // Buttons don't move
-    private final int x, y;
+    private int x, y;
 
     private Runnable onClick;
 
@@ -46,17 +48,21 @@ public class Button implements Component {
 
     @Override
     public void draw(Gui gui) {
-        String path = "";
-        switch (state) {
-            case States.IDLE -> path += "idle";
-            case States.ACTIVE -> path += "active";
-            case States.DISABLED -> path += "disabled";
+        String path = "img/buttons/";
+
+        path += state.name().toLowerCase();
+        path +="_";
+        path += type.name().toLowerCase();
+
+        if (languages != null){
+            path += languages.name();
+        }
+       if (direction  != null){
+            path += direction.name();
         }
 
-        path = "img/buttons/active_arrowRbutton.png";
-
         if(type != Type.NO_GUI) {
-            gui.drawImage(path, x, y, SCALE);
+            gui.drawImage(path + ".png", x, y, SCALE);
         }
     }
 
@@ -76,16 +82,48 @@ public class Button implements Component {
         this.state = state;
     }
 
+    public Languages getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Languages languages) {
+        this.languages = languages;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public States getState() {
         return state;
     }
 
     public enum Type {
-        ARROW, BUTTON, NO_GUI
+        ARROW, BUTTON, NO_GUI, CONFIRM, FINISH, SKIP
     }
 
     public enum Direction {
         UP, DOWN, LEFT, RIGHT
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public enum States {

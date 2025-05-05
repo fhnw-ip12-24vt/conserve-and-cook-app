@@ -4,13 +4,26 @@ import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
+import conserveandcook.view.gui.Window;
+import conserveandcook.view.gui.components.Button;
 
 public class TutorialScreen extends AbstractScreen {
 
     private int frameIndex = 0;
-
+    Button nextButton;
+    Button skipButton;
     public TutorialScreen(Gui gui) {
         super(gui);
+        nextButton = new Button(Button.Type.ARROW);
+        nextButton.setDirection(Button.Direction.LEFT);
+        nextButton.setState(Button.States.ACTIVE);
+
+        nextButton.setX((int) (Window.WIDTH * SCALE) + 600);
+        nextButton.setY((int) (Window.HEIGHT * SCALE) + 20);
+        components.add(nextButton);
+
+        skipButton = new Button(Button.Type.SKIP);
+        components.add(skipButton);
     }
 
     @Override
