@@ -11,6 +11,7 @@ CREATE TABLE if not exists translations
 (
     id          INT primary key NOT NULL,
     text        VARCHAR(255)    NOT NULL,
+    key VARCHAR(255)    NOT NULL,
     language_id INT             NOT NULL,
     FOREIGN KEY (language_id) REFERENCES languages (id)
 );
@@ -54,7 +55,8 @@ CREATE TABLE if not exists ingredient_to_recipe
     FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
 );
 
-create table highscore
+DROP TABLE if exists highscore;
+CREATE TABLE if not exists highscore
 (
     score INTEGER not null,
     name  TEXT,
@@ -62,8 +64,6 @@ create table highscore
         constraint highscore_pk
             primary key autoincrement
 );
-
-
 
 INSERT INTO regions (id, title)
 VALUES (1, 'europe');
@@ -74,14 +74,15 @@ VALUES (3, 'africa');
 INSERT INTO regions (id, title)
 VALUES (4, 'america');
 
-INSERT INTO languages (id, name)
-VALUES (1, 'deutsch');
-INSERT INTO languages (id, name)
-VALUES (2, 'französisch');
-INSERT INTO languages (id, name)
-VALUES (3, 'english');
-INSERT INTO languages (id, name)
-VALUES (4, 'italienisch');
+INSERT INTO languages (id, name) VALUES (4, 'English');
+INSERT INTO languages (id, name) VALUES (1, 'German');
+INSERT INTO languages (id, name) VALUES (2, 'Francais');
+INSERT INTO languages (id, name) VALUES (3, 'Italiano');
+
+INSERT INTO translations (id, text, key, language_id) VALUES (1, 'Wilkommen zu Conserve&Cook!','intro',  1);
+INSERT INTO translations (id, text, key, language_id) VALUES (2, 'Bienvenue chez Conserve&Cook!','intro',  2);
+INSERT INTO translations (id, text, key, language_id) VALUES (3, 'Benvenuti a Conserve&Cook!','intro',  3);
+INSERT INTO translations (id, text, key, language_id) VALUES (4, 'Welcome to Conserve&Cook!','intro',  4);
 
 INSERT INTO recipe (id, region_id, name)
 VALUES (1, 1, 'Burger');
