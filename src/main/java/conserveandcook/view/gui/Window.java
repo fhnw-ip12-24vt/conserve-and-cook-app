@@ -43,6 +43,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.setFullScreen(runningOnPi);
     }
 
+
     // NN added -> close game window on crash
     @Override
     protected void redraw(Application model) {
