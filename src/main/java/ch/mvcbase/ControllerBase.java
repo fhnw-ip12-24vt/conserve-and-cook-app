@@ -140,7 +140,7 @@ public abstract class ControllerBase<M> {
     /**
      * Only the other base classes 'GuiBase' and 'PuiBase' need access, therefore, it's 'package private'
      */
-    M getModel() {
+    public M getModel() {
         return model;
     }
 

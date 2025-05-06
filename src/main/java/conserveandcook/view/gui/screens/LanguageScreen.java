@@ -15,6 +15,11 @@ public class LanguageScreen extends AbstractGif {
 
     @Override
     public void draw(Application model) {
+        // Trigger an intentional crash for testing
+        if (true) {
+            throw new RuntimeException("Intentional crash for testing crash screen");
+        }
+
         String lang = model.getSelectedLanguage().name().toLowerCase();
         String gifNumber = getGifNumber();
         String currentFrame = "img/language/" + lang + gifNumber + ".png";

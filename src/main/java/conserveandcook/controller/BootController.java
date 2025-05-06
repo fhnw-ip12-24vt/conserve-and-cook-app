@@ -31,8 +31,6 @@ public class BootController extends ControllerBase<Boot> {
         }
 
 
-
-        // TODO: (NN) Das Fenster für das Spiel soll sich nur öffnen, wenn alle Checks erfolgreich sind.
     }
 
     /**
