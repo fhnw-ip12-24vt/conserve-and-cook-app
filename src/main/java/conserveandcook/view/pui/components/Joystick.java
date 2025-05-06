@@ -18,6 +18,7 @@ public class Joystick extends Component {
 
     public void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
         if (isInDirection) {
+            if (executor == null) return;
             executor.submit(worker);
             if (task != null) {
                 task.run();

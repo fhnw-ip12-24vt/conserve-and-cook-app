@@ -49,7 +49,6 @@ public class UsbDevice {
             }
         } catch (Exception e) {
             LOGGER.logException(e.getMessage(), e);
-            shutdown();
         }
     }
 
@@ -87,6 +86,6 @@ public class UsbDevice {
             default: // No other axis
                 break;
         }
-        joystick.setInput(isNorth,isEast,isSouth,isWest);
+        joystick.setInput(isNorth, isEast, isSouth, isWest);
     }
 }
