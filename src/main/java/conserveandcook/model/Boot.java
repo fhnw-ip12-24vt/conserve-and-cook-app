@@ -33,6 +33,10 @@ public class Boot {
         this.success = success;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }// NN added -> Add isSuccess() method to Boot model
+
     /**
      * Opens a new game window in its separate thread
      */

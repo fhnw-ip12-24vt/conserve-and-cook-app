@@ -1,10 +1,7 @@
 package conserveandcook.controller;
 
 import ch.mvcbase.ControllerBase;
-import conserveandcook.checks.Check;
-import conserveandcook.checks.CheckException;
-import conserveandcook.checks.DatabaseCheck;
-import conserveandcook.checks.ImageCheck;
+import conserveandcook.checks.*;
 import conserveandcook.model.Boot;
 
 import java.util.Stack;
@@ -19,6 +16,7 @@ public class BootController extends ControllerBase<Boot> {
         super(model);
         checks.push(new ImageCheck());
         checks.push(new DatabaseCheck());
+        //checks.push(new UnitTestCheck()); // NN added -> Add UnitTestCheck to BootController
 
     }
 
@@ -31,6 +29,8 @@ public class BootController extends ControllerBase<Boot> {
         } else {
             model.log("Boot checks failed");
         }
+
+
 
         // TODO: (NN) Das Fenster für das Spiel soll sich nur öffnen, wenn alle Checks erfolgreich sind.
     }
