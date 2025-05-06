@@ -43,13 +43,18 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.setFullScreen(runningOnPi);
     }
 
+    // NN added -> close game window on crash
     @Override
     protected void redraw(Application model) {
         try {
             model.getActiveScreen().draw(model);
             checkIdle(model);
         } catch (Exception e) {
-            bootModel.log(e.getMessage());
+            bootModel.log("Fatal crash in game window: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            e.printStackTrace();
+
+            // Only close the game window — do not shut down the entire app
+            this.close();
         }
     }
 
