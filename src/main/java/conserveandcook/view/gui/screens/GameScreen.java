@@ -105,6 +105,8 @@ public class GameScreen extends AbstractScreen {
     public void right(Application model) {
         if (!runningOnPi) {
             debugCategory = model.decrementWrapped(debugCategory, 2);
+        } else {
+            model.incrementScreen();
         }
     }
 
