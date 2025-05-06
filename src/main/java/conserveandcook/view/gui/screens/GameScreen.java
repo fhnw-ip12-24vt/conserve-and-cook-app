@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
-    /** Game duration in seconds */
+    /**
+     * Game duration in seconds
+     */
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
@@ -42,19 +44,19 @@ public class GameScreen extends AbstractScreen {
 
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
         Recipe selectedRecipe = model.getSelectedRecipe();
-        if (selectedRecipe != null) {
-            drawRecipe(selectedRecipe);
-            Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
+        if (selectedRecipe == null) return;
 
-            for (Ingredient ingredient : ingredients) {
-                drawIngredient(ingredient, selectedRecipe);
-            }
+        drawRecipe(selectedRecipe);
+        Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
 
-            for (Ingredient ingredient : selectedIngredients) {
-                if (ingredient != null) {
-                    drawSelectedIngredient(ingredient, selectedRecipe);
-                }
-            }
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient == null) continue;
+            drawIngredient(ingredient, selectedRecipe);
+        }
+
+        for (Ingredient ingredient : selectedIngredients) {
+            if (ingredient == null) continue;
+            drawSelectedIngredient(ingredient, selectedRecipe);
         }
         gameTimer();
     }
@@ -106,9 +108,9 @@ public class GameScreen extends AbstractScreen {
 
         // Select new random recipe, whenever the screen is initialized
         try {
-            model.setSelectedRecipe(Recipe.getRandomRecipe());
+            model.setSelectedRecipe(Recipe.getRandomRecipe(model.getSelectedRegion().getId()));
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            LOGGER.logError(e.getMessage(), e);
         }
 
         model.resetIngredients();
@@ -151,7 +153,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
-        String path = getPathOfImage(ingredient, selectedRecipe);
+        String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();
         int yOffset = category * 240;
@@ -159,6 +161,7 @@ public class GameScreen extends AbstractScreen {
 
         gui.drawImage(path, (1090 + xOffset) * SCALE, (200 + yOffset) * SCALE, SCALE * ingredientScale);
 
+        // Calculate which position horizontally (x-offset) the ingredient is drawn (0, 1 or 2)
         if (category == prevCategory) {
             ingredientIndex = ingredientIndex + 1 > 3 ? 0 : ingredientIndex + 1;
         } else {
@@ -168,7 +171,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
-        String path = getPathOfImage(ingredient, selectedRecipe);
+        String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();
         int yOffset = category * 240;
@@ -176,17 +179,15 @@ public class GameScreen extends AbstractScreen {
         gui.drawImage(path, (710) * SCALE, (200 + yOffset) * SCALE, SCALE * ingredientScale);
     }
 
-    private static String getPathOfImage(Ingredient ingredient, Recipe selectedRecipe) {
+    private static String getPathOfImage(Ingredient ingredient) {
         String name = ingredient.getName();
         name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        String path = "img/ingredient/" + name + ".png";
-        return path;
+        return "img/ingredient/" + name + ".png";
     }
 
     private void drawRecipe(Recipe recipe) {
         int x = 120, y = 235;
         String path = "img/recipe/" + recipe.getName() + ".png";
-
         gui.drawImage(path, x * SCALE, y * SCALE, SCALE);
     }
 }
