@@ -14,15 +14,16 @@ public class TutorialScreen extends AbstractScreen {
     Button skipButton;
     public TutorialScreen(Gui gui) {
         super(gui);
-        nextButton = new Button(Button.Type.ARROW);
-        nextButton.setDirection(Button.Direction.LEFT);
-        nextButton.setState(Button.States.ACTIVE);
-
-        nextButton.setX((int) (Window.WIDTH * SCALE) + 600);
-        nextButton.setY((int) (Window.HEIGHT * SCALE) + 20);
+       nextButton = new Button(Button.Type.ARROW);
+        nextButton.setDirection(Button.Direction.RIGHT);
+        nextButton.setY(440);
+        nextButton.setX(600);
         components.add(nextButton);
 
-        skipButton = new Button(Button.Type.FINISH);
+        skipButton = new Button(Button.Type.SKIP);
+        skipButton.setState(Button.States.ACTIVE);
+        skipButton.setY(440);
+        skipButton.setX(65);
         components.add(skipButton);
     }
 
@@ -63,7 +64,7 @@ public class TutorialScreen extends AbstractScreen {
                     "\n und musst drei davon einscannen, \n" +
                     "bevor die Zeit abläuft.";
             case 4 -> "Scanne die Zutaten. Nutze den Barcodescanner,\n um Zutaten aus dem Kochbuch auszuwählen. \n" +
-                    "Genau wie an der Supermarktkasse! \nFalls du eine andere Zutat möchtest,\n scanne einfach eine neue ein";
+                    "Genau wie an der Supermarktkasse! \n \n Falls du eine andere Zutat möchtest,\n scanne einfach eine neue ein";
             case 5 -> "Das war's!\nViel Spass beim Kochen!";
             default -> "";
         };
@@ -89,20 +90,20 @@ public class TutorialScreen extends AbstractScreen {
                 break;
 
             case 2:
-                x = 1170;
-                y = 740;
+                x = 1115;
+                y = 680;
                 fontsize = 50;
                 break;
 
             case 3:
                 x = 1025;
-                y = 300;
+                y = 180;
                 fontsize = 50;
                 break;
 
             case 4:
-                x = 975;
-                y = 300;
+                x = 1000;
+                y = 180;
                 fontsize = 50;
                 break;
 

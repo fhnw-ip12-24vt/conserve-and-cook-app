@@ -61,6 +61,7 @@ public class Button implements Component {
             path += direction.name();
         }
 
+        System.out.println(path + ".png");
         if(type != Type.NO_GUI) {
             gui.drawImage(path + ".png", x, y, SCALE);
         }
