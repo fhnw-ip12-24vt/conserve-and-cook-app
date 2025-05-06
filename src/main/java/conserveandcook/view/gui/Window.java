@@ -24,7 +24,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         this.controller = controller;
         this.bootModel = bootModel;
 
-        // Register screens in the model
+        //Register screens in the model
         Application.screens.put(AvailableScreens.START, new StartScreen(this));
         Application.screens.put(AvailableScreens.LANGUAGE, new LanguageScreen(this));
         Application.screens.put(AvailableScreens.TUTORIAL, new TutorialScreen(this));
@@ -38,7 +38,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         HEIGHT = (int) this.getHeight();
         this.setResizable(true);
 
-        // Fullscreen when running on local doesn't work
+        //Fullscreen when running on local doesn't work
         boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
         this.setFullScreen(runningOnPi);
     }
@@ -54,7 +54,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
             bootModel.log("Fatal crash in game window: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             e.printStackTrace();
 
-            // Only close the game window — do not shut down the entire app
+            //Only close the game window — do not shut down the entire app
             this.close();
         }
     }
