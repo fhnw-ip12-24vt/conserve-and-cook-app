@@ -1,62 +1,66 @@
-DROP TABLE if exists languages;
-CREATE TABLE if not exists languages
+drop table if exists ingredient;
+create table ingredient
 (
-    id   INT NOT NULL,
-    name VARCHAR(20)     NOT NULL,
-    PRIMARY KEY (id)
+    id          INT       not null
+        primary key,
+    title       CHAR(255) not null,
+    co2_score   INT       not null,
+    comment     CHAR(255),
+    category_id INT
 );
 
-DROP TABLE if exists translations;
-CREATE TABLE if not exists translations
+drop table if exists languages;
+create table languages
 (
-    id          INT primary key NOT NULL,
-    text        VARCHAR(255)    NOT NULL,
-    key VARCHAR(255)    NOT NULL,
-    language_id INT             NOT NULL,
-    FOREIGN KEY (language_id) REFERENCES languages (id)
+    id   INT
+        primary key,
+    name VARCHAR(20)
 );
 
-DROP TABLE if exists regions;
-CREATE TABLE if not exists regions
+drop table if exists regions;
+create table regions
 (
-    id    INT         NOT NULL,
-    title VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id)
+    id    INT
+        primary key,
+    title VARCHAR(20)
 );
 
-DROP TABLE if exists recipe;
-create table if not exists recipe
+drop table if exists recipe;
+create table recipe
 (
-    id        INT not null primary key,
-    region_id INT references regions,
+    id        INT
+        primary key,
+    region_id INT
+        references regions,
     name      TEXT
 );
 
-DROP TABLE if exists ingredient;
-create table if not exists ingredient
+drop table if exists ingredient_to_recipe;
+create table ingredient_to_recipe
 (
-    id          INT       not null primary key,
-    title       CHAR(255) not null,
-    co2_score   INT       not null,
-    category_id INT,
-    recipe_id   INT       not null,
-    FOREIGN KEY (recipe_id) REFERENCES recipe (id)
+    recipe_id     INT     not null
+        references recipe,
+    ingredient_id INT     not null
+        references ingredient,
+    category_id   integer,
+    id            INTEGER not null
+        constraint ingredient_to_recipe_pk
+            primary key autoincrement
 );
 
-
-DROP TABLE if exists ingredient_to_recipe;
-CREATE TABLE if not exists ingredient_to_recipe
+drop table if exists translations;
+create table translations
 (
-    id            INT NOT NULL,
-    recipe_id     INT NOT NULL,
-    ingredient_id INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (recipe_id) REFERENCES recipe (id),
-    FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
+    id          INT
+        primary key,
+    text        VARCHAR(255),
+    key         VARCHAR(255),
+    language_id INT
+        references languages
 );
 
-DROP TABLE if exists highscore;
-CREATE TABLE if not exists highscore
+drop table if exists highscore;
+create table highscore
 (
     score INTEGER not null,
     name  TEXT,
