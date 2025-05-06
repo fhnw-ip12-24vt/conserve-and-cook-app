@@ -23,7 +23,7 @@ public class  RegionScreen extends AbstractScreen {
         String path = backgroundPath + model.getSelectedRegion().toString().toLowerCase() + ".png";
         drawBackground(path);
 
-        confirmButton.setLanguages(model.getSelectedLanguage());
+        confirmButton.setLanguage(model.getSelectedLanguage());
 
         gui.setTextAlignCenter();
         gui.setFontSize((int) (100 * SCALE));

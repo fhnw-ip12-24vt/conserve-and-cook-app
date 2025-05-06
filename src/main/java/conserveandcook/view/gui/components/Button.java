@@ -9,7 +9,7 @@ public class Button implements Component {
     // State is mutable
     private States state;
     private Direction direction;
-    private Type type;
+    private final Type type;
     private Languages languages;
 
     // Buttons don't move
@@ -82,11 +82,7 @@ public class Button implements Component {
         this.state = state;
     }
 
-    public Languages getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(Languages languages) {
+    public void setLanguage(Languages languages) {
         this.languages = languages;
     }
 

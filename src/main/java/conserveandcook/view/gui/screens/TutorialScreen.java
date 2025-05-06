@@ -22,12 +22,13 @@ public class TutorialScreen extends AbstractScreen {
         nextButton.setY((int) (Window.HEIGHT * SCALE) + 20);
         components.add(nextButton);
 
-        skipButton = new Button(Button.Type.SKIP);
+        skipButton = new Button(Button.Type.FINISH);
         components.add(skipButton);
     }
 
     @Override
     public void draw(Application model) {
+        skipButton.setLanguage(model.getSelectedLanguage());
         drawBackground("img/tutorial/frame_" + frameIndex + ".png");
 
         Result coordinates = getCoordinates();
