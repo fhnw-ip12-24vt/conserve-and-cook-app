@@ -17,8 +17,9 @@ public class BootScreen extends GuiBase<Boot, BootController> {
     private Button resetHighScoresButton; //NN added -> High Score Reset button
     private Timer autoOpenTimer;//NN added -> 5s timer
     private Timer countdownTimer; //NN added -> 15s timer
-
     private int countdown = 5; //NN added -> Start countdown from 5 seconds
+    private boolean showCountdown = true; //NN added -> make countdown disappear after finish
+
 
     public BootScreen(BootController controller) {
         super(controller, "Conserve & Cook | Boot Screen", 800, 400);
@@ -38,6 +39,12 @@ public class BootScreen extends GuiBase<Boot, BootController> {
                     try {
                         model.log("Auto-opening application after 15 seconds");
                         model.openApplication();
+
+                        // Remove the Boot App button after auto-start
+                        javax.swing.SwingUtilities.invokeLater(() -> {
+                            BootScreen.this.removeComponent(bootAppButton);
+                        });
+
                     } catch (Exception e) {
                         model.log("Auto-open failed: " + e.getMessage());
                     }
@@ -49,6 +56,7 @@ public class BootScreen extends GuiBase<Boot, BootController> {
             }
         }, 5000);
 
+
         //NN added -> Countdown timer that updates every second
         countdownTimer = new Timer();
         countdownTimer.scheduleAtFixedRate(new TimerTask() {
@@ -59,6 +67,8 @@ public class BootScreen extends GuiBase<Boot, BootController> {
                     updateComponents(controller.getModel()); // trigger redraw to update countdown display
                 } else {
                     countdownTimer.cancel();
+                    showCountdown = false; //NN added -> hide the countdown after it finishes
+                    updateComponents(controller.getModel()); //NN added ->ensure the UI updates to remove it
                 }
             }
         }, 0, 1000);
@@ -75,25 +85,46 @@ public class BootScreen extends GuiBase<Boot, BootController> {
             this.drawString(logs.get(i), x, y);
         }
 
-        //NN added -> Display countdown timer
-        this.setFontSize(24);
-        this.drawString("Auto-starting in: " + countdown + "s", 10, 330);
+        //NN added -> Display countdown timer (only if still active)
+        if (showCountdown) {
+            this.setFontSize(24);
+            this.drawString("Auto-starting in: " + countdown + "s", 10, 330);
+        }
 
         if (!model.isSuccess()) {
             this.setFontSize(20);
             this.drawString("!!! FEHLER: Boot fehlgeschlagen !!!", 10, 350);
         }
 
-        //NN added -> Refresh click behavior in case it's updated
+        //NN added -> Refresh click behavior in case it's updated also allow after crash
         bootAppButton.setOnClick((Double x, Double y) -> {
-            if (!model.isSuccess()) return;
             try {
+                //NN added -> Stop auto-open
+                autoOpenTimer.cancel();
+
+                //NN added -> Stop countdown display
+                countdownTimer.cancel();
+                showCountdown = false;
+                updateComponents(model); // Refresh UI to remove countdown
+
+                //NN added -> disable or remove the button
+                this.removeComponent(bootAppButton);
+
+                //Attempt to open the app
+                if (model == null || !model.isSuccess()) {
+                    model.log("Boot failed — cannot open app.");
+                    return;
+                }
+
                 model.log("Trying to open application");
                 model.openApplication();
+
             } catch (Exception e) {
-                model.log(e.getMessage());
+                model.log("Manual open failed: " + e.getMessage());
+                e.printStackTrace();
             }
         });
+
     }
 
     @Override
@@ -115,5 +146,7 @@ public class BootScreen extends GuiBase<Boot, BootController> {
         });
 
         this.addComponents(bootAppButton, resetHighScoresButton);  //NN added -> High Score Rest
+
+
     }
 }
