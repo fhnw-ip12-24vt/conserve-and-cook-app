@@ -12,6 +12,8 @@ import conserveandcook.view.gui.AvailableScreens;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
@@ -32,6 +34,11 @@ public class GameScreen extends AbstractScreen {
     private int debugCategory = 0;
     private static final double ingredientScale = 0.25;
 
+    private Recipe recipe;
+    private Ingredient[] ingredients;
+    private int[] ingredientIds;
+    private Ingredient[] selectedIngredients;
+
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
     public GameScreen(Gui g, ApplicationController controller) {
@@ -47,7 +54,6 @@ public class GameScreen extends AbstractScreen {
         if (selectedRecipe == null) return;
 
         drawRecipe(selectedRecipe);
-        Ingredient[] ingredients = model.getSelectedRecipe().getIngredients();
 
         for (Ingredient ingredient : ingredients) {
             if (ingredient == null) continue;
@@ -64,11 +70,18 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void scan(Application model, String barcode) {
         try {
-            Ingredient scannedIngredient = Ingredient.getIngredientById(barcode);
-            model.addSelectedIngredient(scannedIngredient);
+            Ingredient scannedIngredient = Ingredient.getIngredientById(barcode, model.getSelectedRecipe().getId());
+            if (isValidIngredient(scannedIngredient)) {
+                model.addSelectedIngredient(scannedIngredient);
+            }
         } catch (Exception e) {
             log.info(e.getMessage());
         }
+    }
+
+    private boolean isValidIngredient(Ingredient scannedIngredient) {
+        return Arrays.stream(ingredientIds)
+                .anyMatch(n -> n == scannedIngredient.getId());
     }
 
     @Override
@@ -108,7 +121,13 @@ public class GameScreen extends AbstractScreen {
 
         // Select new random recipe, whenever the screen is initialized
         try {
-            model.setSelectedRecipe(Recipe.getRandomRecipe(model.getSelectedRegion().getId()));
+            recipe = Recipe.getRandomRecipe(model.getSelectedRegion().getId());
+            model.setSelectedRecipe(recipe);
+            ingredients = recipe.getIngredients();
+            ingredientIds = new int[9];
+            for (int i = 0; i < ingredients.length; i++) {
+                ingredientIds[i] = ingredients[i].getId();
+            }
         } catch (Exception e) {
             LOGGER.logError(e.getMessage(), e);
         }

@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class IngredientTest extends AbstractTest {
     String testId1 = "078";
     String testId2 = "016";
+    private static int RECIPE_ID = 1;
 
     @Test
     public void ingredientTest() {
@@ -15,7 +16,7 @@ public class IngredientTest extends AbstractTest {
         Ingredient i1;
         try {
             // Act
-            i1 = Ingredient.getIngredientById(testId1);
+            i1 = Ingredient.getIngredientById(testId1, RECIPE_ID);
             // Assert
             assertEquals("ananas", i1.getName());
             assertEquals(10, i1.getCo2());
@@ -31,7 +32,7 @@ public class IngredientTest extends AbstractTest {
         Ingredient i2;
         try {
             // Act
-            i2 = Ingredient.getIngredientById(testId2);
+            i2 = Ingredient.getIngredientById(testId2, RECIPE_ID);
             // Assert
             assertEquals("avocado", i2.getName());
             assertEquals(20, i2.getCo2());
@@ -48,7 +49,7 @@ public class IngredientTest extends AbstractTest {
         String testId3 = "123456765432";
         try {
             // Act
-            i3 = Ingredient.getIngredientById(testId3);
+            i3 = Ingredient.getIngredientById(testId3, RECIPE_ID);
         } catch (Exception e) {
             // Assert
             assertTrue(true);
@@ -63,7 +64,7 @@ public class IngredientTest extends AbstractTest {
 
         try {
             // Act
-            i4 = Ingredient.getIngredientById(testId4);
+            i4 = Ingredient.getIngredientById(testId4, RECIPE_ID);
         } catch (Exception e) {
             // Assert
             assertTrue(true);
@@ -76,8 +77,8 @@ public class IngredientTest extends AbstractTest {
         Ingredient i1, i2;
         try {
             // Act
-            i1 = Ingredient.getIngredientById(testId1);
-            i2 = Ingredient.getIngredientById(testId2);
+            i1 = Ingredient.getIngredientById(testId1, RECIPE_ID);
+            i2 = Ingredient.getIngredientById(testId2, RECIPE_ID);
             model.addSelectedIngredient(i1);
             Ingredient[] selected = model.getSelectedIngredients();
             assertEquals("ananas", selected[1].getName());

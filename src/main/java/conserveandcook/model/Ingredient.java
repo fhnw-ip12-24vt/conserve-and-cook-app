@@ -20,9 +20,14 @@ public class Ingredient {
         this.category = category;
     }
 
-    public static Ingredient getIngredientById(String id) throws SQLException {
+    public static Ingredient getIngredientById(String id, int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select * from ingredient where id = ? limit 1";
+        String query = "select i.id, i.title, i.co2_score, r.category_id " +
+                "from ingredient i " +
+                "join ingredient_to_recipe r " +
+                "on r.ingredient_id = i.id " +
+                "where i.identifier = ? and r.recipe_id = ? " +
+                "limit 1";
 
         // Check for three digits
         Pattern pattern = Pattern.compile("\\d{3}");
@@ -32,7 +37,7 @@ public class Ingredient {
         } else {
             throw new SQLException("Invalid barcode: No id found");
         }
-        ResultSet results = db.executeQuery(query, id);
+        ResultSet results = db.executeQuery(query, id, recipeId);
 
         // Check if we've got a row
         if (!results.next()) {
@@ -49,7 +54,7 @@ public class Ingredient {
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
         int ingredientCount = 9;
-        String query = "select i.id, i.title, i.co2_score, r.category_id, r.ingredient_id, r.recipe_id from ingredient i " +
+        String query = "select i.id, i.title, i.co2_score, r.category_id from ingredient i " +
                 "join ingredient_to_recipe r on i.id = r.ingredient_id " +
                 "where r.recipe_id = ? order by r.category_id";
         ResultSet results = db.executeQuery(query, recipeId);
