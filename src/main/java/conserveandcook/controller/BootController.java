@@ -16,7 +16,7 @@ public class BootController extends ControllerBase<Boot> {
         super(model);
         checks.push(new ImageCheck());
         checks.push(new DatabaseCheck());
-        //checks.push(new UnitTestCheck()); // NN added -> Add UnitTestCheck to BootController
+        //checks.push(new UnitTestCheck()); //NN added -> Add UnitTestCheck to BootController
 
     }
 

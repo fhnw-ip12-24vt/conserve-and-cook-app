@@ -15,7 +15,7 @@ public class LanguageScreen extends AbstractGif {
 
     @Override
     public void draw(Application model) {
-        // Trigger an intentional crash for testing
+        //NN -> Trigger an intentional crash for testing
         if (true) {
             throw new RuntimeException("Intentional crash for testing crash screen");
         }

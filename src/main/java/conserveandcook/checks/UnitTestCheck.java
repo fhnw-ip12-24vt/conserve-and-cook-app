@@ -3,7 +3,7 @@ package conserveandcook.checks;
 public class UnitTestCheck extends Check {
     @Override
     public boolean run() throws CheckException {
-        // Here you'd run real tests or simulate passing tests
+        //Here you'd run real tests or simulate passing tests
         boolean testsPassed = true;
 
         if (!testsPassed) {
@@ -12,4 +12,4 @@ public class UnitTestCheck extends Check {
         return true;
     }
 }
-// NN added -> Unit Test Check at start
+//NN added -> Unit Test Check at start

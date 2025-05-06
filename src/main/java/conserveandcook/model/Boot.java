@@ -35,7 +35,7 @@ public class Boot {
 
     public boolean isSuccess() {
         return success;
-    }// NN added -> Add isSuccess() method to Boot model
+    }//NN added -> Add isSuccess() method to Boot model
 
     /**
      * Opens a new game window in its separate thread
@@ -48,17 +48,17 @@ public class Boot {
             try {
                 ApplicationController controller = new ApplicationController(new Application());
 
-                // Initialize hardware connection
+                //Initialize hardware connection
                 Hardware pui = new Hardware(controller, FRAME_RATE);
 
-                // Open the window
+                //Open the window
                 Window window = new Window(controller, this);
                 window.open();
                 log("Application opened");
 
                 window.runUntilClosed(1000 / FRAME_RATE);
 
-                // After closing the window we run a shutdown sequence
+                //After closing the window we run a shutdown sequence
                 controller.shutdown();
                 pui.shutdown();
                 log("Application stopped");

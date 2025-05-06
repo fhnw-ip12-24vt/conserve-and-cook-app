@@ -44,7 +44,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     }
 
 
-    // NN added -> close game window on crash
+    //NN added -> close game window on crash
     @Override
     protected void redraw(Application model) {
         try {
