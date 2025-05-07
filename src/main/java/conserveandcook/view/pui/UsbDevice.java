@@ -4,15 +4,18 @@ import conserveandcook.misc.Environments;
 import conserveandcook.view.pui.components.Button;
 import conserveandcook.view.pui.components.Joystick;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
-public class UsbDevice {
+public class UsbDevice implements Runnable {
     private Thread serialReaderThread;
     private final String device;
     private final Joystick joystick;
     private final Button button;
+    private volatile boolean running = true;
 
     public UsbDevice(String device, Joystick joystick, Button button) {
         this.device = device;
@@ -23,33 +26,61 @@ public class UsbDevice {
     }
 
     private void startReading() {
-        serialReaderThread = new Thread(this::listenToInput, "SerialJoystickReader");
+        serialReaderThread = new Thread(this, "SerialJoystickReader");
         serialReaderThread.setDaemon(true);
         serialReaderThread.start();
     }
 
     public void shutdown() {
         serialReaderThread.interrupt();
+        running = false;
         LOGGER.logInfo("Shutting down USB device: " + device);
     }
 
-    private void listenToInput() {
+    @Override
+    public void run() {
         if (Environments.get() == Environments.TEST) {
+            LOGGER.logInfo("USB device input listener disabled in TEST environment");
             return;
         }
-        try (FileInputStream fis = new FileInputStream(this.device)) {
-            byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
-            LOGGER.logInfo("Reading USB events from " + this.device);
 
-            while (true) {
-                int bytesRead = fis.read(buffer);
-                if (bytesRead == 8) {
-                    parseEvent(buffer);
-                }
+        int connectionAttempts = 0;
+        int maxAttempts = 5;
+        while (running) {
+            File file = new File(device);
+
+            if (!file.exists()) {
+                connectionAttempts++;
+                LOGGER.logInfo("USB device not found at: " + device + ". Retrying in 2s. (Attempt " + connectionAttempts + ")");
+                sleep(2000);
+                continue;
             }
-        } catch (Exception e) {
-            LOGGER.logException(e.getMessage(), e);
+
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[8];
+                LOGGER.logInfo("Reading USB events from " + device);
+
+                while (running) {
+                    int bytesRead = fis.read(buffer);
+                    if (Thread.interrupted()) throw new InterruptedException();
+
+                    if (bytesRead == 8) {
+                        parseEvent(buffer);
+                    }
+                }
+            } catch (InterruptedException e) {
+                LOGGER.logInfo("USB device thread interrupted");
+                Thread.currentThread().interrupt(); // Preserve interrupt status
+            } catch (IOException e) {
+                LOGGER.logException("IO error with USB device: " + e.getMessage(), e);
+                sleep(2000); // Wait before retrying after I/O errors
+            } catch (Exception e) {
+                LOGGER.logException("Unexpected error in USB device thread: " + e.getMessage(), e);
+                sleep(2000);
+            }
         }
+
+        LOGGER.logInfo("USB device listener thread stopped");
     }
 
     private void parseEvent(byte[] buffer) {
@@ -87,5 +118,17 @@ public class UsbDevice {
                 break;
         }
         joystick.setInput(isNorth, isEast, isSouth, isWest);
+    }
+
+    /**
+     * Interrupt-Safe sleeping function
+     * @param millis Wait time in milliseconds
+     */
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {
+            Thread.currentThread().interrupt(); // Preserve interrupt status
+        }
     }
 }
