@@ -10,16 +10,13 @@ import java.util.concurrent.Executors;
 public class Joystick extends Component {
 
     private Runnable onNorth, onEast, onSouth, onWest;
-    private Runnable whileNorth, whileEast, whileSouth, whileWest;
     private boolean isNorth, isEast, isSouth, isWest = false;
 
     private Duration whilePressedDelay;
-    private ExecutorService executor;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
+    public void setDirection(boolean isInDirection, Runnable task) {
         if (isInDirection) {
-            if (executor == null) return;
-            executor.submit(worker);
             if (task != null) {
                 task.run();
             }
@@ -31,78 +28,6 @@ public class Joystick extends Component {
         isEast = false;
         isWest = false;
         isSouth = false;
-    }
-
-    private final Runnable whileNorthWorker = () -> {
-        while (isNorth && whileNorth != null) {
-            delay(whilePressedDelay);
-            whileNorth.run();
-        }
-    };
-
-    private final Runnable whileEastWorker = () -> {
-        while (isEast && whileEast != null) {
-            delay(whilePressedDelay);
-            whileEast.run();
-        }
-    };
-
-    private final Runnable whileSouthWorker = () -> {
-        while (isSouth && whileSouth != null) {
-            delay(whilePressedDelay);
-            whileSouth.run();
-        }
-    };
-
-    private final Runnable whileWestWorker = () -> {
-        while (isWest && whileWest != null) {
-            delay(whilePressedDelay);
-            whileWest.run();
-        }
-    };
-
-    public void whileNorth(Runnable task, Duration delay) {
-        whileNorth = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileSouth(Runnable task, Duration delay) {
-        whileSouth = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileEast(Runnable task, Duration delay) {
-        whileEast = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileWest(Runnable task, Duration delay) {
-        whileWest = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
     }
 
     public void onNorth(Runnable task) {
@@ -121,21 +46,24 @@ public class Joystick extends Component {
         this.onWest = task;
     }
 
+    public void shutdown() {
+        executor.shutdownNow();
+    }
+
     // For testing
     public void mockInput() {
         if (Environments.get() == Environments.TEST) {
-            executor = Executors.newSingleThreadExecutor();
-            setDirection(true, whileNorthWorker, onNorth);
-            setDirection(true, whileEastWorker, onEast);
-            setDirection(true, whileSouthWorker, onSouth);
-            setDirection(true, whileWestWorker, onWest);
+            setDirection(true, onNorth);
+            setDirection(true, onEast);
+            setDirection(true, onSouth);
+            setDirection(true, onWest);
         }
     }
 
     public void setInput(boolean isNorth, boolean isEast, boolean isSouth, boolean isWest) {
-        setDirection(isWest, whileNorthWorker, onNorth);
-        setDirection(isEast, whileEastWorker, onEast);
-        setDirection(isSouth, whileSouthWorker, onSouth);
-        setDirection(isWest, whileWestWorker, onWest);
+        setDirection(isNorth, onNorth);
+        setDirection(isEast, onEast);
+        setDirection(isSouth, onSouth);
+        setDirection(isWest, onWest);
     }
 }
