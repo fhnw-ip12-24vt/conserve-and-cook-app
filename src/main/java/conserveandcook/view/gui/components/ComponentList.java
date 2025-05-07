@@ -10,6 +10,7 @@ public class ComponentList {
     private final ArrayList<Button> list = new ArrayList<>();
     private int activeIndex = 0;
     private final Gui gui;
+    //boolean ensureActive = false;
 
     public ComponentList(Gui g) {
         this.gui = g;
@@ -48,6 +49,7 @@ public class ComponentList {
 
     private void ensureActive() {
         if(list.isEmpty()) return;
+      //  if (!ensureActive) return;
         Button activeButton = list.get(activeIndex);
 
         if (activeButton == null) return;

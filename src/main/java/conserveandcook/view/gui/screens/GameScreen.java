@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
-    /** Game duration in seconds */
+    /**
+     * Game duration in seconds
+     */
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
@@ -34,12 +36,13 @@ public class GameScreen extends AbstractScreen {
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
     Button finishButton;
+
     public GameScreen(Gui g, ApplicationController controller) {
         super(g);
         finishButton = new Button(Button.Type.FINISH);
-        finishButton.setState(Button.States.ACTIVE);
-        finishButton.setY(440);
-        finishButton.setX(600);
+        finishButton.setY((int) (880 * SCALE));
+        finishButton.setX((int) (1200 * SCALE));
+        finishButton.setState(Button.States.DISABLED);
         components.add(finishButton);
         this.controller = controller;
     }
@@ -48,6 +51,18 @@ public class GameScreen extends AbstractScreen {
         drawBackground("img/game/frame_0.png");
         finishButton.setLanguage(model.getSelectedLanguage());
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
+
+        int selectedCount = 0;
+        for (Ingredient ing : selectedIngredients) {
+            System.out.println(ing);
+            if (ing != null) {
+                selectedCount++;
+            }
+        }
+        if (selectedCount == 3) {
+            finishButton.setState(Button.States.ACTIVE);
+        }
+
         Recipe selectedRecipe = model.getSelectedRecipe();
         if (selectedRecipe != null) {
             drawRecipe(selectedRecipe);

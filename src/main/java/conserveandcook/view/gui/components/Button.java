@@ -103,6 +103,14 @@ public class Button implements Component {
         this.y = y;
     }
 
+    public Runnable getOnClick() {
+        return onClick;
+    }
+
+    public void setOnClick(Runnable onClick) {
+        this.onClick = onClick;
+    }
+
     public States getState() {
         return state;
     }

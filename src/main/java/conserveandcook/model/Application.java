@@ -82,6 +82,14 @@ public class Application {
         activeScreen = screens.get(prev);
         activeScreen.init(this);
     }
+    public void skipTutorial() {
+        AvailableScreens skip = AvailableScreens.REGION;
+        activeScreen = screens.get(skip);
+        if (activeScreen == null) {
+            return;
+        }
+        activeScreen.init(this);
+    }
 
     public AvailableScreens getCurrentScreen() {
         return availableScreens[currentScreen];

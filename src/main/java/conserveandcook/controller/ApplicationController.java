@@ -29,26 +29,25 @@ public class ApplicationController extends ControllerBase<Application> {
     }
 
     public void up() {
-        model.getActiveScreen().up(model);
+        model.getActiveScreen().getComponents().incrementActiveIndex();
     }
 
     public void down() {
-        model.getActiveScreen().down(model);
+        model.getActiveScreen().getComponents().decrementActiveIndex();
     }
 
     public void left() {
         model.getActiveScreen().left(model);
     }
-
     public void right() {
         model.getActiveScreen().right(model);
     }
-
     public void scan(String barcode) {
         model.getActiveScreen().scan(model, barcode);
     }
 
     public void press(){
         model.getActiveScreen().getComponents().press();
+        System.out.println("space");
     }
 }

@@ -60,6 +60,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
                 case "down" -> controller.down();
                 case "d" -> controller.nextScreen();
                 case "a" -> controller.prevScreen();
+                case "space" -> controller.press();
             }
         });
     }

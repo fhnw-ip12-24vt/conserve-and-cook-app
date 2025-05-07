@@ -16,21 +16,26 @@ public class TutorialScreen extends AbstractScreen {
         super(gui);
        nextButton = new Button(Button.Type.ARROW);
         nextButton.setDirection(Button.Direction.RIGHT);
-        nextButton.setY(440);
-        nextButton.setX(600);
+        nextButton.setState(Button.States.ACTIVE);
+        nextButton.setY((int) (880 * SCALE));
+        nextButton.setX((int) (1200 * SCALE));
         components.add(nextButton);
 
         skipButton = new Button(Button.Type.SKIP);
         skipButton.setState(Button.States.ACTIVE);
-        skipButton.setY(440);
-        skipButton.setX(65);
+        skipButton.setY((int) (880 * SCALE));
+        skipButton.setX((int) (130 * SCALE));
+
         components.add(skipButton);
+        components.incrementActiveIndex();
     }
 
     @Override
     public void draw(Application model) {
         skipButton.setLanguage(model.getSelectedLanguage());
         drawBackground("img/tutorial/frame_" + frameIndex + ".png");
+
+        skipButton.setOnPress(model::skipTutorial);
 
         Result coordinates = getCoordinates();
         gui.setTextAlignCenter();
@@ -50,8 +55,7 @@ public class TutorialScreen extends AbstractScreen {
 
     @Override
     public AvailableScreens prev() {
-        frameIndex = Math.max(frameIndex - 1, 0);
-        return null;
+        return AvailableScreens.REGION;
     }
 
     // TODO: (SK) Replace this function with i18n results

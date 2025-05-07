@@ -12,8 +12,8 @@ public class  RegionScreen extends AbstractScreen {
     public RegionScreen(Gui gui) {
         super(gui);
         confirmButton = new Button(Button.Type.CONFIRM);
-        confirmButton.setX((int) (((Window.WIDTH * SCALE) / 2) + 100));
-        confirmButton.setY((int) (((Window.HEIGHT * SCALE) / 2) + 260));
+        confirmButton.setX((int) (680 * SCALE));
+        confirmButton.setY((int) (840 * SCALE));
         components.add(confirmButton);
     }
 
