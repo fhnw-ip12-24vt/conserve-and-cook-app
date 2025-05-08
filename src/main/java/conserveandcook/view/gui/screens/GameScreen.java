@@ -10,6 +10,7 @@ import conserveandcook.model.Recipe;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 import conserveandcook.view.gui.components.Button;
+import conserveandcook.view.gui.components.FinishButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,16 +36,16 @@ public class GameScreen extends AbstractScreen {
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
-    Button finishButton;
+    FinishButton finishButton;
 
     public GameScreen(Gui g, ApplicationController controller) {
         super(g);
-        finishButton = new Button(Button.Type.FINISH);
-        finishButton.setY((int) (880 * SCALE));
-        finishButton.setX((int) (1200 * SCALE));
-        finishButton.setState(Button.States.DISABLED);
-        components.add(finishButton);
         this.controller = controller;
+        finishButton = new FinishButton(
+                Button.States.IDLE,
+                (int) (1200 * SCALE),
+                (int) (880 * SCALE)
+        );
     }
 
     public void draw(Application model) {
@@ -54,13 +55,13 @@ public class GameScreen extends AbstractScreen {
 
         int selectedCount = 0;
         for (Ingredient ing : selectedIngredients) {
-            System.out.println(ing);
             if (ing != null) {
                 selectedCount++;
             }
         }
         if (selectedCount == 3) {
             finishButton.setState(Button.States.ACTIVE);
+            finishButton.draw(gui);
         }
 
         Recipe selectedRecipe = model.getSelectedRecipe();

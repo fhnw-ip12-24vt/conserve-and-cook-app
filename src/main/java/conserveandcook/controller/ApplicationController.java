@@ -29,25 +29,30 @@ public class ApplicationController extends ControllerBase<Application> {
     }
 
     public void up() {
-        model.getActiveScreen().getComponents().incrementActiveIndex();
+        model.getActiveScreen().interaction(model);
+        model.getActiveScreen().up(model);
     }
 
     public void down() {
-        model.getActiveScreen().getComponents().decrementActiveIndex();
+        model.getActiveScreen().interaction(model);
+        model.getActiveScreen().down(model);
     }
 
     public void left() {
+        model.getActiveScreen().interaction(model);
         model.getActiveScreen().left(model);
     }
     public void right() {
+        model.getActiveScreen().interaction(model);
         model.getActiveScreen().right(model);
     }
     public void scan(String barcode) {
+        model.getActiveScreen().interaction(model);
         model.getActiveScreen().scan(model, barcode);
     }
 
     public void press(){
-        model.getActiveScreen().getComponents().press();
-        System.out.println("space");
+        model.getActiveScreen().interaction(model);
+        model.getActiveScreen().press(model);
     }
 }

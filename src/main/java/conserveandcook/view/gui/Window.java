@@ -41,7 +41,6 @@ public class Window extends GuiBase<Application, ApplicationController> {
     protected void redraw(Application model) {
         AbstractScreen activeScreen = model.getActiveScreen();
         activeScreen.draw(model);
-        activeScreen.components.drawEach(this);
     }
 
     @Override

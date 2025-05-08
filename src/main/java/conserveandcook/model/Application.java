@@ -53,6 +53,10 @@ public class Application {
         I18n.setLanguage(language);
     }
 
+    public void setLanguage(Languages lang) {
+        language = lang;
+    }
+
     public Languages getLanguage() {
         return language;
     }

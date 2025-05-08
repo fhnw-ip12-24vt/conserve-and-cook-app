@@ -4,58 +4,85 @@ import ch.trick17.gui.Gui;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
-import conserveandcook.view.gui.Window;
+import conserveandcook.view.gui.components.Arrow;
 import conserveandcook.view.gui.components.Button;
+import conserveandcook.view.gui.components.SkipButton;
 
 public class TutorialScreen extends AbstractScreen {
 
     private int frameIndex = 0;
-    Button nextButton;
     Button skipButton;
+    Arrow nextButton;
+
     public TutorialScreen(Gui gui) {
         super(gui);
-       nextButton = new Button(Button.Type.ARROW);
-        nextButton.setDirection(Button.Direction.RIGHT);
-        nextButton.setState(Button.States.ACTIVE);
-        nextButton.setY((int) (880 * SCALE));
-        nextButton.setX((int) (1200 * SCALE));
-        components.add(nextButton);
 
-        skipButton = new Button(Button.Type.SKIP);
-        skipButton.setState(Button.States.ACTIVE);
-        skipButton.setY((int) (880 * SCALE));
-        skipButton.setX((int) (130 * SCALE));
-
-        components.add(skipButton);
-        components.incrementActiveIndex();
+        nextButton = new Arrow(Button.States.ACTIVE,
+                Arrow.Direction.RIGHT,
+                (int) (1200 * SCALE),
+                (int) (880 * SCALE)
+        );
+        skipButton = new SkipButton(
+                Button.States.IDLE,
+                (int) (130 * SCALE),
+                (int) (880 * SCALE)
+        );
     }
 
     @Override
     public void draw(Application model) {
-        skipButton.setLanguage(model.getSelectedLanguage());
         drawBackground("img/tutorial/frame_" + frameIndex + ".png");
-
-        skipButton.setOnPress(model::skipTutorial);
 
         Result coordinates = getCoordinates();
         gui.setTextAlignCenter();
         gui.setFontSize((int) (coordinates.fontsize() * SCALE));
         gui.drawString(getText(), coordinates.x() * SCALE, (coordinates.y()) * SCALE);
+
+        skipButton.draw(gui);
+        nextButton.draw(gui);
+    }
+
+    @Override
+    public void init(Application model) {
+        skipButton.setLanguage(model.getSelectedLanguage());
+        skipButton.setOnPress(model::skipTutorial);
+        nextButton.setOnPress(model::incrementScreen);
     }
 
     @Override
     public AvailableScreens next() {
-        if (frameIndex + 1 > 5) {
+        frameIndex++;
+        if (frameIndex > 5) {
             frameIndex = 0;
             return AvailableScreens.REGION;
         }
-        frameIndex++;
         return null;
     }
 
     @Override
+    public void press(Application model) {
+        if (nextButton.isActive()) {
+            nextButton.onPress(gui);
+        } else if (skipButton.isActive()) {
+            skipButton.onPress(gui);
+        }
+    }
+
+    @Override
     public AvailableScreens prev() {
-        return AvailableScreens.REGION;
+        return AvailableScreens.LANGUAGE;
+    }
+
+    @Override
+    public void left(Application model) {
+        skipButton.setState(Button.States.ACTIVE);
+        nextButton.setState(Button.States.IDLE);
+    }
+
+    @Override
+    public void right(Application model) {
+        nextButton.setState(Button.States.ACTIVE);
+        skipButton.setState(Button.States.IDLE);
     }
 
     // TODO: (SK) Replace this function with i18n results

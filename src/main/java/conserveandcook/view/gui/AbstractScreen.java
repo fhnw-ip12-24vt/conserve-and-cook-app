@@ -3,20 +3,16 @@ package conserveandcook.view.gui;
 import ch.trick17.gui.Gui;
 import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
-import conserveandcook.view.gui.components.ComponentList;
 
 public abstract class AbstractScreen {
     protected final Gui gui;
     public static double SCALE = Double.parseDouble(Config.get("screen.scale"));
-    protected final ComponentList components;
 
     protected AbstractScreen(Gui gui) {
         this.gui = gui;
-        this.components = new ComponentList(gui);
     }
 
     public abstract void draw(Application model);
-    public void initComponents() {};
 
     public AvailableScreens next(){
         return null;
@@ -24,15 +20,21 @@ public abstract class AbstractScreen {
     public AvailableScreens prev(){
         return null;
     }
-    public void left(Application model) {
-        model.decrementScreen();
-    }
-    public void right(Application model) {
-        model.incrementScreen();
-    }
+    public void left(Application model) {}
+    public void right(Application model) {}
     public void scan(Application model, String barcode) {}
     public void up(Application model) {};
     public void down(Application model) {};
+    public void press(Application model) {
+        model.incrementScreen();
+    }
+
+    /**
+     * Called on any interaction: button press, joystick, barcode scan.
+     * Useful for actions that are the same, no matter the interaction.
+     * @param model
+     */
+    public void interaction(Application model) {};
 
     /**
      * Call this method to reset the state of the view.
@@ -48,7 +50,4 @@ public abstract class AbstractScreen {
         gui.drawImage(frame, 0, 0, SCALE);
     }
 
-    public ComponentList getComponents() {
-        return components;
-    }
 }
