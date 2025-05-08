@@ -15,4 +15,10 @@ else
         exit 1
     fi
 fi
+
+if
+
+unclutter -display :0 -idle 0 &
+DISPLAY=:0
+XAUTHORITY=/home/pi/.Xauthority
 /usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx2G -jar /home/pi/deploy/Trick17App/Trick17App.jar
