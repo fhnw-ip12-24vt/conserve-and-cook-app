@@ -12,12 +12,18 @@ public class GameoverScreen extends AbstractScreen {
     }
 
     public void draw(Application model) {
-        String lang = model.getSelectedLanguage().toString().toLowerCase();
+        String lang = model.getSelectedLanguage().name().toLowerCase();
         drawBackground("img/gameover/" + lang + ".png");
     }
 
     @Override
     public AvailableScreens next() {
         return AvailableScreens.RESULT;
+    }
+
+    @Override
+    public boolean interaction(Application model) {
+        model.incrementScreen();
+        return false;
     }
 }

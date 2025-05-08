@@ -23,4 +23,11 @@ public class StartScreen extends AbstractGif {
     public AvailableScreens next() {
         return AvailableScreens.LANGUAGE;
     }
+
+    @Override
+    public boolean interaction(Application model) {
+        model.incrementScreen();
+        return false;
+    }
+
 }
