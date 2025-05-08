@@ -57,8 +57,16 @@ create table translations
         references languages
 );
 
-INSERT INTO translations (id, text, language_id) VALUES (1, 'Hello', 1);
-INSERT INTO translations (id, text, language_id) VALUES (2, 'Hallo', 2);
+DROP TABLE if exists highscore;
+CREATE TABLE if not exists highscore
+(
+    score INTEGER not null,
+    name  TEXT,
+    id    integer not null
+    constraint highscore_pk
+    primary key autoincrement
+);
+
 
 
 INSERT INTO regions (id, title) VALUES (1, 'Europe');
@@ -77,8 +85,15 @@ INSERT INTO recipe (id, region_id, name) VALUES (8, 1, 'Fleischfondue');
 INSERT INTO recipe (id, region_id, name) VALUES (9, 1, 'Pizza');
 
 
-INSERT INTO languages (id, name) VALUES (1, 'English');
-INSERT INTO languages (id, name) VALUES (2, 'German');
+INSERT INTO languages (id, name) VALUES (4, 'English');
+INSERT INTO languages (id, name) VALUES (1, 'German');
+INSERT INTO languages (id, name) VALUES (2, 'Francais');
+INSERT INTO languages (id, name) VALUES (3, 'Italiano');
+
+INSERT INTO translations (id, text, key, language_id) VALUES (1, 'Wilkommen zu Conserve&Cook!','intro',  1);
+INSERT INTO translations (id, text, key, language_id) VALUES (2, 'Bienvenue chez Conserve&Cook!','intro',  2);
+INSERT INTO translations (id, text, key, language_id) VALUES (3, 'Benvenuti a Conserve&Cook!','intro',  3);
+INSERT INTO translations (id, text, key, language_id) VALUES (4, 'Welcome to Conserve&Cook!','intro',  4);
 
 
 INSERT INTO ingredient_to_recipe (recipe_id, ingredient_id, category_id, id) VALUES (1, 0, 0, 1);

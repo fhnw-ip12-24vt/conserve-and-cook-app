@@ -2,6 +2,7 @@ package conserveandcook.misc;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
@@ -46,7 +47,7 @@ public class Config {
 
     public static boolean isEnabled(String key) {
         String enabled = get(key + ".enabled");
-        return !enabled.equals("false");
+        return ! Objects.equals(enabled, "false");
     }
 
     /**

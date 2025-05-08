@@ -11,6 +11,9 @@ public class Window extends GuiBase<Application, ApplicationController> {
 
     public static int HEIGHT = Integer.parseInt(Config.get("screen.height"));
     public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
+    public static int TIMEOUT = Integer.parseInt(Config.get("screen.timeout"));
+
+    private long startTime = System.currentTimeMillis();
 
     protected final ApplicationController controller;
 
@@ -41,6 +44,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
     protected void redraw(Application model) {
         AbstractScreen activeScreen = model.getActiveScreen();
         activeScreen.draw(model);
+        checkIdle(model);
     }
 
     @Override
@@ -62,5 +66,19 @@ public class Window extends GuiBase<Application, ApplicationController> {
                 case "space" -> controller.press();
             }
         });
+    }
+
+    private void checkIdle(Application model) {
+        // Return early for performance reasons
+        if (model.getCurrentScreen() == AvailableScreens.START) return;
+
+        int idleTime = model.getIdleTime();
+        if (System.currentTimeMillis() - startTime > 1000) {
+            idleTime++;
+            model.setIdleTime(idleTime);
+            startTime = System.currentTimeMillis();
+        }
+
+        if (idleTime > TIMEOUT) model.timeoutScreen();
     }
 }
