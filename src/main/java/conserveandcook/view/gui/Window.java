@@ -26,7 +26,7 @@ public class Window extends GuiBase<Application, ApplicationController> {
         Application.screens.put(AvailableScreens.LANGUAGE, new LanguageScreen(this));
         Application.screens.put(AvailableScreens.TUTORIAL, new TutorialScreen(this));
         Application.screens.put(AvailableScreens.REGION, new RegionScreen(this));
-        Application.screens.put(AvailableScreens.GAME, new GameScreen(this, controller));
+        Application.screens.put(AvailableScreens.GAME, new GameScreen(this));
         Application.screens.put(AvailableScreens.GAMEOVER, new GameoverScreen(this));
         Application.screens.put(AvailableScreens.RESULT, new ResultScreen(this));
         Application.screens.put(AvailableScreens.NAME, new NameScreen(this));
@@ -61,8 +61,6 @@ public class Window extends GuiBase<Application, ApplicationController> {
                 case "left" -> controller.left();
                 case "up" -> controller.up();
                 case "down" -> controller.down();
-                case "d" -> controller.nextScreen();
-                case "a" -> controller.prevScreen();
                 case "space" -> controller.press();
             }
         });

@@ -1,7 +1,6 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
-import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
@@ -23,7 +22,6 @@ public class GameScreen extends AbstractScreen {
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
-    private final ApplicationController controller;
 
     private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
@@ -38,9 +36,8 @@ public class GameScreen extends AbstractScreen {
 
     FinishButton finishButton;
 
-    public GameScreen(Gui g, ApplicationController controller) {
+    public GameScreen(Gui g) {
         super(g);
-        this.controller = controller;
         finishButton = new FinishButton(
                 Button.States.IDLE,
                 (int) (1200 * SCALE),
@@ -79,7 +76,7 @@ public class GameScreen extends AbstractScreen {
                 }
             }
         }
-        gameTimer();
+        gameTimer(model);
     }
 
     @Override
@@ -98,21 +95,21 @@ public class GameScreen extends AbstractScreen {
         if (!runningOnPi && model.getSelectedRecipe() != null) {
             model.addSelectedIngredient(model.getSelectedRecipe()
                     .getIngredients()[(3 * debugCategory) + debugIndex]);
-            debugIndex = model.incrementWrapped(debugIndex, 2);
+            debugIndex = Application.incrementWrapped(debugIndex, 2);
         }
     }
 
     @Override
     public void left(Application model) {
         if (!runningOnPi) {
-            debugCategory = model.incrementWrapped(debugCategory, 2);
+            debugCategory = Application.incrementWrapped(debugCategory, 2);
         }
     }
 
     @Override
     public void right(Application model) {
         if (!runningOnPi) {
-            debugCategory = model.decrementWrapped(debugCategory, 2);
+            debugCategory = Application.decrementWrapped(debugCategory, 2);
         }
     }
 
@@ -137,12 +134,12 @@ public class GameScreen extends AbstractScreen {
         model.resetIngredients();
     }
 
-    private void gameTimer() {
+    private void gameTimer(Application model) {
         long currentTime = System.nanoTime();
         long goneTime = currentTime - lastUpdateTime;
 
         if (gameDuration <= 0) {
-            gameOver();
+            gameOver(model);
             return;
         }
 
@@ -160,9 +157,9 @@ public class GameScreen extends AbstractScreen {
         gui.drawString(time, 140 * SCALE, 140 * SCALE);
     }
 
-    private void gameOver() {
+    private void gameOver(Application model) {
         this.gameOver = true;
-        controller.nextScreen();
+        model.incrementScreen();
     }
 
     @Override

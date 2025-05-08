@@ -14,11 +14,6 @@ public class ApplicationController extends ControllerBase<Application> {
         model.setIdleTime(0);
     }
 
-    public void prevScreen() {
-        model.decrementScreen();
-        model.setIdleTime(0);
-    }
-
     public void up() {
         model.getActiveScreen().interaction(model);
         model.getActiveScreen().up(model);
