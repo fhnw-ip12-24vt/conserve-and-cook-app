@@ -16,7 +16,10 @@ else
     fi
 fi
 
-if
+if not which unclutter; then
+    echo "Unclutter not found. Installing it now"
+    sudo apt install -y unclutter
+fi
 
 unclutter -display :0 -idle 0 &
 DISPLAY=:0
