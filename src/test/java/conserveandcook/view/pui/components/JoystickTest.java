@@ -18,12 +18,12 @@ public class JoystickTest extends AbstractTest {
     @Test
     public void testCreateJoystick() {
         // Random file, obviously pom.xml is not a valid joystick input
-        js = new Joystick("pom.xml");
+        js = new Joystick();
     }
 
     @Test
     public void testOnNorth() {
-        js = new Joystick("pom.xml");
+        js = new Joystick();
         js.onNorth(this::task);
         js.mockInput();
         assertTrue(test);
@@ -31,7 +31,7 @@ public class JoystickTest extends AbstractTest {
 
     @Test
     public void testOnEast() {
-        js = new Joystick("pom.xml");
+        js = new Joystick();
         js.onEast(this::task);
         js.mockInput();
         assertTrue(test);
@@ -39,7 +39,7 @@ public class JoystickTest extends AbstractTest {
 
     @Test
     public void testOnSouth() {
-        js = new Joystick("pom.xml");
+        js = new Joystick();
         js.onSouth(this::task);
         js.mockInput();
         assertTrue(test);
@@ -47,7 +47,7 @@ public class JoystickTest extends AbstractTest {
 
     @Test
     public void testOnWest() {
-        js = new Joystick("pom.xml");
+        js = new Joystick();
         js.onWest(this::task);
         js.mockInput();
         assertTrue(test);
