@@ -6,6 +6,7 @@ import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class Application {
     }
 
     public void setLanguage(Languages lang) {
+        selectedLanguage = Arrays.asList(languages).indexOf(lang);
         language = lang;
     }
 
@@ -89,8 +91,8 @@ public class Application {
         activeScreen.init(this);
     }
     public void skipTutorial() {
-        AvailableScreens skip = AvailableScreens.REGION;
-        activeScreen = screens.get(skip);
+        AvailableScreens region = AvailableScreens.REGION;
+        activeScreen = screens.get(region);
         if (activeScreen == null) {
             return;
         }
@@ -124,6 +126,10 @@ public class Application {
 
     public Regions getSelectedRegion() {
         return regions[selectedRegion];
+    }
+
+    public void setRegion(Regions region) {
+        selectedRegion = region.ordinal();
     }
 
     public void addSelectedIngredient(Ingredient ingredient) {

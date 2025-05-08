@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Regions;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
@@ -36,6 +37,13 @@ public class RegionScreen extends AbstractScreen {
     @Override
     public void init(Application model) {
         confirmButton.setLanguage(model.getLanguage());
+        model.setRegion(Regions.EUROPE);
+    }
+
+    @Override
+    public void press(Application model) {
+        System.out.println("region.press");
+        model.incrementScreen();
     }
 
     @Override

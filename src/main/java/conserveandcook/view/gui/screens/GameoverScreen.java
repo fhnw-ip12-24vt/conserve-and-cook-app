@@ -22,7 +22,8 @@ public class GameoverScreen extends AbstractScreen {
     }
 
     @Override
-    public void interaction(Application model) {
+    public boolean interaction(Application model) {
         model.incrementScreen();
+        return false;
     }
 }

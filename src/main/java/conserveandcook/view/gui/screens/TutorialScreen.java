@@ -46,7 +46,9 @@ public class TutorialScreen extends AbstractScreen {
     public void init(Application model) {
         skipButton.setLanguage(model.getSelectedLanguage());
         skipButton.setOnPress(model::skipTutorial);
+        skipButton.setState(Button.States.IDLE);
         nextButton.setOnPress(model::incrementScreen);
+        nextButton.setState(Button.States.ACTIVE);
     }
 
     @Override

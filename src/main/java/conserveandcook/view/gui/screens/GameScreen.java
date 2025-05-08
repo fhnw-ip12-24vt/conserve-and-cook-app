@@ -154,7 +154,7 @@ public class GameScreen extends AbstractScreen {
         String time = String.format("%02d:%02d", minutes, seconds);
 
         gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(time, 140 * SCALE, 140 * SCALE);
+        gui.drawString(time, 290 * SCALE, 1000 * SCALE);
     }
 
     private void gameOver(Application model) {
