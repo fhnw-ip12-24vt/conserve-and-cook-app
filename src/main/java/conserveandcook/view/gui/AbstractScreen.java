@@ -37,7 +37,6 @@ public abstract class AbstractScreen {
      * False if not
      */
     public boolean interaction(Application model) {
-        System.out.println("abs.interation");
         return true;
     }
 

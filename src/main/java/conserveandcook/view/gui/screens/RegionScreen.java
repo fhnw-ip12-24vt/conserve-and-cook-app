@@ -42,7 +42,6 @@ public class RegionScreen extends AbstractScreen {
 
     @Override
     public void press(Application model) {
-        System.out.println("region.press");
         model.incrementScreen();
     }
 

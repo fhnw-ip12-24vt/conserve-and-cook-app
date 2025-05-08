@@ -24,13 +24,11 @@ public class LanguageScreen extends AbstractGif {
 
     @Override
     public void init(Application model) {
-        System.out.println("lang.init");
         model.setLanguage(Languages.DE);
     }
 
     @Override
     public void press(Application model) {
-        System.out.println("lang.press");
         model.incrementScreen();
     }
 
@@ -46,7 +44,6 @@ public class LanguageScreen extends AbstractGif {
 
     @Override
     public AvailableScreens next() {
-        System.out.println("lang.next");
         return AvailableScreens.TUTORIAL;
     }
 
