@@ -11,17 +11,13 @@ Group=pi
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
 
-# grab the Pi's session bus – adjust the UID if needed:
+# grab the Pi's session bus
 Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 
 WorkingDirectory=/home/pi/deploy/Trick17App
-ExecStart=/usr/bin/java \
-  -Dsun.java2d.opengl=True \
-  -XX:+UseZGC \
-  -Xmx1G \
-  -jar /home/pi/deploy/Trick17App/Trick17App.jar
+ExecStart=sh /home/pi/deploy/Trick17App/autostart.sh
 
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=graphical.target
