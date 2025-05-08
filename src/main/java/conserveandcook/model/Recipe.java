@@ -116,11 +116,21 @@ public class Recipe {
     }
 
     /**
-     *
      * @return The comment of the Ingredient with the largest c02 value
      */
-    public String getComment(){
-        // TODO: (EH): Remove the exception and implement this function
-        throw new UnsupportedOperationException("Not supported yet.");
+    //TODO: (EH,08.05) Es kommt immer der Kommentar mit max c02 Wert von allen Zutaten und nicht von den ausgewählten(also kommt immer Ananas)
+    public String getComment() {
+        Ingredient[] ingredient = getIngredients();
+
+        Ingredient max = ingredient[0];
+
+
+        for (int i = 0; i < ingredient.length; i++) {
+            if (ingredient[i].getCo2() > max.getCo2()) {
+                max = ingredient[i];
+            }
+        }
+
+        return max.getComment();
     }
 }
