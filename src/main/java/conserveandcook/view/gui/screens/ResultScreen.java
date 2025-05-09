@@ -24,10 +24,20 @@ public class ResultScreen extends AbstractScreen {
         int score = model.getScore();
         gui.setFontSize((int) (140 * SCALE));
         gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
-        // TODO (Elena, 4.5) : The following Arrays.toString does not convert to a 3 letter name
-        // saveHighscore(model.getScore(), Arrays.toString(model.getName()));
 
-        //wählt je nach score den richtigen Resultat Screen
+        // wählt je nach score den richtigen Resultat Screen
+        String path = getFrameName(score);
+
+        drawBackground(path);
+        gui.setFontSize((int) (80 * SCALE));
+        gui.drawString(score + " Punkte", 1175 * SCALE, 400 * SCALE);
+
+        drawComment(model);
+        saveHighscore(model.getScore(), Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
+
+    }
+
+    private static String getFrameName(int score) {
         String path = "";
 
         if (score <= 1500) {
@@ -43,14 +53,7 @@ public class ResultScreen extends AbstractScreen {
         } else if (score <= 12000){
             path = "img/result/frame_5.png";  //resultat sehr gut
         }
-
-        drawBackground(path);
-        gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(score + " Punkte", 1150 * SCALE, 400 * SCALE);
-
-        drawComment(model);
-        saveHighscore(model.getScore(), Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
-
+        return path;
     }
 
 
@@ -73,6 +76,7 @@ public class ResultScreen extends AbstractScreen {
     private void drawComment(Application model) {
         Recipe selectedRecipe = model.getSelectedRecipe();
         String comment = selectedRecipe.getComment(model.getSelectedIngredients());
+        if (comment == null) return;
 
         //position of the comment
         int commentX = (int) (720 * SCALE);

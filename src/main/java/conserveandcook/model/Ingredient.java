@@ -52,7 +52,7 @@ public class Ingredient {
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
         int ingredientCount = 9;
-        String query = "select i.id, i.title, i.co2_score, i.category_id, i.comment from ingredient i " +
+        String query = "select i.id, i.title, i.co2_score, r.category_id, i.comment from ingredient i " +
                 "join ingredient_to_recipe r on i.id = r.ingredient_id " +
                 "where r.recipe_id = ? order by r.category_id";
         ResultSet results = db.executeQuery(query, recipeId);
