@@ -44,10 +44,10 @@ public class ResultScreen extends AbstractScreen {
     public AvailableScreens next() {
         return AvailableScreens.START;
     }
-    //TODO: (EH, 08.05) Es kommt immer der selbe Kommentar
+
     private void drawComment(Application model) {
         Recipe selectedRecipe = model.getSelectedRecipe();
-        String comment = selectedRecipe.getComment();
+        String comment = selectedRecipe.getComment(model.getSelectedIngredients());
 
         //position of the comment
         int commentX = (int) (720 * SCALE);

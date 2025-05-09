@@ -118,12 +118,8 @@ public class Recipe {
     /**
      * @return The comment of the Ingredient with the largest c02 value
      */
-    //TODO: (EH,08.05) Es kommt immer der Kommentar mit max c02 Wert von allen Zutaten und nicht von den ausgewählten(also kommt immer Ananas)
-    public String getComment() {
-        Ingredient[] ingredient = getIngredients();
-
+    public String getComment(Ingredient[] ingredient) {
         Ingredient max = ingredient[0];
-
 
         for (int i = 0; i < ingredient.length; i++) {
             if (ingredient[i].getCo2() > max.getCo2()) {
