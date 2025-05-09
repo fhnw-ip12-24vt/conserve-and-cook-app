@@ -16,7 +16,9 @@ else
     fi
 fi
 
-if not which unclutter; then
+if which unclutter; then
+    echo "Unclutter found."
+else
     echo "Unclutter not found. Installing it now"
     sudo apt install -y unclutter
 fi
@@ -24,4 +26,7 @@ fi
 unclutter -display :0 -idle 0 &
 DISPLAY=:0
 XAUTHORITY=/home/pi/.Xauthority
+
+sudo systemctl stop lightdm && sudo systemctl disable lightdm
+cd /home/pi/deploy/Trick17App/
 /usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx2G -jar /home/pi/deploy/Trick17App/Trick17App.jar
