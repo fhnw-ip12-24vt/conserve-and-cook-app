@@ -137,7 +137,7 @@ public class RecipeTest extends AbstractTest {
 
         // Act
         r1 = Recipe.getRandomRecipe();
-        String comment = r1.getComment(r1.getIngredients());
+        String comment = r1.getComment(new Ingredient[]{Ingredient.getIngredientById("000")});
 
         // Assert
         assertEquals("rind ist schlecht!", comment);
