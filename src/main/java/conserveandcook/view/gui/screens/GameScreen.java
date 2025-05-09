@@ -1,7 +1,6 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
-import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
@@ -9,6 +8,8 @@ import conserveandcook.model.Ingredient;
 import conserveandcook.model.Recipe;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
+import conserveandcook.view.gui.components.Button;
+import conserveandcook.view.gui.components.FinishButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,6 @@ public class GameScreen extends AbstractScreen {
     private int gameDuration; // 2 minutes in seconds
     private long lastUpdateTime;
     private boolean gameOver;
-    private final ApplicationController controller;
 
     private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
@@ -41,15 +41,33 @@ public class GameScreen extends AbstractScreen {
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
-    public GameScreen(Gui g, ApplicationController controller) {
+    FinishButton finishButton;
+
+    public GameScreen(Gui g) {
         super(g);
-        this.controller = controller;
+        finishButton = new FinishButton(
+                Button.States.IDLE,
+                (int) (1200 * SCALE),
+                (int) (880 * SCALE)
+        );
     }
 
     public void draw(Application model) {
         drawBackground("img/game/frame_0.png");
-
+        finishButton.setLanguage(model.getSelectedLanguage());
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
+
+        int selectedCount = 0;
+        for (Ingredient ing : selectedIngredients) {
+            if (ing != null) {
+                selectedCount++;
+            }
+        }
+        if (selectedCount == 3) {
+            finishButton.setState(Button.States.ACTIVE);
+            finishButton.draw(gui);
+        }
+
         Recipe selectedRecipe = model.getSelectedRecipe();
         if (selectedRecipe == null) return;
 
@@ -64,7 +82,7 @@ public class GameScreen extends AbstractScreen {
             if (ingredient == null) continue;
             drawSelectedIngredient(ingredient, selectedRecipe);
         }
-        gameTimer();
+        gameTimer(model);
     }
 
     @Override
@@ -90,21 +108,21 @@ public class GameScreen extends AbstractScreen {
         if (!runningOnPi && model.getSelectedRecipe() != null) {
             model.addSelectedIngredient(model.getSelectedRecipe()
                     .getIngredients()[(3 * debugCategory) + debugIndex]);
-            debugIndex = model.incrementWrapped(debugIndex, 2);
+            debugIndex = Application.incrementWrapped(debugIndex, 2);
         }
     }
 
     @Override
     public void left(Application model) {
         if (!runningOnPi) {
-            debugCategory = model.incrementWrapped(debugCategory, 2);
+            debugCategory = Application.incrementWrapped(debugCategory, 2);
         }
     }
 
     @Override
     public void right(Application model) {
         if (!runningOnPi) {
-            debugCategory = model.decrementWrapped(debugCategory, 2);
+            debugCategory = Application.decrementWrapped(debugCategory, 2);
         } else {
             model.incrementScreen();
         }
@@ -137,12 +155,12 @@ public class GameScreen extends AbstractScreen {
         model.resetIngredients();
     }
 
-    private void gameTimer() {
+    private void gameTimer(Application model) {
         long currentTime = System.nanoTime();
         long goneTime = currentTime - lastUpdateTime;
 
         if (gameDuration <= 0) {
-            gameOver();
+            gameOver(model);
             return;
         }
 
@@ -157,12 +175,12 @@ public class GameScreen extends AbstractScreen {
         String time = String.format("%02d:%02d", minutes, seconds);
 
         gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(time, 140 * SCALE, 140 * SCALE);
+        gui.drawString(time, 290 * SCALE, 1000 * SCALE);
     }
 
-    private void gameOver() {
+    private void gameOver(Application model) {
         this.gameOver = true;
-        controller.nextScreen();
+        model.incrementScreen();
     }
 
     @Override

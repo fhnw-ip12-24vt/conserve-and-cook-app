@@ -9,38 +9,49 @@ public class ApplicationController extends ControllerBase<Application> {
         super(model);
     }
 
-    public void nextScreen() {
-        model.incrementScreen();
-        model.setIdleTime(0);
-    }
-
-    public void prevScreen() {
-        model.decrementScreen();
-        model.setIdleTime(0);
-    }
-
     public void up() {
-        model.getActiveScreen().up(model);
         model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
+        model.getActiveScreen().up(model);
     }
 
     public void down() {
-        model.getActiveScreen().down(model);
         model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
+        model.getActiveScreen().down(model);
     }
 
     public void left() {
+        model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
         model.getActiveScreen().left(model);
-        model.setIdleTime(0);
     }
-
     public void right() {
-        model.getActiveScreen().right(model);
         model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
+        model.getActiveScreen().right(model);
+    }
+    public void scan(String barcode) {
+        model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
+        model.getActiveScreen().scan(model, barcode);
     }
 
-    public void scan(String barcode) {
-        model.getActiveScreen().scan(model, barcode);
+    public void press(){
         model.setIdleTime(0);
+        boolean shouldContinue = model.getActiveScreen().interaction(model);
+        if (! shouldContinue) return;
+
+        model.getActiveScreen().press(model);
     }
 }

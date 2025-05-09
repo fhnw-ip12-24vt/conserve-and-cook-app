@@ -1,0 +1,24 @@
+[Unit]
+Description=ConserveAndCook Java GUI Application
+Before=graphical.target
+
+[Service]
+Type=simple
+
+# static DISPLAY & XAUTHORITY:
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+
+# grab the Pi's session bus
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+WorkingDirectory=/home/pi/deploy/Trick17App
+ExecStartPre=systemctl stop lightdm
+ExecStart=/usr/bin/xinit /home/pi/deploy/Trick17App/autostart.sh -- /usr/bin/Xorg :0 vt1 -nolisten tcp
+
+ExecStopPost=systemctl start lightdm
+
+Restart=always
+
+[Install]
+WantedBy=graphical.target

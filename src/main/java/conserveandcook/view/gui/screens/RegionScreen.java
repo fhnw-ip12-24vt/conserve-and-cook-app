@@ -1,13 +1,23 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Regions;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
+import conserveandcook.view.gui.components.Button;
+import conserveandcook.view.gui.components.ConfirmButton;
 
 public class RegionScreen extends AbstractScreen {
+    ConfirmButton confirmButton;
+
     public RegionScreen(Gui gui) {
         super(gui);
+        confirmButton = new ConfirmButton(
+                Button.States.IDLE,
+                (int) (680 * SCALE),
+                (int) (840 * SCALE)
+        );
     }
 
     @Override
@@ -19,16 +29,42 @@ public class RegionScreen extends AbstractScreen {
         gui.setTextAlignCenter();
         gui.setFontSize((int) (100 * SCALE));
         gui.drawString("Select Region", gui.getWidth() / 2, 160 * SCALE);
+
+        confirmButton.setLanguage(model.getLanguage());
+        confirmButton.draw(gui);
     }
 
     @Override
-    public void up(Application model) {
+    public void init(Application model) {
+        confirmButton.setLanguage(model.getLanguage());
+        model.setRegion(Regions.EUROPE);
+    }
+
+    @Override
+    public void press(Application model) {
+        model.incrementScreen();
+    }
+
+    @Override
+    public void right(Application model) {
+        if (confirmButton.isActive()) return;
+        model.previousRegion();
+    }
+
+    @Override
+    public void left(Application model) {
+        if (confirmButton.isActive()) return;
         model.nextRegion();
     }
 
     @Override
+    public void up(Application model) {
+        confirmButton.setState(Button.States.IDLE);
+    }
+
+    @Override
     public void down(Application model) {
-        model.previousRegion();
+        confirmButton.setState(Button.States.ACTIVE);
     }
 
     @Override

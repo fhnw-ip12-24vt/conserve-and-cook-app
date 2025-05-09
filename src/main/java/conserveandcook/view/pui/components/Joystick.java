@@ -3,185 +3,31 @@ package conserveandcook.view.pui.components;
 import com.pi4j.catalog.components.base.Component;
 import conserveandcook.misc.Environments;
 
-import java.io.FileInputStream;
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static ch.mvcbase.MvcLogger.LOGGER;
-
 public class Joystick extends Component {
-    private final String device;
-    private Thread serialReaderThread;
 
     private Runnable onNorth, onEast, onSouth, onWest;
-    private Runnable whileNorth, whileEast, whileSouth, whileWest;
     private boolean isNorth, isEast, isSouth, isWest = false;
 
     private Duration whilePressedDelay;
-    private ExecutorService executor;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public Joystick(String device) {
-        this.device = device;
-        startReading();
-    }
-
-    private void startReading() {
-        serialReaderThread = new Thread(this::listenToInput, "SerialJoystickReader");
-        serialReaderThread.setDaemon(true);
-        serialReaderThread.start();
-    }
-
-    public void shutdown() {
-        serialReaderThread.interrupt();
-        LOGGER.logInfo("Shutting down joystick device: " + device);
-    }
-
-    private void listenToInput() {
-        if (Environments.get() == Environments.TEST) {
-            return;
-        }
-        try (FileInputStream fis = new FileInputStream(this.device)) {
-            byte[] buffer = new byte[8]; // Joystick events are 8 bytes long
-            LOGGER.logInfo("Reading joystick events from " + this.device);
-
-            while (true) {
-                int bytesRead = fis.read(buffer);
-                if (bytesRead == 8) {
-                    parseEvent(buffer);
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.logException(e.getMessage(), e);
-            shutdown();
-        }
-    }
-
-    private void parseEvent(byte[] buffer) {
-        // The direction in which the joystick was moved
-        int value = (short) ((buffer[4] & 0xFF) | ((buffer[5] & 0xFF) << 8));
-
-        byte type = buffer[6]; // type 1 = Button Press, type 2 = Axis movement
-        byte axis = buffer[7]; // 1 = X-Axis, 2 = Y-Axis
-
-        if (value == 0) {
-            setNeutral();
-            return;
-        }
-
-        if (type == 1) {
-            return;    // Button Pressed
-        }
-
-        // Axis movement
-        switch (axis) {
-            case 1: // X-axis
-                isWest = (value > -30000);  // Move left
-                isEast = (value < 30000); // Move right
-                break;
-            case 0: // Y-axis
-                isNorth = (value < -30000);   // Move up
-                isSouth = (value > 30000); // Move down
-                break;
-            default: // No other axis
-                break;
-        }
-
-        executor = Executors.newSingleThreadExecutor();
-
-        setDirection(isNorth, whileNorthWorker, onNorth);
-        setDirection(isEast, whileEastWorker, onEast);
-        setDirection(isSouth, whileSouthWorker, onSouth);
-        setDirection(isWest, whileWestWorker, onWest);
-    }
-
-    private void setDirection(boolean isInDirection, Runnable worker, Runnable task) {
+    public void setDirection(boolean isInDirection, Runnable task) {
         if (isInDirection) {
-            if (executor == null) return;
-            executor.submit(worker);
             if (task != null) {
                 task.run();
             }
         }
     }
 
-    private void setNeutral() {
+    public void setNeutral() {
         isNorth = false;
         isEast = false;
         isWest = false;
         isSouth = false;
-    }
-
-    private final Runnable whileNorthWorker = () -> {
-        while (isNorth && whileNorth != null) {
-            delay(whilePressedDelay);
-            whileNorth.run();
-        }
-    };
-
-    private final Runnable whileEastWorker = () -> {
-        while (isEast && whileEast != null) {
-            delay(whilePressedDelay);
-            whileEast.run();
-        }
-    };
-
-    private final Runnable whileSouthWorker = () -> {
-        while (isSouth && whileSouth != null) {
-            delay(whilePressedDelay);
-            whileSouth.run();
-        }
-    };
-
-    private final Runnable whileWestWorker = () -> {
-        while (isWest && whileWest != null) {
-            delay(whilePressedDelay);
-            whileWest.run();
-        }
-    };
-
-    public void whileNorth(Runnable task, Duration delay) {
-        whileNorth = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileSouth(Runnable task, Duration delay) {
-        whileSouth = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileEast(Runnable task, Duration delay) {
-        whileEast = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-    }
-
-    public void whileWest(Runnable task, Duration delay) {
-        whileWest = task;
-        whilePressedDelay = delay;
-        if (executor != null) {
-            executor.shutdownNow();
-        }
-        if (task != null) {
-            executor = Executors.newSingleThreadExecutor();
-        }
     }
 
     public void onNorth(Runnable task) {
@@ -200,14 +46,24 @@ public class Joystick extends Component {
         this.onWest = task;
     }
 
+    public void shutdown() {
+        executor.shutdownNow();
+    }
+
     // For testing
     public void mockInput() {
         if (Environments.get() == Environments.TEST) {
-            executor = Executors.newSingleThreadExecutor();
-            setDirection(true, whileNorthWorker, onNorth);
-            setDirection(true, whileEastWorker, onEast);
-            setDirection(true, whileSouthWorker, onSouth);
-            setDirection(true, whileWestWorker, onWest);
+            setDirection(true, onNorth);
+            setDirection(true, onEast);
+            setDirection(true, onSouth);
+            setDirection(true, onWest);
         }
+    }
+
+    public void setInput(boolean isNorth, boolean isEast, boolean isSouth, boolean isWest) {
+        setDirection(isNorth, onNorth);
+        setDirection(isEast, onEast);
+        setDirection(isSouth, onSouth);
+        setDirection(isWest, onWest);
     }
 }
