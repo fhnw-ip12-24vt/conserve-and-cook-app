@@ -10,6 +10,7 @@ TEMPLATE_FILE="${DEPLOY_DIR}/autostart.service"
 
 if [ -f "$TEMPLATE_FILE" ]; then
     sudo cp "$TEMPLATE_FILE" "$SERVICE_FILE"
+    sudo chmod +x "${DEPLOY_DIR}autostart.sh"
     sudo systemctl daemon-reload
     sudo systemctl stop "$SERVICE_NAME"
     sudo systemctl enable "$SERVICE_NAME"

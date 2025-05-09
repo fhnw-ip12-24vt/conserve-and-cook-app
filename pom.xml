@@ -346,7 +346,6 @@
                                                  failonerror="false" usepty="true" useSystemIn="true"
                                                  command="unzip '${pi.deploydirectory}/${jar.name}.zip' -d '${pi.deploydirectory}'"/>
 
-                                        <!-- TODO: (SK) Replace test.db with database.db once we have all the necessary assets -->
                                         <scp trust="true"
                                              localFile="${project.basedir}/src/main/resources/database/database.db"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/database.db"
@@ -361,6 +360,10 @@
                                         <scp trust="true"
                                              localFile="${project.basedir}/src/assembly/autostart.service"
                                              todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/autostart.service"
+                                             port="${pi.port}" />
+                                        <scp trust="true"
+                                             localFile="${project.basedir}/src/assembly/autostart.sh"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}/${jar.name}/autostart.sh"
                                              port="${pi.port}" />
 
                                         <!-- Run application on Raspberry Pi -->
