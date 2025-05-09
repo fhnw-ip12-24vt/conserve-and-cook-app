@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.Languages;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractGif;
 import conserveandcook.view.gui.AvailableScreens;
@@ -19,6 +20,16 @@ public class LanguageScreen extends AbstractGif {
         String gifNumber = getGifNumber();
         String currentFrame = "img/language/" + lang + gifNumber + ".png";
         drawBackground(currentFrame);
+    }
+
+    @Override
+    public void init(Application model) {
+        model.setLanguage(Languages.DE);
+    }
+
+    @Override
+    public void press(Application model) {
+        model.incrementScreen();
     }
 
     @Override

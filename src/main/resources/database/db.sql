@@ -134,8 +134,14 @@ CREATE TABLE translations
     language_id INT
         references languages
 );
-INSERT INTO translations VALUES(1,'Hello',1);
-INSERT INTO translations VALUES(2,'Hallo',2);
+CREATE TABLE if not exists highscore
+(
+    score INTEGER not null,
+    name  TEXT,
+    id    integer not null
+        constraint highscore_pk
+            primary key autoincrement
+);
 CREATE TABLE IF NOT EXISTS "ingredient" (
                                             id INTEGER PRIMARY KEY,
                                             title CHAR(255),

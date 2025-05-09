@@ -6,6 +6,7 @@ import conserveandcook.misc.Regions;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ public class Application {
     public AbstractScreen getActiveScreen() {
         if (activeScreen == null) {
             activeScreen = screens.get(AvailableScreens.START);
+            activeScreen.init(this);
         }
         return activeScreen;
     }
@@ -52,6 +54,11 @@ public class Application {
         selectedLanguage = incrementWrapped(selectedLanguage, languages.length - 1);
         language = languages[selectedLanguage];
         I18n.setLanguage(language);
+    }
+
+    public void setLanguage(Languages lang) {
+        selectedLanguage = Arrays.asList(languages).indexOf(lang);
+        language = lang;
     }
 
     public Languages getLanguage() {
@@ -83,6 +90,14 @@ public class Application {
         activeScreen = screens.get(prev);
         activeScreen.init(this);
     }
+    public void skipTutorial() {
+        AvailableScreens region = AvailableScreens.REGION;
+        activeScreen = screens.get(region);
+        if (activeScreen == null) {
+            return;
+        }
+        activeScreen.init(this);
+    }
 
     public AvailableScreens getCurrentScreen() {
         return availableScreens[currentScreen];
@@ -111,6 +126,10 @@ public class Application {
 
     public Regions getSelectedRegion() {
         return regions[selectedRegion];
+    }
+
+    public void setRegion(Regions region) {
+        selectedRegion = region.ordinal();
     }
 
     public void addSelectedIngredient(Ingredient ingredient) {
@@ -197,7 +216,7 @@ public class Application {
      * @param max     int that represents the maximum value after which to wrap around
      * @return int result
      */
-    public int incrementWrapped(int current, int max) {
+    public static int incrementWrapped(int current, int max) {
         return current + 1 > max ? 0 : current + 1;
     }
 
@@ -208,7 +227,7 @@ public class Application {
      * @param max     int to which the function wraps in case the previous int is below 0
      * @return int result
      */
-    public int decrementWrapped(int current, int max) {
+    public static int decrementWrapped(int current, int max) {
         return current - 1 >= 0 ? current - 1 : max;
     }
 }

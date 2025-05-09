@@ -5,11 +5,14 @@ import conserveandcook.controller.ApplicationController;
 import conserveandcook.misc.Config;
 import conserveandcook.model.Application;
 import conserveandcook.view.pui.components.BarcodeScanner;
+import conserveandcook.view.pui.components.Button;
 import conserveandcook.view.pui.components.Joystick;
 
 public class Hardware extends PuiBase<Application, ApplicationController> {
     private Joystick joystick;
     private BarcodeScanner scanner;
+    private Button button;
+    private UsbDevice usb;
 
     public Hardware(ApplicationController controller, int frameRate) {
         super(controller, frameRate);
@@ -27,12 +30,19 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
         if (scanner != null) {
             scanner.onScan(controller::scan);
         }
+
+        if (button != null) {
+            button.onPress(controller::press);
+        }
     }
 
     @Override
     public void initializeComponents(Application model) {
         if (Config.isEnabled("joystick")) {
-            joystick = new Joystick(Config.get("joystick.path"));
+            joystick = new Joystick();
+            button = new Button();
+
+            usb = new UsbDevice(Config.get("joystick.path"), joystick, button);
         }
 
         if (Config.isEnabled("barcode_scanner")) {
@@ -46,8 +56,8 @@ public class Hardware extends PuiBase<Application, ApplicationController> {
         if (scanner != null) {
             scanner.shutdown();
         }
-        if (joystick != null) {
-            joystick.shutdown();
+        if (usb != null) {
+            usb.shutdown();
         }
     }
 }
