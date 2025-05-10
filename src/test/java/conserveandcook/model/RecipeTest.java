@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RecipeTest extends AbstractTest {
+    private static final int REGION_ID = 1;
+    private static final int RECIPE_ID = 1;
 
     @Test
     public void recipeTest() {
@@ -15,7 +17,7 @@ public class RecipeTest extends AbstractTest {
         Recipe r1;
         try {
             // Act
-            r1 = Recipe.getRandomRecipe();
+            r1 = Recipe.getRandomRecipe(REGION_ID);
             // Assert
             assertNotNull(r1);
         } catch (Exception e) {
@@ -29,7 +31,7 @@ public class RecipeTest extends AbstractTest {
         Recipe r1;
         try {
             // Act
-            r1 = Recipe.getRandomRecipe();
+            r1 = Recipe.getRandomRecipe(REGION_ID);
             // Assert
             Ingredient[] ingredients = r1.getIngredients();
 
@@ -49,7 +51,7 @@ public class RecipeTest extends AbstractTest {
         int score;
 
         // Act
-        r1 = Recipe.getRandomRecipe();
+        r1 = Recipe.getRandomRecipe(REGION_ID);
         score = r1.getMaxScore();
 
         // Assert
@@ -63,7 +65,7 @@ public class RecipeTest extends AbstractTest {
         int score;
 
         // Act
-        r1 = Recipe.getRandomRecipe();
+        r1 = Recipe.getRandomRecipe(REGION_ID);
         score = r1.getMinScore();
 
         // Assert
@@ -77,10 +79,10 @@ public class RecipeTest extends AbstractTest {
         Application m = new Application();
 
         // Act
-        r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("066");
-        Ingredient i2 = Ingredient.getIngredientById("078");
-        Ingredient i3 = Ingredient.getIngredientById("007");
+        r1 = Recipe.getRandomRecipe(REGION_ID);
+        Ingredient i1 = Ingredient.getIngredientById("066", RECIPE_ID);
+        Ingredient i2 = Ingredient.getIngredientById("078", RECIPE_ID);
+        Ingredient i3 = Ingredient.getIngredientById("007", RECIPE_ID);
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);
@@ -97,10 +99,10 @@ public class RecipeTest extends AbstractTest {
         Application m = new Application();
 
         // Act
-        r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("001");
-        Ingredient i2 = Ingredient.getIngredientById("008");
-        Ingredient i3 = Ingredient.getIngredientById("007");
+        r1 = Recipe.getRandomRecipe(REGION_ID);
+        Ingredient i1 = Ingredient.getIngredientById("001", RECIPE_ID);
+        Ingredient i2 = Ingredient.getIngredientById("008", RECIPE_ID);
+        Ingredient i3 = Ingredient.getIngredientById("007", RECIPE_ID);
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);
@@ -117,10 +119,10 @@ public class RecipeTest extends AbstractTest {
         Application m = new Application();
 
         // Act
-        r1 = Recipe.getRandomRecipe();
-        Ingredient i1 = Ingredient.getIngredientById("000");
-        Ingredient i2 = Ingredient.getIngredientById("018");
-        Ingredient i3 = Ingredient.getIngredientById("016");
+        r1 = Recipe.getRandomRecipe(REGION_ID);
+        Ingredient i1 = Ingredient.getIngredientById("000", RECIPE_ID);
+        Ingredient i2 = Ingredient.getIngredientById("018", RECIPE_ID);
+        Ingredient i3 = Ingredient.getIngredientById("016", RECIPE_ID);
         m.addSelectedIngredient(i1);
         m.addSelectedIngredient(i2);
         m.addSelectedIngredient(i3);

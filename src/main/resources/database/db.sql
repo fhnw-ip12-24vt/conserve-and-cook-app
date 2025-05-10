@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS "ingredient" (
                                             title CHAR(255),
                                             co2_score INTEGER,
                                             comment TEXT
+                                            identifier TEXT
 );
 INSERT INTO ingredient VALUES(0,'Rindfleisch',13300,'Aber Achtung: Rindfleisch verursacht besonders viel CO₂ wegen der Methan-Emissionen. Vielleicht findest du eine klimafreundlichere Alternative?');
 INSERT INTO ingredient VALUES(1,'Poulet',3400,replace('Nur ein kleiner Hinweis: Auch Poulet stammt aus Tierhaltung, was mit CO₂ verbunden ist. Vielleicht entdeckst eine noch klimafreundlichere pflanzliche Alternative.\n','\n',char(10)));
@@ -230,4 +231,61 @@ INSERT INTO ingredient VALUES(80,'Zwiebel',420,'Deine Zutatenwahl ist top für d
 INSERT INTO ingredient VALUES(81,'Mais',1500,'Dein Rezept ist nicht nur lecker, sondern auch richtig nachhaltig.');
 INSERT INTO ingredient VALUES(82,'Artischocken',394,'Dein Rezept ist nicht nur lecker, sondern auch richtig nachhaltig.');
 INSERT INTO sqlite_sequence VALUES('ingredient_to_recipe',82);
+COMMIT;
+CREATE TABLE IF NOT EXISTS "ingredient"
+(
+    id         INT       not null
+        primary key,
+    title      CHAR(255) not null,
+    co2_score  INT       not null,
+    identifier TEXT
+);
+INSERT INTO ingredient VALUES(0,'Rindfleisch',13600,'034');
+INSERT INTO ingredient VALUES(1,'Poulet',5500,'031');
+INSERT INTO ingredient VALUES(2,'Falafel',1100,'014');
+INSERT INTO ingredient VALUES(3,'Käse',5700,'022');
+INSERT INTO ingredient VALUES(4,'Ananas',10000,'001');
+INSERT INTO ingredient VALUES(5,'Speck',4600,'005');
+INSERT INTO ingredient VALUES(6,'Tomate',500,'044');
+INSERT INTO ingredient VALUES(7,'Salat',200,'036');
+INSERT INTO ingredient VALUES(8,'Zwiebel',200,'046');
+INSERT INTO ingredient VALUES(9,'Bohnen',800,'008');
+INSERT INTO ingredient VALUES(10,'Mais',600,'027');
+INSERT INTO ingredient VALUES(16,'Avocado',600,'004');
+INSERT INTO ingredient VALUES(17,'Knoblauch',200,'024');
+INSERT INTO ingredient VALUES(21,'Sahne',4200,'035');
+INSERT INTO ingredient VALUES(22,'Erdbeer',500,'013');
+INSERT INTO ingredient VALUES(23,'Eier',3000,'012');
+INSERT INTO ingredient VALUES(24,'Knoblauchsauce',4500,'025');
+INSERT INTO ingredient VALUES(25,'Banane',600,'007');
+INSERT INTO ingredient VALUES(26,'Lachs',5100,'026');
+INSERT INTO ingredient VALUES(27,'Schokolade',4100,'038');
+INSERT INTO ingredient VALUES(28,'Tofu',1000,'043');
+INSERT INTO ingredient VALUES(31,'Brokkoli',300,'009');
+INSERT INTO ingredient VALUES(32,'Aubergine',200,'003');
+INSERT INTO ingredient VALUES(33,'Bambussprossen',200,'006');
+INSERT INTO ingredient VALUES(34,'Reis',3000,'033');
+INSERT INTO ingredient VALUES(35,'Nudeln',700,'029');
+INSERT INTO ingredient VALUES(36,'Fladenbrot',1000,'015');
+INSERT INTO ingredient VALUES(40,'Heuschrecken',300,'017');
+INSERT INTO ingredient VALUES(41,'Champignon',1300,'010');
+INSERT INTO ingredient VALUES(46,'Quinoa',600,'032');
+INSERT INTO ingredient VALUES(48,'Thunfisch',2400,'042');
+INSERT INTO ingredient VALUES(49,'Gurke',200,'016');
+INSERT INTO ingredient VALUES(50,'Kaviar',10000,'023');
+INSERT INTO ingredient VALUES(51,'Karotten',100,'020');
+INSERT INTO ingredient VALUES(53,'Ingwer',200,'018');
+INSERT INTO ingredient VALUES(54,'Sojasauce',1000,'040');
+INSERT INTO ingredient VALUES(55,'Wasabi',100,'045');
+INSERT INTO ingredient VALUES(57,'Sardellen',2400,'037');
+INSERT INTO ingredient VALUES(59,'Kartoffel',300,'021');
+INSERT INTO ingredient VALUES(60,'Süsskartoffel',200,'041');
+INSERT INTO ingredient VALUES(61,'Maniok',200,'028');
+INSERT INTO ingredient VALUES(62,'Kapern',100,'019');
+INSERT INTO ingredient VALUES(66,'Schweinefleisch',4600,'039');
+INSERT INTO ingredient VALUES(72,'Cocktailsauce',3000,'011');
+INSERT INTO ingredient VALUES(79,'Olive',2000,'030');
+INSERT INTO ingredient VALUES(82,'Artischocken',200,'002');
+INSERT INTO sqlite_sequence VALUES('ingredient_to_recipe',82);
+INSERT INTO sqlite_sequence VALUES('highscore',12);
 COMMIT;

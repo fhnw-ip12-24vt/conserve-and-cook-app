@@ -115,6 +115,4 @@ CREATE TABLE highscore
         constraint highscore_pk
             primary key autoincrement
 );
-INSERT INTO sqlite_sequence
-VALUES ('highscore', 3);
 COMMIT;
