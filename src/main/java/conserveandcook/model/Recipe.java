@@ -16,12 +16,11 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public static Recipe getRandomRecipe() throws SQLException {
+    public static Recipe getRandomRecipe(int regionId) throws SQLException {
         Database db = Database.getInstance();
         // TODO: (SK) Replace this code once all the recipes are drawn
-//        String query = "select * from recipe order by random() limit 1";
-        String query = "select * from recipe where id = 1 limit 1";
-        ResultSet results = db.executeQuery(query);
+        String query = "select * from recipe where region_id = ? order by random() limit 1";
+        ResultSet results = db.executeQuery(query, regionId);
 
         // Check if we've got a row
         if (results == null || !results.next()) {

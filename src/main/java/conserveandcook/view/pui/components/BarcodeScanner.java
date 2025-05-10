@@ -57,8 +57,6 @@ public class BarcodeScanner extends Component {
                     }
                 } else if (event.value == 0) { // Key released
                     if (event.code == 28) { // Enter key
-                        LOGGER.logInfo("Barcode scanned: {}", barcode);
-
                         // Run the onScan worker, if it has been set
                         if (onScan != null) {
                             onScan.accept(barcode.toString());
