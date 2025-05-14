@@ -101,7 +101,7 @@ public class IngredientTest extends AbstractTest {
         Ingredient i1;
         try {
             // Act
-            i1 = Ingredient.getIngredientById(testId1);
+            i1 = Ingredient.getIngredientById(testId1, RECIPE_ID);
             // Assert
             assertEquals("abc", i1.getComment());
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class IngredientTest extends AbstractTest {
         // Arrange
         Ingredient i1;
         // Act
-        i1 = Ingredient.getIngredientById("000");
+        i1 = Ingredient.getIngredientById("000", RECIPE_ID);
         // Assert
         assertEquals("rind ist schlecht!", i1.getComment());
     }

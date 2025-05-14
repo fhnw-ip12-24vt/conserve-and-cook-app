@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>HSI</groupId>
-    <artifactId>Trick17Template</artifactId>
+    <artifactId>Conserveandcook</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -13,7 +13,7 @@
         <!-- The class that will be started, choose one and only one -->
         <launcher.class>conserveandcook.Starter</launcher.class>
 
-        <jar.name>Trick17App</jar.name>
+        <jar.name>Conserveandcook</jar.name>
 
         <!-- Setup for the RaspPi -->
         <pi.hostname>pi4j</pi.hostname>

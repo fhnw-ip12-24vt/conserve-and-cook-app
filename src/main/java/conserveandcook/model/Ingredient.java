@@ -24,7 +24,7 @@ public class Ingredient {
 
     public static Ingredient getIngredientById(String id, int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select i.id, i.title, i.co2_score, r.category_id " +
+        String query = "select i.id, i.title, i.co2_score, r.category_id, i.comment " +
                 "from ingredient i " +
                 "join ingredient_to_recipe r " +
                 "on r.ingredient_id = i.id " +

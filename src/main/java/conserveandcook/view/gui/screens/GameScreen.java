@@ -10,22 +10,15 @@ import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 import conserveandcook.view.gui.components.Button;
 import conserveandcook.view.gui.components.FinishButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
-    /**
-     * Game duration in seconds
-     */
-    private int gameDuration; // 2 minutes in seconds
+    private int gameDuration;
     private long lastUpdateTime;
     private boolean gameOver;
-
-    private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
     private int ingredientIndex = 0;
     private int prevCategory = 0;
@@ -93,7 +86,7 @@ public class GameScreen extends AbstractScreen {
                 model.addSelectedIngredient(scannedIngredient);
             }
         } catch (Exception e) {
-            log.info(e.getMessage());
+            LOGGER.logInfo(e.getMessage());
         }
     }
 
@@ -147,6 +140,7 @@ public class GameScreen extends AbstractScreen {
             ingredientIds = new int[9];
             for (int i = 0; i < ingredients.length; i++) {
                 ingredientIds[i] = ingredients[i].getId();
+                System.out.println(ingredients[i].getName() + " " + ingredients[i].getId() + " " + ingredients[i].getCategory());
             }
         } catch (Exception e) {
             LOGGER.logError(e.getMessage(), e);

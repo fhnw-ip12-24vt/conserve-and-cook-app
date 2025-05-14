@@ -16,7 +16,9 @@ public class StartScreen extends AbstractGif {
     @Override
     public void draw(Application model) {
         String currentFrame = getGifFrame("img/start/");
+        String flourish = getGifFrame("img/start/flourish/");
         drawBackground(currentFrame);
+        drawBackground(flourish);
     }
 
     @Override

@@ -59,26 +59,27 @@ CREATE TABLE IF NOT EXISTS "ingredient"
     title       CHAR(255) not null,
     co2_score   INT       not null,
     category_id INT,
-    comment     TEXT
+    comment     TEXT,
+    identifier TEXT
 );
 INSERT INTO ingredient
-VALUES (1, 'poulet', 20, 0, 'abc');
+VALUES (1, 'poulet', 20, 0, 'abc', '001');
 INSERT INTO ingredient
-VALUES (0, 'rind', 40, 2, 'rind ist schlecht!');
+VALUES (0, 'rind', 40, 2, 'rind ist schlecht!', '000');
 INSERT INTO ingredient
-VALUES (66, 'schwein', 30, 0, 'abc');
+VALUES (66, 'schwein', 30, 0, 'abc', '066');
 INSERT INTO ingredient
-VALUES (78, 'ananas', 10, 1, 'abc');
+VALUES (78, 'ananas', 10, 1, 'abc', '078');
 INSERT INTO ingredient
-VALUES (18, 'kaese', 20, 1, 'abc');
+VALUES (18, 'kaese', 20, 1, 'abc', '018');
 INSERT INTO ingredient
-VALUES (8, 'zwiebel', 5, 1, 'abc');
+VALUES (8, 'zwiebel', 5, 1, 'abc', '008');
 INSERT INTO ingredient
-VALUES (16, 'avocado', 20, 2, 'abc');
+VALUES (16, 'avocado', 20, 2, 'abc', '016');
 INSERT INTO ingredient
-VALUES (7, 'salat', 3, 2, 'abc');
+VALUES (7, 'salat', 3, 2, 'abc', '007');
 INSERT INTO ingredient
-VALUES (6, 'tomate', 5, 2, 'abc');
+VALUES (6, 'tomate', 5, 2, 'abc', '006');
 CREATE TABLE ingredient_to_recipe
 (
     id            INT NOT NULL,
