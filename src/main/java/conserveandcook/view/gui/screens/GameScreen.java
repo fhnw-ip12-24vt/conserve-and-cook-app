@@ -31,6 +31,7 @@ public class GameScreen extends AbstractScreen {
     private Ingredient[] ingredients;
     private int[] ingredientIds;
     private Ingredient[] selectedIngredients;
+    private boolean buttonIsVisible = false;
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
@@ -50,14 +51,19 @@ public class GameScreen extends AbstractScreen {
         finishButton.setLanguage(model.getSelectedLanguage());
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
 
-        int selectedCount = 0;
-        for (Ingredient ing : selectedIngredients) {
-            if (ing != null) {
-                selectedCount++;
+        // Only calculate if necessary
+        if(! buttonIsVisible) {
+            int selectedCount = 0;
+            for (Ingredient ing : selectedIngredients) {
+                if (ing != null) {
+                    selectedCount++;
+                }
             }
-        }
-        if (selectedCount == 3) {
-            finishButton.setState(Button.States.ACTIVE);
+            if (selectedCount == 3) {
+                buttonIsVisible = true;
+                finishButton.setState(Button.States.ACTIVE);
+            }
+        } else {
             finishButton.draw(gui);
         }
 
@@ -68,12 +74,12 @@ public class GameScreen extends AbstractScreen {
 
         for (Ingredient ingredient : ingredients) {
             if (ingredient == null) continue;
-            drawIngredient(ingredient, selectedRecipe);
+            drawIngredient(ingredient);
         }
 
         for (Ingredient ingredient : selectedIngredients) {
             if (ingredient == null) continue;
-            drawSelectedIngredient(ingredient, selectedRecipe);
+            drawSelectedIngredient(ingredient);
         }
         gameTimer(model);
     }
@@ -140,13 +146,13 @@ public class GameScreen extends AbstractScreen {
             ingredientIds = new int[9];
             for (int i = 0; i < ingredients.length; i++) {
                 ingredientIds[i] = ingredients[i].getId();
-                System.out.println(ingredients[i].getName() + " " + ingredients[i].getId() + " " + ingredients[i].getCategory());
             }
         } catch (Exception e) {
             LOGGER.logError(e.getMessage(), e);
         }
 
         model.resetIngredients();
+        buttonIsVisible = false;
     }
 
     private void gameTimer(Application model) {
@@ -169,7 +175,7 @@ public class GameScreen extends AbstractScreen {
         String time = String.format("%02d:%02d", minutes, seconds);
 
         gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(time, 290 * SCALE, 1000 * SCALE);
+        gui.drawString(time, 305 * SCALE, 995 * SCALE);
     }
 
     private void gameOver(Application model) {
@@ -185,7 +191,7 @@ public class GameScreen extends AbstractScreen {
         return AvailableScreens.RESULT;
     }
 
-    private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+    private void drawIngredient(Ingredient ingredient) {
         String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();
@@ -203,7 +209,7 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
-    private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+    private void drawSelectedIngredient(Ingredient ingredient) {
         String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();

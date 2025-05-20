@@ -121,10 +121,11 @@ public class Recipe {
         Ingredient max = null;
         int maxCo2 = -1;
 
-        for (int i = 0; i < ingredient.length; i++) {
-            if (ingredient[i] == null) continue;
-            if (ingredient[i].getCo2() > maxCo2) {
-                max = ingredient[i];
+        for (Ingredient value : ingredient) {
+            if (value == null) continue;
+            if (value.getCo2() > maxCo2) {
+                max = value;
+                maxCo2 = value.getCo2();
             }
         }
 

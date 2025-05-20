@@ -14,6 +14,8 @@ import static ch.mvcbase.MvcLogger.LOGGER;
 
 
 public class ResultScreen extends AbstractScreen {
+    private String comment = "";
+
     public ResultScreen(Gui gui) {
         super(gui);
     }
@@ -38,7 +40,7 @@ public class ResultScreen extends AbstractScreen {
     }
 
     private static String getFrameName(int score) {
-        String path = "";
+        String path;
 
         if (score <= 1500) {
             path = "img/result/frame_0.png";  //resultat sehr schlecht
@@ -50,7 +52,7 @@ public class ResultScreen extends AbstractScreen {
             path = "img/result/frame_3.png";
         } else if (score <= 10000) {
             path = "img/result/frame_4.png";
-        } else if (score <= 12000){
+        } else {
             path = "img/result/frame_5.png";  //resultat sehr gut
         }
         return path;
@@ -64,7 +66,7 @@ public class ResultScreen extends AbstractScreen {
             highscore.saveHighscore(score, name);
         } catch (IllegalArgumentException e) {
             // TODO: (Elena, 4.5) What do i need to do with IllegalArgumentException's
-            LOGGER.logError(String.format("We are ignoring IllegalArgumentException for now. Score is : %s, name %s, with length %s", score,name, name.length()));
+            LOGGER.logError(String.format("We are ignoring IllegalArgumentException for now. Score is : %s, name %s, with length %s", score, name, name.length()));
         }
     }
 
@@ -74,9 +76,11 @@ public class ResultScreen extends AbstractScreen {
     }
 
     private void drawComment(Application model) {
-        Recipe selectedRecipe = model.getSelectedRecipe();
-        String comment = selectedRecipe.getComment(model.getSelectedIngredients());
-        if (comment == null) return;
+        if (comment == null || comment.isEmpty()) {
+            Recipe selectedRecipe = model.getSelectedRecipe();
+            comment = selectedRecipe.getComment(model.getSelectedIngredients());
+            return;
+        }
 
         //position of the comment
         int commentX = (int) (720 * SCALE);
