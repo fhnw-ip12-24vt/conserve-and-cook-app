@@ -98,8 +98,10 @@ CREATE TABLE languages
         primary key,
     name VARCHAR(20)
 );
-INSERT INTO languages VALUES(1,'English');
-INSERT INTO languages VALUES(2,'German');
+INSERT INTO languages VALUES(1,'deutsch');
+INSERT INTO languages VALUES(2,'französisch');
+INSERT INTO languages VALUES(3,'english');
+INSERT INTO languages VALUES(4,'italienisch');
 CREATE TABLE recipe
 (
     id        INT
@@ -128,12 +130,51 @@ INSERT INTO regions VALUES(2,'Asia');
 INSERT INTO regions VALUES(3,'Amerika');
 CREATE TABLE translations
 (
-    id          INT
-        primary key,
-    text        VARCHAR(255),
-    language_id INT
-        references languages
+    id          INT primary key NOT NULL,
+    text        VARCHAR(255)    NOT NULL,
+    key         VARCHAR(255)    NOT NULL,
+    language_id INT             NOT NULL,
+    FOREIGN KEY (language_id) REFERENCES languages (id)
 );
+
+-- Tutorial Deutsch
+INSERT INTO translations VALUES(1,'Wilkommen bei'|| char(10) ||'Conserve & Cook!','tutorial.intro',1);
+INSERT INTO translations VALUES(5,'Dein Ziel ist es,'|| char(10) ||' leckere Gerichte '|| char(10) ||' aus aller Welt zu kochen','tutorial.aim',1);
+INSERT INTO translations VALUES(6,'Die Region bestimmt,'|| char(10) ||'welche Rezepte du kochen wirst!','tutorial.region',1);
+INSERT INTO translations VALUES(7,'Wähle 3 Zutaten.'|| char(10) ||'Du Bekommst neun zur Auswahl'|| char(10) ||'und musst drei davon einscannen,'|| char(10) ||' bevor die Zeit abläuft.','tutorial.ingredient',1);
+INSERT INTO translations VALUES(8,'Scanne die Zutaten. Nutze den Barcodescanner,'|| char(10) ||' um Zutaten aus dem Kochbuch auszuwählen. '|| char(10) ||' Genau wie an der Supermarktkasse! '|| char(10) ||' '|| char(10) ||' Falls du eine andere Zutat möchtest,'|| char(10) ||' scanne einfach eine neue ein.','tutorial.scan',1);
+INSERT INTO translations VALUES(9,'Das wars!'|| char(10) ||'Viel Spass beim Kochen!','tutorial.end',1);
+
+-- Tutorial Französisch
+INSERT INTO translations VALUES(2,'Bienvenue chez'|| char(10) ||'Conserve & Cook!','tutorial.intro',2);
+INSERT INTO translations VALUES(10,'Ton objectif est'|| char(10) ||'de préparer des plats'|| char(10) ||'du monde entier. ','tutorial.aim',2);
+INSERT INTO translations VALUES(11,'Choisis une région:'|| char(10) ||' elle détermine le type de recette!','tutorial.region',2);
+INSERT INTO translations VALUES(12,'Choisissez 3 ingrédients.'|| char(10) ||'Il y aura 9 options'|| char(10) ||'et tu devras scanner 3 ingrédients,'|| char(10) ||'avant la fin du temps imparti.','tutorial.ingredient',2);
+INSERT INTO translations VALUES(13,'Scannez les ingrédients'|| char(10) ||'de votre livre de cuisine'|| char(10) ||'comme à la caisse d''un supermarché.'|| char(10) ||' '|| char(10) ||'Si tu changes d''avis,'|| char(10) ||'scanne un nouveau code-barres pour le remplacer.','tutorial.scan',2);
+INSERT INTO translations VALUES(14,'Et c''est tout !'|| char(10) ||' Bon amusement!','tutorial.end',2);
+
+-- Tutorial Italienisch
+INSERT INTO translations VALUES(3,'Benvenuti a'|| char(10) ||'Conserve & Cook!','tutorial.intro',3);
+INSERT INTO translations VALUES(15,'L''obiettivo è'|| char(10) ||'cucinare piatti deliziosi'|| char(10) ||'da tutto il mondo. ','tutorial.aim',3);
+INSERT INTO translations VALUES(16,'La regione determina'|| char(10) ||'quali ricette cucinare!','tutorial.region',3);
+INSERT INTO translations VALUES(17,'Scegliere 3 ingredienti.'|| char(10) ||'Ne avrete nove tra cui'|| char(10) ||'scegliere e dovrete scansionarne tre'|| char(10) ||'prima dello scadere del tempo.','tutorial.ingredient',3);
+INSERT INTO translations VALUES(18,'Usate lo scanner per selezionare gli ingredienti.'|| char(10) ||'Proprio come alla cassa del supermercato!'|| char(10) ||' '|| char(10) ||'Se si desidera un ingrediente diverso,'|| char(10) ||'è sufficiente scansionarne uno nuovo.','tutorial.scan',3);
+INSERT INTO translations VALUES(19,'Ecco fatto!'|| char(10) ||'Divertitevi a cucinare!','tutorial.end',3);
+
+-- Tutorial Englisch
+INSERT INTO translations VALUES(20,'Welcome to'|| char(10) ||'Conserve & Cook!','tutorial.intro',4);
+INSERT INTO translations VALUES(21,'Your goal is to'|| char(10) ||'cook delicous meals'|| char(10) ||'from all over the world!','tutorial.aim',4);
+INSERT INTO translations VALUES(22,'The region determines '|| char(10) ||'which recipes you will cook!','tutorial.region',4);
+INSERT INTO translations VALUES(23,'Choose 3 ingredients.'|| char(10) ||'You will be given nine to choose from'|| char(10) ||'and must scan three of them,'|| char(10) ||'before the time runs out.','tutorial.ingredient',4);
+INSERT INTO translations VALUES(24,'Use the barcode scanner to select'|| char(10) ||'ingredients from the cookery book.'|| char(10) ||'Just like at the supermarket checkout!'|| char(10) ||' '|| char(10) ||'  If you change your mind,'|| char(10) ||' scan a new one to replace it.','tutorial.scan',4);
+INSERT INTO translations VALUES(9,'That’s it!'|| char(10) ||'Have fun cooking!','tutorial.end',4);
+
+-- Region
+INSERT INTO translations VALUES(26,'Region Auswählen','region',1);
+INSERT INTO translations VALUES(27,'Sélectionner une région','region',2);
+INSERT INTO translations VALUES(28,'Selezionare la regione','region',3);
+INSERT INTO translations VALUES(23,'Select a Region','region',4);
+
 CREATE TABLE highscore
 (
     score INTEGER not null,

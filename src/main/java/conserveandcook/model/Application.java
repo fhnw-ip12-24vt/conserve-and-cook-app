@@ -59,6 +59,7 @@ public class Application {
     public void setLanguage(Languages lang) {
         selectedLanguage = Arrays.asList(languages).indexOf(lang);
         language = lang;
+        I18n.setLanguage(language);
     }
 
     public Languages getLanguage() {

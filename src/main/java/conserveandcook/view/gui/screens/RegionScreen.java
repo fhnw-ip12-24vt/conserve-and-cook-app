@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.I18n;
 import conserveandcook.misc.Regions;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
@@ -29,10 +30,14 @@ public class RegionScreen extends AbstractScreen {
         gui.setTextAlignCenter();
         gui.setFontSize((int) (100 * SCALE));
         // TODO (SK): Translate this string
-        gui.drawString("Select Region", gui.getWidth() / 2, 160 * SCALE);
+        gui.drawString(getText(), gui.getWidth() / 2, 160 * SCALE);
 
         confirmButton.setLanguage(model.getLanguage());
         confirmButton.draw(gui);
+    }
+
+    private static String getText() {
+        return I18n.translate("region");
     }
 
     @Override
