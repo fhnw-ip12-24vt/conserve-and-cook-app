@@ -23,10 +23,10 @@ else
     sudo apt install -y unclutter
 fi
 
-unclutter -display :0 -idle 0 &
+unclutter -display :0 -idle 4 &
 DISPLAY=:0
 XAUTHORITY=/home/pi/.Xauthority
 
 sudo systemctl stop lightdm && sudo systemctl disable lightdm
-cd /home/pi/deploy/Trick17App/
-/usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx2G -jar /home/pi/deploy/Trick17App/Trick17App.jar
+cd /home/pi/deploy/Conserveandcook/
+/usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx2G -jar /home/pi/deploy/Conserveandcook/Conserveandcook.jar
