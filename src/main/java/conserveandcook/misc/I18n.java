@@ -11,9 +11,10 @@ import static ch.mvcbase.MvcLogger.LOGGER;
 public class I18n {
     private static I18n INSTANCE;
     private Languages language;
-    private HashMap<String, HashMap<Integer, String>> cache;
-
-    private I18n() {}
+    /**
+     * Mapping of Languages and Keys to their Translation to minimize DB hits.
+     */
+    private HashMap<Integer, HashMap<String, String>> cache;
 
     public static I18n getInstance() {
         if (INSTANCE == null) {
@@ -25,13 +26,13 @@ public class I18n {
 
     /**
      * Translates a given key into the target language. Language can be specified over a setter.
-     * @param key
      * @return The translated String
      */
     public static String translate(String key) {
         I18n i18n = getInstance();
         String cacheResult = getFromCache(key);
         if (cacheResult != null) {
+            int size = i18n.cache.values().stream().mapToInt(HashMap::size).sum();
             return cacheResult;
         }
 
@@ -65,28 +66,34 @@ public class I18n {
 
     /**
      * Try to retrieve the translation String from memory.
-     * @param key
      * @return The translated key, or null if it was not present in memory.
      */
     private static String getFromCache(String key) {
         I18n i18n = getInstance();
-        if (! cacheContains(key)) return null;
-        return i18n.cache.get(key).get(i18n.language.index);
+        if (! cacheContains(key)) {
+            return null;
+        }
+        return i18n.cache.get(i18n.language.index).get(key);
     }
 
     private static boolean cacheContains(String key) {
         I18n i18n = getInstance();
-        boolean cacheContainsKey = i18n.cache.containsKey(key);
+        boolean cacheContainsKey = i18n.cache.containsKey(i18n.language.index);
         if (! cacheContainsKey) return false;
 
-        return i18n.cache.get(key).containsKey(i18n.language.index);
+        return i18n.cache.get(i18n.language.index).containsKey(key);
     }
 
     private static void putToCache(String key, String value) {
         I18n i18n = getInstance();
-        if (! i18n.cache.containsKey(key)) {
-            i18n.cache.put(key, new HashMap<>());
+        if (! i18n.cache.containsKey(i18n.language.index)) {
+            i18n.cache.put(i18n.language.index, new HashMap<>());
         }
-        i18n.cache.get(key).put(i18n.language.index, value);
+        i18n.cache.get(i18n.language.index).put(key, value);
+    }
+
+    public static void clearCache() {
+        I18n i18n = getInstance();
+        i18n.cache.clear();
     }
 }
