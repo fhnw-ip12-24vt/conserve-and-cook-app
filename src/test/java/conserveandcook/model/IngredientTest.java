@@ -3,6 +3,8 @@ package conserveandcook.model;
 import conserveandcook.AbstractTest;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IngredientTest extends AbstractTest {
@@ -91,5 +93,29 @@ public class IngredientTest extends AbstractTest {
         } catch (Exception e) {
             fail(e);
         }
+    }
+
+    @Test
+    public void commentTest() {
+        // Arrange
+        Ingredient i1;
+        try {
+            // Act
+            i1 = Ingredient.getIngredientById(testId1, RECIPE_ID);
+            // Assert
+            assertEquals("abc", i1.getComment());
+        } catch (Exception e) {
+            fail(e);
+        }
+    }
+
+    @Test
+    public void commentTest2() throws SQLException {
+        // Arrange
+        Ingredient i1;
+        // Act
+        i1 = Ingredient.getIngredientById("000", RECIPE_ID);
+        // Assert
+        assertEquals("rind ist schlecht!", i1.getComment());
     }
 }

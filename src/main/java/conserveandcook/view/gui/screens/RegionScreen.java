@@ -28,6 +28,7 @@ public class RegionScreen extends AbstractScreen {
 
         gui.setTextAlignCenter();
         gui.setFontSize((int) (100 * SCALE));
+        // TODO (SK): Translate this string
         gui.drawString("Select Region", gui.getWidth() / 2, 160 * SCALE);
 
         confirmButton.setLanguage(model.getLanguage());
@@ -37,12 +38,8 @@ public class RegionScreen extends AbstractScreen {
     @Override
     public void init(Application model) {
         confirmButton.setLanguage(model.getLanguage());
+        confirmButton.setState(Button.States.IDLE);
         model.setRegion(Regions.EUROPE);
-    }
-
-    @Override
-    public void press(Application model) {
-        model.incrementScreen();
     }
 
     @Override

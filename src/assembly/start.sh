@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DEPLOY_DIR="/home/pi/deploy/Trick17App/"
+DEPLOY_DIR="/home/pi/deploy/Conserveandcook/"
 
-JAR_NAME="Trick17App"
-SERVICE_NAME="trick17app"
+JAR_NAME="Conserveandcook"
+SERVICE_NAME="conserveandcook"
 
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 TEMPLATE_FILE="${DEPLOY_DIR}/autostart.service"

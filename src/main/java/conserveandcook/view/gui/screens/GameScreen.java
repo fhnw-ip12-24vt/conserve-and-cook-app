@@ -10,22 +10,15 @@ import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
 import conserveandcook.view.gui.components.Button;
 import conserveandcook.view.gui.components.FinishButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 public class GameScreen extends AbstractScreen {
-    /**
-     * Game duration in seconds
-     */
-    private int gameDuration; // 2 minutes in seconds
+    private int gameDuration;
     private long lastUpdateTime;
     private boolean gameOver;
-
-    private static final Logger log = LoggerFactory.getLogger(GameScreen.class);
 
     private int ingredientIndex = 0;
     private int prevCategory = 0;
@@ -38,6 +31,7 @@ public class GameScreen extends AbstractScreen {
     private Ingredient[] ingredients;
     private int[] ingredientIds;
     private Ingredient[] selectedIngredients;
+    private boolean buttonIsVisible = false;
 
     boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
 
@@ -57,14 +51,19 @@ public class GameScreen extends AbstractScreen {
         finishButton.setLanguage(model.getSelectedLanguage());
         Ingredient[] selectedIngredients = model.getSelectedIngredients();
 
-        int selectedCount = 0;
-        for (Ingredient ing : selectedIngredients) {
-            if (ing != null) {
-                selectedCount++;
+        // Only calculate if necessary
+        if(! buttonIsVisible) {
+            int selectedCount = 0;
+            for (Ingredient ing : selectedIngredients) {
+                if (ing != null) {
+                    selectedCount++;
+                }
             }
-        }
-        if (selectedCount == 3) {
-            finishButton.setState(Button.States.ACTIVE);
+            if (selectedCount == 3) {
+                buttonIsVisible = true;
+                finishButton.setState(Button.States.ACTIVE);
+            }
+        } else {
             finishButton.draw(gui);
         }
 
@@ -75,12 +74,12 @@ public class GameScreen extends AbstractScreen {
 
         for (Ingredient ingredient : ingredients) {
             if (ingredient == null) continue;
-            drawIngredient(ingredient, selectedRecipe);
+            drawIngredient(ingredient);
         }
 
         for (Ingredient ingredient : selectedIngredients) {
             if (ingredient == null) continue;
-            drawSelectedIngredient(ingredient, selectedRecipe);
+            drawSelectedIngredient(ingredient);
         }
         gameTimer(model);
     }
@@ -93,7 +92,7 @@ public class GameScreen extends AbstractScreen {
                 model.addSelectedIngredient(scannedIngredient);
             }
         } catch (Exception e) {
-            log.info(e.getMessage());
+            LOGGER.logInfo(e.getMessage());
         }
     }
 
@@ -153,6 +152,7 @@ public class GameScreen extends AbstractScreen {
         }
 
         model.resetIngredients();
+        buttonIsVisible = false;
     }
 
     private void gameTimer(Application model) {
@@ -175,7 +175,7 @@ public class GameScreen extends AbstractScreen {
         String time = String.format("%02d:%02d", minutes, seconds);
 
         gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(time, 290 * SCALE, 1000 * SCALE);
+        gui.drawString(time, 305 * SCALE, 995 * SCALE);
     }
 
     private void gameOver(Application model) {
@@ -191,7 +191,7 @@ public class GameScreen extends AbstractScreen {
         return AvailableScreens.RESULT;
     }
 
-    private void drawIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+    private void drawIngredient(Ingredient ingredient) {
         String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();
@@ -209,7 +209,7 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
-    private void drawSelectedIngredient(Ingredient ingredient, Recipe selectedRecipe) {
+    private void drawSelectedIngredient(Ingredient ingredient) {
         String path = getPathOfImage(ingredient);
 
         int category = ingredient.getCategory();

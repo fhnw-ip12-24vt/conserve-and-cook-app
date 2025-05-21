@@ -131,4 +131,20 @@ public class RecipeTest extends AbstractTest {
         int score = r1.calculateScore(m.getSelectedIngredients());
         assertEquals(4500, score);
     }
+
+    @Test
+    public void commentTest() throws SQLException {
+        // Arrange
+        Recipe r1;
+
+        // Act
+        r1 = Recipe.getRandomRecipe(REGION_ID);
+        String comment = r1.getComment(new Ingredient[]{
+                Ingredient.getIngredientById("000", RECIPE_ID),
+                Ingredient.getIngredientById("066", RECIPE_ID)
+        });
+
+        // Assert
+        assertEquals("rind ist schlecht!", comment);
+    }
 }

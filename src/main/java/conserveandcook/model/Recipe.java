@@ -113,4 +113,22 @@ public class Recipe {
 
         return results.getInt(2);
     }
+
+    /**
+     * @return The comment of the Ingredient with the largest c02 value
+     */
+    public String getComment(Ingredient[] ingredient) {
+        Ingredient max = null;
+        int maxCo2 = -1;
+
+        for (Ingredient value : ingredient) {
+            if (value == null) continue;
+            if (value.getCo2() > maxCo2) {
+                max = value;
+                maxCo2 = value.getCo2();
+            }
+        }
+
+        return max != null ? max.getComment() : null;
+    }
 }
