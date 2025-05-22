@@ -138,6 +138,14 @@ public class GameScreen extends AbstractScreen {
             this.gameDuration = 120;
         }
 
+        buttonIsVisible = false;
+    }
+
+    /**
+     * Called to preload the ingredients, to block the drawing queue less
+     * @param model
+     */
+    public void preload(Application model) {
         // Select new random recipe, whenever the screen is initialized
         try {
             recipe = Recipe.getRandomRecipe(model.getSelectedRegion().getId());
@@ -152,7 +160,6 @@ public class GameScreen extends AbstractScreen {
         }
 
         model.resetIngredients();
-        buttonIsVisible = false;
     }
 
     private void gameTimer(Application model) {

@@ -2,19 +2,19 @@ package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
 import conserveandcook.misc.Highscore;
+import conserveandcook.misc.I18n;
 import conserveandcook.model.Application;
 import conserveandcook.model.Recipe;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static ch.mvcbase.MvcLogger.LOGGER;
 
 
 public class ResultScreen extends AbstractScreen {
     private String comment = "";
+    private String pointsTranslation;
+    private int score = 0;
 
     public ResultScreen(Gui gui) {
         super(gui);
@@ -22,21 +22,24 @@ public class ResultScreen extends AbstractScreen {
 
     @Override
     public void draw(Application model) {
-        model.setScore(model.getSelectedRecipe().calculateScore(model.getSelectedIngredients()));
-        int score = model.getScore();
-        gui.setFontSize((int) (140 * SCALE));
-        gui.drawString(score + " Punkte", 1000 * SCALE, 200 * SCALE);
-
         // wählt je nach score den richtigen Resultat Screen
         String path = getFrameName(score);
-
         drawBackground(path);
+
         gui.setFontSize((int) (80 * SCALE));
-        gui.drawString(score + " Punkte", 1175 * SCALE, 400 * SCALE);
+        gui.drawString(score + " " + pointsTranslation , 1175 * SCALE, 400 * SCALE);
 
         drawComment(model);
-        saveHighscore(model.getScore(), Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
+    }
 
+    @Override
+    public void init(Application model) {
+        score = 0;
+        Recipe recipe = model.getSelectedRecipe();
+        score = recipe.calculateScore(model.getSelectedIngredients());
+        model.setScore(score);
+        pointsTranslation = I18n.translate("points");
+//        saveHighscore(score, Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
     }
 
     private static String getFrameName(int score) {

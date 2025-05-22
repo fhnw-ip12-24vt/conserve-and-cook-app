@@ -60,7 +60,14 @@ public class Recipe {
      * @return All three ingredient scores added
      */
     public int calculateScore(Ingredient[] selectedIngredients) {
-        int score = 0;
+        int min, max, score = 0;
+        try {
+            max = getMaxScore();
+            min = getMinScore();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
 
         for (int i = 0; i < 3; i++) {
             Ingredient ingredient = selectedIngredients[i];
@@ -68,14 +75,6 @@ public class Recipe {
                 continue;
             }
             int ingScore = ingredient.getCo2();
-            int min = 0, max = 0;
-            try {
-                max = getMaxScore();
-                min = getMinScore();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                return 0;
-            }
 
             int x = max - min;
             int y = ingScore - min;
@@ -85,6 +84,7 @@ public class Recipe {
             score += (int) (dblScore * 100);
         }
 
+        // Multiplication with 125 is only cosmetic, the numbers look cooler
         return (score / 3) * 125;
     }
 

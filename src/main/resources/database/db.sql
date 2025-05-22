@@ -173,7 +173,13 @@ INSERT INTO translations VALUES(9,'That’s it!'|| char(10) ||'Have fun cooking!
 INSERT INTO translations VALUES(26,'Region Auswählen','region',1);
 INSERT INTO translations VALUES(27,'Sélectionner une région','region',2);
 INSERT INTO translations VALUES(28,'Selezionare la regione','region',3);
-INSERT INTO translations VALUES(23,'Select a Region','region',4);
+INSERT INTO translations VALUES(29,'Select a Region','region',4);
+
+-- Result
+INSERT INTO translations VALUES(30,'Punkte','points',1);
+INSERT INTO translations VALUES(31,'Points','points',2);
+INSERT INTO translations VALUES(32,'Punti','points',3);
+INSERT INTO translations VALUES(33,'Points','points',4);
 
 CREATE TABLE highscore
 (
@@ -235,7 +241,4 @@ INSERT INTO ingredient VALUES(66,'Schweinefleisch',3250,replace('Schweinefleisch
 INSERT INTO ingredient VALUES(72,'Cocktailsauce',2700,'Cocktailsauce bringt viel Geschmack und braucht oft weniger Zutaten als viele andere Saucen. Super Entscheidung, weiter so!','011');
 INSERT INTO ingredient VALUES(79,'Olive',1400,'Olivenbäume sind sehr widerstandsfähig und können in heissen, trockenen Regionen wachsen, was ihren CO2-Abdruck niedrig hält. Super Wahl, weiter so!','030');
 INSERT INTO ingredient VALUES(82,'Artischocken',394,'Artischocken sind oft eine gute Wahl, wenn sie aus Europa kommen, da ihr Anbau relativ wenig Energie benötigt. Klasse Entscheidung, weiter so!','002');
-INSERT INTO sqlite_sequence VALUES('ingredient_to_recipe',82);
-INSERT INTO sqlite_sequence VALUES('ingredient_to_recipe',82);
-INSERT INTO sqlite_sequence VALUES('highscore',12);
 COMMIT;
