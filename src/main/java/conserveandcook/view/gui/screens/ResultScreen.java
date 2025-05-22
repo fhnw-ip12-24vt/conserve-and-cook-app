@@ -39,6 +39,7 @@ public class ResultScreen extends AbstractScreen {
         score = recipe.calculateScore(model.getSelectedIngredients());
         model.setScore(score);
         pointsTranslation = I18n.translate("points");
+        comment = "";
 //        saveHighscore(score, Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
     }
 
