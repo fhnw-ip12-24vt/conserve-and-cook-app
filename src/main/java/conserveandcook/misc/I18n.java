@@ -32,7 +32,6 @@ public class I18n {
         I18n i18n = getInstance();
         String cacheResult = getFromCache(key);
         if (cacheResult != null) {
-            int size = i18n.cache.values().stream().mapToInt(HashMap::size).sum();
             return cacheResult;
         }
 

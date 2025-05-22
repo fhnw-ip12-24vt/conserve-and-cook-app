@@ -29,4 +29,4 @@ XAUTHORITY=/home/pi/.Xauthority
 
 sudo systemctl stop lightdm && sudo systemctl disable lightdm
 cd /home/pi/deploy/Conserveandcook/
-/usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx2G -jar /home/pi/deploy/Conserveandcook/Conserveandcook.jar
+/usr/bin/java -Dsun.java2d.opengl=True -XX:+UseZGC -Xmx3G -jar /home/pi/deploy/Conserveandcook/Conserveandcook.jar
