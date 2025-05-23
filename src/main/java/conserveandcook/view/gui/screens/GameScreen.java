@@ -153,6 +153,7 @@ public class GameScreen extends AbstractScreen {
 
         model.resetIngredients();
         buttonIsVisible = false;
+        gameOver = false;
     }
 
     private void gameTimer(Application model) {

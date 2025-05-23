@@ -1,6 +1,7 @@
 package conserveandcook.model;
 
 import conserveandcook.Database;
+import conserveandcook.misc.I18n;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,19 +13,17 @@ public class Ingredient {
     private final String name;
     private final int co2;
     private final int category;
-    private final String comment;
 
-    private Ingredient(int id, String name, int co2, int category, String comment) {
+    private Ingredient(int id, String name, int co2, int category) {
         this.id = id;
         this.name = name;
         this.co2 = co2;
         this.category = category;
-        this.comment = comment;
     }
 
     public static Ingredient getIngredientById(String id, int recipeId) throws SQLException {
         Database db = Database.getInstance();
-        String query = "select i.id, i.title, i.co2_score, r.category_id, i.comment " +
+        String query = "select i.id, i.title, i.co2_score, r.category_id " +
                 "from ingredient i " +
                 "join ingredient_to_recipe r " +
                 "on r.ingredient_id = i.id " +
@@ -49,15 +48,14 @@ public class Ingredient {
                 results.getInt(1),
                 results.getString(2),
                 results.getInt(3),
-                results.getInt(4),
-                results.getString(5)
+                results.getInt(4)
         );
     }
 
     public static Ingredient[] getIngredientsByRecipe(int recipeId) throws SQLException {
         Database db = Database.getInstance();
         int ingredientCount = 9;
-        String query = "select i.id, i.title, i.co2_score, r.category_id, i.comment from ingredient i " +
+        String query = "select i.id, i.title, i.co2_score, r.category_id from ingredient i " +
                 "join ingredient_to_recipe r on i.id = r.ingredient_id " +
                 "where r.recipe_id = ? order by r.category_id";
         ResultSet results = db.executeQuery(query, recipeId);
@@ -73,8 +71,7 @@ public class Ingredient {
                             results.getInt(1),
                             results.getString(2),
                             results.getInt(3),
-                            results.getInt(4),
-                            results.getString(5)
+                            results.getInt(4)
                     );
             index++;
         }
@@ -98,6 +95,6 @@ public class Ingredient {
     }
 
     public String getComment() {
-        return comment;
+        return I18n.translate("comment." + id);
     }
 }

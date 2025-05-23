@@ -1,6 +1,8 @@
 package conserveandcook.model;
 
 import conserveandcook.AbstractTest;
+import conserveandcook.misc.I18n;
+import conserveandcook.misc.Languages;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -136,6 +138,7 @@ public class RecipeTest extends AbstractTest {
     public void commentTest() throws SQLException {
         // Arrange
         Recipe r1;
+        I18n.setLanguage(Languages.DE);
 
         // Act
         r1 = Recipe.getRandomRecipe(REGION_ID);

@@ -71,6 +71,11 @@ public class ResultScreen extends AbstractScreen {
     }
 
     @Override
+    public void init(Application model) {
+        comment = "";
+    }
+
+    @Override
     public AvailableScreens next() {
         return AvailableScreens.START;
     }

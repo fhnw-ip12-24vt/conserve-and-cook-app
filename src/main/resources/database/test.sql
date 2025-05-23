@@ -22,6 +22,12 @@ INSERT INTO translations VALUES(1,'Wilkommen zu Conserve&Cook!','intro',1);
 INSERT INTO translations VALUES(2,'Bienvenue chez Conserve&Cook!','intro',2);
 INSERT INTO translations VALUES(3,'Benvenuti a Conserve&Cook!','intro',3);
 INSERT INTO translations VALUES(4,'Welcome to Conserve&Cook!','intro',4);
+
+INSERT INTO translations VALUES(5,'rind ist schlecht!','comment.0',1);
+INSERT INTO translations VALUES(6,'le bœuf est mauvais!','comment.0',2);
+INSERT INTO translations VALUES(7,'il manzo è cattivo!','comment.0',3);
+INSERT INTO translations VALUES(8,'beef is bad!','comment.0',4);
+
 CREATE TABLE regions
 (
     id    INT         NOT NULL,
