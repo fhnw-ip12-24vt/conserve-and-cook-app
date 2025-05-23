@@ -167,7 +167,7 @@ INSERT INTO translations VALUES(21,'Your goal is to'|| char(10) ||'cook delicous
 INSERT INTO translations VALUES(22,'The region determines '|| char(10) ||'which recipes you will cook!','tutorial.region',4);
 INSERT INTO translations VALUES(23,'Choose 3 ingredients.'|| char(10) ||'You will be given nine to choose from'|| char(10) ||'and must scan three of them,'|| char(10) ||'before the time runs out.','tutorial.ingredient',4);
 INSERT INTO translations VALUES(24,'Use the barcode scanner to select'|| char(10) ||'ingredients from the cookery book.'|| char(10) ||'Just like at the supermarket checkout!'|| char(10) ||' '|| char(10) ||'  If you change your mind,'|| char(10) ||' scan a new one to replace it.','tutorial.scan',4);
-INSERT INTO translations VALUES(9,'That’s it!'|| char(10) ||'Have fun cooking!','tutorial.end',4);
+INSERT INTO translations VALUES(25,'That’s it!'|| char(10) ||'Have fun cooking!','tutorial.end',4);
 
 -- Region
 INSERT INTO translations VALUES(26,'Region Auswählen','region',1);
@@ -198,7 +198,7 @@ INSERT INTO translations (id, text, language_id, key) VALUES (103, 'Käse ist zw
 INSERT INTO translations (id, text, language_id, key) VALUES (203, 'Le fromage est délicieux, mais il a souvent une empreinte CO2 élevée car la production de lait nécessite beaucoup de nourriture et d''eau. Peut-être existe-t-il une alternative plus écologique !', 2, 'comment.3');
 INSERT INTO translations (id, text, language_id, key) VALUES (303, 'Il formaggio è buono, ma spesso ha un''alta impronta di CO2 perché la produzione di latte richiede molto cibo e acqua. Forse esiste un''alternativa più ecologica!', 3, 'comment.3');
 INSERT INTO translations (id, text, language_id, key) VALUES (403, 'Cheese is tasty, but it often has a high CO2 footprint because milk production requires lots of feed and water. Maybe there''s a more climate-friendly alternative!', 4, 'comment.3');
-INSERT INTO translations (id, text, language_id, key) VALUES (104, 'Ananas schmeckt süss und frisch, aber oft wird sie von weit her importiert, was viel Energie für den Transport braucht. Vielleicht gibt es auch eine klimafreundlichere Frucht!', 1, 'comment.4');
+INSERT INTO translations (id, text, language_id, key) VALUES (104, 'Ananas schmeckt süss und frisch, aber oft wird sie von weit her importiert, was viel Energie für den Transport braucht. Vielleicht gibt es auch eine klimafreundlichere Variante?', 1, 'comment.4');
 INSERT INTO translations (id, text, language_id, key) VALUES (204, 'L''ananas est sucrée et rafraîchissante, mais elle est souvent importée de loin, ce qui consomme beaucoup d''énergie. Peut-être existe-t-il un fruit plus écologique !', 2, 'comment.4');
 INSERT INTO translations (id, text, language_id, key) VALUES (304, 'L''ananas è dolce e fresca, ma spesso viene importata da molto lontano, il che richiede molta energia. Forse c''è un frutto più ecologico!', 3, 'comment.4');
 INSERT INTO translations (id, text, language_id, key) VALUES (404, 'Pineapple is sweet and refreshing, but it’s often imported from far away, which uses a lot of energy. Maybe there’s a more climate-friendly fruit!', 4, 'comment.4');

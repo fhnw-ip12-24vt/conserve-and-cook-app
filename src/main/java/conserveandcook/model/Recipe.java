@@ -5,6 +5,8 @@ import conserveandcook.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static ch.mvcbase.MvcLogger.LOGGER;
+
 public class Recipe {
     private final int id;
     private final String name;
@@ -65,7 +67,7 @@ public class Recipe {
             max = getMaxScore();
             min = getMinScore();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            LOGGER.logException(e.getMessage(), e);
             return 0;
         }
 
