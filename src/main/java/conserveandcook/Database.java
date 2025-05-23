@@ -34,7 +34,6 @@ public class Database {
     }
 
     public void executeUpdate(String sql, Object... params) {
-        System.out.println("executing query: " + sql);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             setParameters(preparedStatement, params);

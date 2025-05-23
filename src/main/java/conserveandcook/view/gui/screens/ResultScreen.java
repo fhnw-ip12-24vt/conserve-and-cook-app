@@ -75,11 +75,6 @@ public class ResultScreen extends AbstractScreen {
     }
 
     @Override
-    public void init(Application model) {
-        comment = "";
-    }
-
-    @Override
     public AvailableScreens next() {
         return AvailableScreens.START;
     }
@@ -93,7 +88,7 @@ public class ResultScreen extends AbstractScreen {
 
         //position of the comment
         int commentX = (int) (720 * SCALE);
-        int commentY = (int) (630 * SCALE);
+        int commentY = (int) (600 * SCALE);
         int lineHeight = (int) (45 * SCALE);
         gui.setFontSize((int) (50 * SCALE));
 

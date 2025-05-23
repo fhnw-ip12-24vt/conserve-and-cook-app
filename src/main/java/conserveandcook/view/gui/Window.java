@@ -59,7 +59,6 @@ public class Window extends GuiBase<Application, ApplicationController> {
         super.setupEventHandler(controller);
 
         setOnKeyReleased(key -> {
-            System.out.println("Key released: " + key);
             switch (key) {
                 case "right" -> controller.right();
                 case "left" -> controller.left();
