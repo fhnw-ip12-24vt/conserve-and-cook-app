@@ -122,8 +122,13 @@ public class GameScreen extends AbstractScreen {
     public void right(Application model) {
         if (!runningOnPi) {
             debugCategory = Application.decrementWrapped(debugCategory, 2);
-        } else {
-            model.incrementScreen();
+        }
+    }
+
+    @Override
+    public void press(Application model) {
+        if(buttonIsVisible) {
+            super.press(model);
         }
     }
 
@@ -138,6 +143,14 @@ public class GameScreen extends AbstractScreen {
             this.gameDuration = 120;
         }
 
+        buttonIsVisible = false;
+    }
+
+    /**
+     * Called to preload the ingredients, to block the drawing queue less
+     * @param model
+     */
+    public void preload(Application model) {
         // Select new random recipe, whenever the screen is initialized
         try {
             recipe = Recipe.getRandomRecipe(model.getSelectedRegion().getId());
@@ -152,7 +165,6 @@ public class GameScreen extends AbstractScreen {
         }
 
         model.resetIngredients();
-        buttonIsVisible = false;
     }
 
     private void gameTimer(Application model) {
@@ -174,7 +186,7 @@ public class GameScreen extends AbstractScreen {
         int seconds = gameDuration % 60;
         String time = String.format("%02d:%02d", minutes, seconds);
 
-        gui.setFontSize((int) (80 * SCALE));
+        gui.setFontSize((int) (90 * SCALE));
         gui.drawString(time, 305 * SCALE, 995 * SCALE);
     }
 

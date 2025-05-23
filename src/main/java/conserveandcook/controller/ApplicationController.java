@@ -54,4 +54,9 @@ public class ApplicationController extends ControllerBase<Application> {
 
         model.getActiveScreen().press(model);
     }
+
+    public void shutdown(){
+        super.shutdown();
+        System.exit(1);
+    }
 }
