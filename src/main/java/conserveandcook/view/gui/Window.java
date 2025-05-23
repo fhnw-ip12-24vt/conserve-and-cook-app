@@ -7,12 +7,15 @@ import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Window extends GuiBase<Application, ApplicationController> {
 
     public static int HEIGHT = Integer.parseInt(Config.get("screen.height"));
     public static int WIDTH = Integer.parseInt(Config.get("screen.width"));
     public static int TIMEOUT = Integer.parseInt(Config.get("screen.timeout"));
-
+    private Set<String> keysPressed = new HashSet<>();
     private long startTime = System.currentTimeMillis();
 
     protected final ApplicationController controller;
@@ -56,12 +59,14 @@ public class Window extends GuiBase<Application, ApplicationController> {
         super.setupEventHandler(controller);
 
         setOnKeyReleased(key -> {
+            System.out.println("Key released: " + key);
             switch (key) {
                 case "right" -> controller.right();
                 case "left" -> controller.left();
                 case "up" -> controller.up();
                 case "down" -> controller.down();
                 case "space" -> controller.press();
+                case "f4", "escape" -> controller.shutdown();
             }
         });
     }

@@ -3,7 +3,6 @@ package conserveandcook.view.pui.components;
 import com.pi4j.catalog.components.base.Component;
 import conserveandcook.misc.Environments;
 
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,7 +11,6 @@ public class Joystick extends Component {
     private Runnable onNorth, onEast, onSouth, onWest;
     private boolean isNorth, isEast, isSouth, isWest = false;
 
-    private Duration whilePressedDelay;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public void setDirection(boolean isInDirection, Runnable task) {
