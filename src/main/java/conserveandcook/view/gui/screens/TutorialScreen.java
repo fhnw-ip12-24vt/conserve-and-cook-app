@@ -1,6 +1,7 @@
 package conserveandcook.view.gui.screens;
 
 import ch.trick17.gui.Gui;
+import conserveandcook.misc.I18n;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.AbstractScreen;
 import conserveandcook.view.gui.AvailableScreens;
@@ -44,6 +45,7 @@ public class TutorialScreen extends AbstractScreen {
 
     @Override
     public void init(Application model) {
+        frameIndex = 0;
         skipButton.setLanguage(model.getSelectedLanguage());
         skipButton.setOnPress(model::skipTutorial);
         skipButton.setState(Button.States.IDLE);
@@ -89,18 +91,17 @@ public class TutorialScreen extends AbstractScreen {
 
     // TODO: (SK) Replace this function with i18n results
     private String getText() {
-        return switch (frameIndex) {
-            case 0 -> "Willkommen bei \nConserve & Cook";
-            case 1 -> "Dein Ziel ist es, \nleckere Gerichte \naus aller Welt zu kochen";
-            case 2 -> "Die Region bestimmt, \nwelche Rezepte du kochen wirst!";
-            case 3 -> "Wähle 3 Zutaten. \n Du Bekommst neun zur Auswahl" +
-                    "\n und musst drei davon einscannen, \n" +
-                    "bevor die Zeit abläuft.";
-            case 4 -> "Scanne die Zutaten. Nutze den Barcodescanner,\n um Zutaten aus dem Kochbuch auszuwählen. \n" +
-                    "Genau wie an der Supermarktkasse! \n \n Falls du eine andere Zutat möchtest,\n scanne einfach eine neue ein";
-            case 5 -> "Das war's!\nViel Spass beim Kochen!";
+        String key = "tutorial." + switch (frameIndex) {
+            case 0 -> "intro";
+            case 1 -> "aim";
+            case 2 -> "region";
+            case 3 -> "ingredient";
+            case 4 -> "scan";
+            case 5 -> "end";
             default -> "";
         };
+
+        return I18n.translate(key);
     }
 
     private record Result(int x, int y, int fontsize) {
