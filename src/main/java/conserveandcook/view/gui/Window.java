@@ -7,6 +7,12 @@ import conserveandcook.misc.Environments;
 import conserveandcook.model.Application;
 import conserveandcook.view.gui.screens.*;
 
+import javax.swing.*;
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.util.List;
+import java.util.stream.Stream;
+
 public class Window extends GuiBase<Application, ApplicationController> {
 
     public static int HEIGHT = Integer.parseInt(Config.get("screen.height"));
@@ -37,6 +43,8 @@ public class Window extends GuiBase<Application, ApplicationController> {
         // Fullscreen when running on local doesn't work
         boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
         this.setFullScreen(runningOnPi);
+
+        preloadImages();
     }
 
     @Override
@@ -78,5 +86,36 @@ public class Window extends GuiBase<Application, ApplicationController> {
         }
 
         if (idleTime > TIMEOUT) model.timeoutScreen();
+    }
+
+    private void preloadImages() {
+        String path = "src/main/resources/img/";
+        String userDirectory = FileSystems.getDefault()
+                .getPath("")
+                .toAbsolutePath()
+                .toString();
+
+        System.out.println("working dir: "+ userDirectory);
+        File directory = new File(path);
+        System.out.println(directory.getAbsolutePath());
+
+        if(directory.listFiles() == null) return;
+        List.of(directory.listFiles())
+                .parallelStream()
+                .forEach(this::preload);
+    }
+
+    private void preload(File file) {
+//        System.out.println("preloading " + file.getAbsolutePath());
+        if (file.isDirectory()) {
+            Stream.of(file.listFiles())
+                    .forEach(this::preload);
+        } else {
+            System.out.println("drawing: " + file.getAbsolutePath());
+            SwingUtilities.invokeLater(() -> {
+                String path = file.getPath();
+                drawImage(path, 0, 0, 0);
+            });
+        }
     }
 }

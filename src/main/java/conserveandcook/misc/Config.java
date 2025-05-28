@@ -2,6 +2,7 @@ package conserveandcook.misc;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -11,6 +12,7 @@ public class Config {
     private static final String PATH = ".properties";
     private static Config INSTANCE;
     private final Properties properties;
+    private static final HashMap<String, String> cache = new HashMap<>();
 
     private Config() {
         properties = new Properties();
@@ -38,16 +40,23 @@ public class Config {
     }
 
     public static String get(String key) {
-        return getInstance().properties.getProperty(key);
+        if (cache.containsKey(key) && cache.get(key) != null) {
+            return cache.get(key);
+        } else {
+            String value = getInstance().properties.getProperty(key);
+            cache.put(key, value);
+            return value;
+        }
     }
 
     public static void set(String key, String value) {
+        cache.put(key, value);
         getInstance().properties.setProperty(key, value);
     }
 
     public static boolean isEnabled(String key) {
         String enabled = get(key + ".enabled");
-        return ! Objects.equals(enabled, "false");
+        return !Objects.equals(enabled, "false");
     }
 
     /**
@@ -55,6 +64,7 @@ public class Config {
      */
     public static void loadTestProperties() {
         Config config = getInstance();
+        cache.clear();
         try {
             File file = new File("test" + PATH);
             if (file.exists() && !file.isDirectory()) {
