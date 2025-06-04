@@ -11,15 +11,21 @@ import static ch.mvcbase.MvcLogger.LOGGER;
 public class I18n {
     private static I18n INSTANCE;
     private Languages language;
-    /**
-     * Mapping of Languages and Keys to their Translation to minimize DB hits.
-     */
+
+    /** Mapping of Languages and Keys to their Translation to minimize DB hits. */
     private HashMap<Integer, HashMap<String, String>> cache;
+
+    /** Cache can be disabled via the properties */
+    private boolean isCacheEnabled;
 
     public static I18n getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new I18n();
-            INSTANCE.cache = new HashMap<>();
+
+            INSTANCE.isCacheEnabled = Config.isEnabled("i18n.cache");
+            if(INSTANCE.isCacheEnabled) {
+                INSTANCE.cache = new HashMap<>();
+            }
         }
         return INSTANCE;
     }
@@ -30,9 +36,12 @@ public class I18n {
      */
     public static String translate(String key) {
         I18n i18n = getInstance();
-        String cacheResult = getFromCache(key);
-        if (cacheResult != null) {
-            return cacheResult;
+
+        if(i18n.isCacheEnabled) {
+            String cacheResult = getFromCache(key);
+            if (cacheResult != null) {
+                return cacheResult;
+            }
         }
 
         Database db = Database.getInstance();
@@ -49,7 +58,9 @@ public class I18n {
                 return null;
             }
             String result = resultSet.getString(2);
-            putToCache(key, result);
+            if (i18n.isCacheEnabled) {
+                putToCache(key, result);
+            }
 
             return result;
         } catch (SQLException e) {
