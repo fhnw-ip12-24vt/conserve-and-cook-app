@@ -29,6 +29,23 @@
 				<include>*.sh</include>
 			</includes>
 		</fileSet>
+
+
+		<fileSet>
+			<directory>src/main/resources/database/</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>database.db</include>
+			</includes>
+		</fileSet>
+
+		<fileSet>
+			<directory>.</directory>
+			<outputDirectory>.</outputDirectory>
+			<includes>
+				<include>app.properties</include>
+			</includes>
+		</fileSet>
 	</fileSets>
 
 </assembly>

@@ -120,7 +120,7 @@ public class ResultScreen extends AbstractScreen {
         }
 
         int commentX = (int) (350 * SCALE);
-        int commentY = (int) (320 * SCALE);
+        int commentY = (int) (340 * SCALE);
         int lineHeight = (int) (45 * SCALE);
 
         StringBuilder line = new StringBuilder();
@@ -137,18 +137,12 @@ public class ResultScreen extends AbstractScreen {
 
     private String getScoreComment(int score) {
         String index;
-        if (score <= 1500) {
-            index = "0";
-        } else if (score <= 3500) {
+        if (score <= 3500) {
             index = "1";
-        } else if (score <= 5500) {
-            index = "2";
         } else if (score <= 7500) {
-            index = "3";
-        } else if (score <= 10000) {
-            index = "4";
+            index = "2";
         } else {
-            index = "5";
+            index = "3";
         }
         return I18n.translate("score.comment." + index);
     }

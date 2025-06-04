@@ -367,33 +367,25 @@ INSERT INTO translations (id, text, language_id, key) VALUES (282, 'Les artichau
 INSERT INTO translations (id, text, language_id, key) VALUES (382, 'I carciofi crescono in Europa e non hanno bisogno di molta energia per crescere. Fa bene al clima. Ottima scelta, continua così!', 3, 'comment.82');
 INSERT INTO translations (id, text, language_id, key) VALUES (482, 'Artichokes grow in Europe and don’t need much energy to grow. That’s good for the climate. Great choice, keep it up!', 4, 'comment.82');
 
-INSERT INTO translations (id, text, language_id, key) VALUES (500, 'gut', 1, 'score.comment.5');
-INSERT INTO translations (id, text, language_id, key) VALUES (501, 'medium', 1, 'score.comment.4');
-INSERT INTO translations (id, text, language_id, key) VALUES (502, 'mittel schlecht', 1, 'score.comment.3');
-INSERT INTO translations (id, text, language_id, key) VALUES (503, 'schlecht', 1, 'score.comment.2');
-INSERT INTO translations (id, text, language_id, key) VALUES (504, 'sehr schlecht', 1, 'score.comment.1');
-INSERT INTO translations (id, text, language_id, key) VALUES (505, 'desaströs', 1, 'score.comment.0');
+-- score comment DE
+INSERT INTO translations (id, text, language_id, key) VALUES (500, 'Super gespielt! Du hast echt viele Punkte gesammelt. Weiter so!', 1, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (501, 'Gar nicht schlecht! Schaffst du beim nächsten Mal noch ein paar Punkte mehr?', 1, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (502, 'Das war vielleicht nicht dein bestes Ergebnis, aber das kommt sicher besser!', 1, 'score.comment.1');
 
-INSERT INTO translations (id, text, language_id, key) VALUES (510, 'gut', 2, 'score.comment.5');
-INSERT INTO translations (id, text, language_id, key) VALUES (511, 'medium', 2, 'score.comment.4');
-INSERT INTO translations (id, text, language_id, key) VALUES (512, 'mittel schlecht', 2, 'score.comment.3');
-INSERT INTO translations (id, text, language_id, key) VALUES (513, 'schlecht', 2, 'score.comment.2');
-INSERT INTO translations (id, text, language_id, key) VALUES (514, 'sehr schlecht', 2, 'score.comment.1');
-INSERT INTO translations (id, text, language_id, key) VALUES (515, 'desaströs', 2, 'score.comment.0');
+-- score comment FR
+INSERT INTO translations (id, text, language_id, key) VALUES (510, 'Bravo! Tu as vraiment gagné beaucoup de points. Continue comme ça!', 2, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (511, 'Pas mal du tout! La prochaine fois, tu pourras marquer quelques points de plus?', 2, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (512, 'Pas ton meilleur score, mais ça ira mieux la prochaine fois!', 2, 'score.comment.1');
 
-INSERT INTO translations (id, text, language_id, key) VALUES (520, 'gut', 3, 'score.comment.5');
-INSERT INTO translations (id, text, language_id, key) VALUES (521, 'medium', 3, 'score.comment.4');
-INSERT INTO translations (id, text, language_id, key) VALUES (522, 'mittel schlecht', 3, 'score.comment.3');
-INSERT INTO translations (id, text, language_id, key) VALUES (523, 'schlecht', 3, 'score.comment.2');
-INSERT INTO translations (id, text, language_id, key) VALUES (524, 'sehr schlecht', 3, 'score.comment.1');
-INSERT INTO translations (id, text, language_id, key) VALUES (525, 'desaströs', 3, 'score.comment.0');
+-- score comment IT
+INSERT INTO translations (id, text, language_id, key) VALUES (520, 'Bravo! Hai raccolto davvero tanti punti. Continua così!', 3, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (521, 'Niente male! Riuscirete a fare qualche punto in più la prossima volta?', 3, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (522, 'Non è stato il tuo risultato migliore, ma andrà meglio la prossima volta!', 3, 'score.comment.1');
 
-INSERT INTO translations (id, text, language_id, key) VALUES (530, 'gut', 4, 'score.comment.5');
-INSERT INTO translations (id, text, language_id, key) VALUES (531, 'medium', 4, 'score.comment.4');
-INSERT INTO translations (id, text, language_id, key) VALUES (532, 'mittel schlecht', 4, 'score.comment.3');
-INSERT INTO translations (id, text, language_id, key) VALUES (533, 'schlecht', 4, 'score.comment.2');
-INSERT INTO translations (id, text, language_id, key) VALUES (534, 'sehr schlecht', 4, 'score.comment.1');
-INSERT INTO translations (id, text, language_id, key) VALUES (535, 'desaströs', 4, 'score.comment.0');
+-- score comment EN
+INSERT INTO translations (id, text, language_id, key) VALUES (530, 'Great job! You collected lots of points. Keep it up!', 4, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (531, 'Not bad at all! Can you score a few more points next time?', 4, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (532, 'That might not have been your best result, but it’ll surely go better next time!', 4, 'score.comment.1');
 
 CREATE TABLE highscore
 (
