@@ -37,6 +37,9 @@ public class Window extends GuiBase<Application, ApplicationController> {
         // Fullscreen when running on local doesn't work
         boolean runningOnPi = Environments.get() == Environments.PRODUCTION;
         this.setFullScreen(runningOnPi);
+
+        this.loadFont("font/Conserveandcook-Regular.ttf");
+        this.setFontFamily("Conserveandcook-Regular");
     }
 
     @Override

@@ -10,8 +10,6 @@ public class NameScreen extends AbstractScreen {
 
     public NameScreen(Gui gui) {
         super(gui);
-        gui.loadFont("font/Conserveandcook-Regular.ttf");
-        gui.setFontFamily("Conserveandcook-Regular");
     }
 
     @Override

@@ -367,6 +367,34 @@ INSERT INTO translations (id, text, language_id, key) VALUES (282, 'Les artichau
 INSERT INTO translations (id, text, language_id, key) VALUES (382, 'I carciofi crescono in Europa e non hanno bisogno di molta energia per crescere. Fa bene al clima. Ottima scelta, continua così!', 3, 'comment.82');
 INSERT INTO translations (id, text, language_id, key) VALUES (482, 'Artichokes grow in Europe and don’t need much energy to grow. That’s good for the climate. Great choice, keep it up!', 4, 'comment.82');
 
+INSERT INTO translations (id, text, language_id, key) VALUES (500, 'gut', 1, 'score.comment.5');
+INSERT INTO translations (id, text, language_id, key) VALUES (501, 'medium', 1, 'score.comment.4');
+INSERT INTO translations (id, text, language_id, key) VALUES (502, 'mittel schlecht', 1, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (503, 'schlecht', 1, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (504, 'sehr schlecht', 1, 'score.comment.1');
+INSERT INTO translations (id, text, language_id, key) VALUES (505, 'desaströs', 1, 'score.comment.0');
+
+INSERT INTO translations (id, text, language_id, key) VALUES (510, 'gut', 2, 'score.comment.5');
+INSERT INTO translations (id, text, language_id, key) VALUES (511, 'medium', 2, 'score.comment.4');
+INSERT INTO translations (id, text, language_id, key) VALUES (512, 'mittel schlecht', 2, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (513, 'schlecht', 2, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (514, 'sehr schlecht', 2, 'score.comment.1');
+INSERT INTO translations (id, text, language_id, key) VALUES (515, 'desaströs', 2, 'score.comment.0');
+
+INSERT INTO translations (id, text, language_id, key) VALUES (520, 'gut', 3, 'score.comment.5');
+INSERT INTO translations (id, text, language_id, key) VALUES (521, 'medium', 3, 'score.comment.4');
+INSERT INTO translations (id, text, language_id, key) VALUES (522, 'mittel schlecht', 3, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (523, 'schlecht', 3, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (524, 'sehr schlecht', 3, 'score.comment.1');
+INSERT INTO translations (id, text, language_id, key) VALUES (525, 'desaströs', 3, 'score.comment.0');
+
+INSERT INTO translations (id, text, language_id, key) VALUES (530, 'gut', 4, 'score.comment.5');
+INSERT INTO translations (id, text, language_id, key) VALUES (531, 'medium', 4, 'score.comment.4');
+INSERT INTO translations (id, text, language_id, key) VALUES (532, 'mittel schlecht', 4, 'score.comment.3');
+INSERT INTO translations (id, text, language_id, key) VALUES (533, 'schlecht', 4, 'score.comment.2');
+INSERT INTO translations (id, text, language_id, key) VALUES (534, 'sehr schlecht', 4, 'score.comment.1');
+INSERT INTO translations (id, text, language_id, key) VALUES (535, 'desaströs', 4, 'score.comment.0');
+
 CREATE TABLE highscore
 (
     score INTEGER not null,

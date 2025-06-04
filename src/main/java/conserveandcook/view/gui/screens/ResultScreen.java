@@ -12,7 +12,13 @@ import static ch.mvcbase.MvcLogger.LOGGER;
 
 
 public class ResultScreen extends AbstractScreen {
+    // Mia comments the worst ingredient.
     private String comment = "";
+
+    // Mia comments the score
+    private String scoreComment = "";
+
+    // "score" translated
     private String pointsTranslation;
     private int score = 0;
 
@@ -30,6 +36,7 @@ public class ResultScreen extends AbstractScreen {
         gui.drawString(score + " " + pointsTranslation , 1175 * SCALE, 400 * SCALE);
 
         drawComment(model);
+        drawPointsComment(model);
     }
 
     @Override
@@ -40,6 +47,7 @@ public class ResultScreen extends AbstractScreen {
         model.setScore(score);
         pointsTranslation = I18n.translate("points");
         comment = "";
+        scoreComment = "";
 //        saveHighscore(score, Arrays.stream(model.getName()).mapToObj(String::valueOf).collect(Collectors.joining()));
     }
 
@@ -83,7 +91,7 @@ public class ResultScreen extends AbstractScreen {
         if (comment == null || comment.isEmpty()) {
             Recipe selectedRecipe = model.getSelectedRecipe();
             comment = selectedRecipe.getComment(model.getSelectedIngredients());
-            return;
+            if (comment == null || comment.isEmpty()) return;
         }
 
         //position of the comment
@@ -103,5 +111,45 @@ public class ResultScreen extends AbstractScreen {
             line.append(word).append(" ");
         }
         gui.drawString(line.toString().trim(), commentX, commentY);
+    }
+
+    private void drawPointsComment(Application model) {
+        if (scoreComment == null || scoreComment.isEmpty()) {
+            scoreComment = getScoreComment(score);
+            if (scoreComment == null || scoreComment.isEmpty()) return;
+        }
+
+        int commentX = (int) (350 * SCALE);
+        int commentY = (int) (320 * SCALE);
+        int lineHeight = (int) (45 * SCALE);
+
+        StringBuilder line = new StringBuilder();
+        for (String word : scoreComment.split(" ")) {
+            if (gui.stringWidth(line + word) > (600 * SCALE)) {
+                gui.drawString(line.toString().trim(), commentX, commentY);
+                commentY += lineHeight;
+                line = new StringBuilder();
+            }
+            line.append(word).append(" ");
+        }
+        gui.drawString(line.toString().trim(), commentX, commentY);
+    }
+
+    private String getScoreComment(int score) {
+        String index;
+        if (score <= 1500) {
+            index = "0";
+        } else if (score <= 3500) {
+            index = "1";
+        } else if (score <= 5500) {
+            index = "2";
+        } else if (score <= 7500) {
+            index = "3";
+        } else if (score <= 10000) {
+            index = "4";
+        } else {
+            index = "5";
+        }
+        return I18n.translate("score.comment." + index);
     }
 }

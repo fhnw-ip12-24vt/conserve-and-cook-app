@@ -54,10 +54,12 @@ public class I18n {
 
         try (ResultSet resultSet = db.executeQuery(query, lang.index, key)) {
 
-            if (resultSet == null) {
+            if (resultSet == null || !resultSet.next()) {
+                LOGGER.logError("Translation not found for key " + key);
                 return null;
             }
             String result = resultSet.getString(2);
+
             if (i18n.isCacheEnabled) {
                 putToCache(key, result);
             }
