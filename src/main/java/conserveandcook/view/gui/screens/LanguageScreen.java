@@ -8,7 +8,7 @@ import conserveandcook.view.gui.AvailableScreens;
 
 public class LanguageScreen extends AbstractGif {
     static final int FRAMES = 4;
-    static final long GIF_INTERVAL = 2200 * 100000; // 0.25 seconds
+    static final long GIF_INTERVAL = 5000 * 100000; // 0.5 seconds
 
     public LanguageScreen(Gui gui) {
         super(gui, FRAMES, GIF_INTERVAL);
